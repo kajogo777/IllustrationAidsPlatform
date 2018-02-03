@@ -5,7 +5,10 @@ module.exports = {
       template: {
         name: '{{name.firstName}} {{name.lastName}}',
         email: 'bla@stmary.com',//'{{internet.email}}',
-        password: '12345' //'{{internet.password}}'
+        password: '12345', //'{{internet.password}}'
+        status: 'CONFIRMED',
+        role: 'ADMIN',
+        mobileNumber: '01000000000'
       }
     },
     {
