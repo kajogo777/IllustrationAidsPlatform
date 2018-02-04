@@ -20,11 +20,11 @@ export function login(email, password){
     return client.passport.verifyJWT(response.accessToken);
   })
   .then(payload => {
-    store.dispatch(prompt("Logged in successfully", "success"));
+    store.dispatch(prompt("Logged in successfully", "success", null, 5));
     return client.service('users').get(payload.userId);
   })
   .catch(err => {
-    store.dispatch(prompt("Log in Failed", "failure"));
+    store.dispatch(prompt("Log in Failed: " + err.message, "failure", null, 5));
     return new Promise((res, rej)=>{
       rej(err);
     });

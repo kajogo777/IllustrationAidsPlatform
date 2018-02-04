@@ -2,6 +2,8 @@ const authentication = require('feathers-authentication');
 const jwt = require('feathers-authentication-jwt');
 const local = require('feathers-authentication-local');
 
+const confimedLoginHook = require('./hooks/confirmedlogin');
+
 
 module.exports = function () {
   const app = this;
@@ -22,6 +24,11 @@ module.exports = function () {
       ],
       remove: [
         authentication.hooks.authenticate('jwt')
+      ]
+    },
+    after: {
+      create: [
+        confimedLoginHook()
       ]
     }
   });
