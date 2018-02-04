@@ -25,17 +25,17 @@ class RegisterForm extends React.Component{
   }
 
   handleClick = () => {
-    //this.props.prompt("password fields do not match", "warning");
-    // const fields = Object.keys(this.state);
-    // for(var i = 0; i < fields.length; i++){
-    //   if(!this.state[fields[i]] || this.state[fields[i]] === ""){
-    //     this.props.promptm(fields[i]+" is missing", "warning");
-    //     //return;
-    //   }
-    // }
+    this.props.prompt("password fields do not match", "warning");
+    const fields = Object.keys(this.state);
+    for(var i = 0; i < fields.length; i++){
+      if(!this.state[fields[i]] || this.state[fields[i]] === ""){
+        this.props.prompt(fields[i]+" is missing", "failure");
+        return;
+      }
+    }
 
     if(this.state.password !== this.state.password2){
-      this.props.prompt("password fields do not match", "warning");
+      this.props.prompt("password fields do not match", "failure");
       return;
     }
 
