@@ -43,9 +43,6 @@ class LoginForm extends React.Component{
     return(
       <Card centered>
           <Card.Content>
-            <Card.Header textAlign='center'>
-              Log In
-            </Card.Header>
             <Card.Description>
               <Input
                 fluid

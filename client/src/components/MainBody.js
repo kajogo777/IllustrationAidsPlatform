@@ -2,6 +2,8 @@ import React from 'react';
 import AidCardGrid from './AidCardGrid';
 import LoginForm from './LoginForm';
 import PrivateRoute from './PrivateRoute';
+import LoginPanel from './LoginPanel';
+
 
 import {
   AidContainer,
@@ -28,7 +30,7 @@ class MainBody extends React.Component{
           </PrivateRoute>
 
           <Route path="/login" render={()=>
-            <AuthContainer component={LoginForm}/>
+            <LoginPanel/>
           } />
 
           <Redirect from="/" to="/aidgrid" />

@@ -7,6 +7,6 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 //promise trigger _Fulfilled , _Pending and _Rejected actions allow you to return promise
 //thunk allows u to return functions
-const middleware = applyMiddleware(promise(), thunk);
+const middleware = applyMiddleware(thunk, promise());
 
 export default createStore(rootReducer, composeWithDevTools(middleware));

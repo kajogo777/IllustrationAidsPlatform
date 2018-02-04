@@ -52,7 +52,7 @@ module.exports = {
     ],
     find: [],
     get: [],
-    create: [ hook => {console.log(hook.data);} ],
+    create: [],
     update: [],
     patch: [],
     remove: []
