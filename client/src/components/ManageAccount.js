@@ -11,7 +11,7 @@ import { AuthContainer } from '../state-management';
 function ManageAccountHelper(props){
   return (
     <div>
-      <Dropdown item text='Manage Account'>
+      <Dropdown item text='Account'>
       {
         props.auth.user ?
           <Dropdown.Menu>

@@ -6,7 +6,7 @@ import { prompt } from '../actions/prompt-actions';
 
 function mapStateToProps (state){
   return {
-    register_error: state.aidStore.register_error
+    register_error: state.userStore.register_error
   };
 }
 

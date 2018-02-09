@@ -42,3 +42,24 @@ export function addUser(name, email, password, mobileNumber){
     });
   };
 }
+
+export function fetchPendingUsers(){
+  return {
+    type: 'FETCH_PENDING_USERS',
+    payload: client.service("users").find({query: {status: "PENDING"}})
+  }
+}
+
+export function approvePendingUser(user){
+  return {
+    type: 'APPROVE_USER',
+    payload: client.service("users").patch(user._id, {status: "CONFIRMED"})
+  }
+}
+
+export function deleteUser(user){
+  return {
+    type: 'DELETE_USER',
+    payload: client.service("users").remove(user._id)
+  }
+}

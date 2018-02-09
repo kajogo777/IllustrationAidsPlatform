@@ -17,11 +17,11 @@ const panes = [
   { menuItem: 'Register', render: () => <Tab.Pane><RegisterContainer component={RegisterForm}/></Tab.Pane> },
 ]
 
-
+//<Tab panes={panes}  menu={{ widths: 2, tabular: true }} /> centered menu
 function LoginPanel(props){
   return(
     <Card centered>
-     <Tab panes={panes} />
+     <Tab panes={panes}  />
     </Card>
   );
 }

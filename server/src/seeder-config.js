@@ -12,6 +12,18 @@ module.exports = {
       }
     },
     {
+      count: 5,
+      path: 'users',
+      template: {
+        name: '{{name.firstName}} {{name.lastName}}',
+        email: '{{internet.email}}',
+        password: '12345', //'{{internet.password}}'
+        status: 'PENDING',
+        role: 'SERVANT',
+        mobileNumber: '01000000000'
+      }
+    },
+    {
       count: 10,
       path: 'aids',
       template: {

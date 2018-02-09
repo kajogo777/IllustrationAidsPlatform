@@ -9,9 +9,12 @@ import {
   Link
 } from 'react-router-dom'
 import PrivateRoute from './PrivateRoute';
+import AdminRoute from './AdminRoute';
 import SearchField from './SearchField';
 import ManageAccount from './ManageAccount';
 import ManageAids from './ManageAids';
+import ManageUsers from './ManageUsers';
+
 
 function NavigationBar(props){
   return(
@@ -26,9 +29,16 @@ function NavigationBar(props){
           </Link>
         </Menu.Item>
         <Menu.Menu position='right'>
-          <Menu.Item >
-            <ManageAids/>
-          </Menu.Item>
+          <AdminRoute>
+            <Menu.Item >
+              <ManageAids/>
+            </Menu.Item>
+          </AdminRoute>
+          <AdminRoute>
+            <Menu.Item >
+              <ManageUsers/>
+            </Menu.Item>
+          </AdminRoute>
           <Menu.Item >
             <ManageAccount/>
           </Menu.Item>
