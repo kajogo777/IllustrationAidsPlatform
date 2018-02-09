@@ -1,0 +1,56 @@
+// users-model.js - A mongoose model
+//
+// See http://mongoosejs.com/docs/models.html
+// for more of what you can do here.
+module.exports = function (app) {
+  const mongooseClient = app.get('mongooseClient');
+  const users = new mongooseClient.Schema({
+    name: {
+      type: String,
+      requried: [true, "Missing user's name"],
+      minlength: [5, "Name is too short, please choose a name longer than 5 letters"]
+    },
+    email: {
+      type: String,
+      unique: true,
+      requried: [true, "Missing user's email"],
+      validate: {
+        validator: function(value){
+          return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(value);
+        },
+        message: "invalid email"
+      }
+    },
+    password: {
+      type: String,
+      requried: [true, "Missing user's password"],
+      minlength: [5, "Password is too short, please choose a password longer than 5 letters"]
+    },
+    mobileNumber: {
+      type: String,
+      required: [true, "Missing user's mobile number"],
+      validate: {
+        validator: function(value){
+          return /\d{11}/.test(value);
+        },
+        message: "{VALUE} is not a valid mobile number"
+      }
+    },
+    status: {
+      type: String,
+      enum: ['PENDING', 'CONFIRMED'],
+      default: 'PENDING',
+      requried: [true, "Missing user status"]
+    },
+    role: {
+      type: String,
+      enum: ['ADMIN', 'SERVANT'],
+      default: 'SERVANT',
+      requried: [true, "Missing user role"]
+    }
+  }, {
+    timestamps: true
+  });
+
+  return mongooseClient.model('users', users);
+};

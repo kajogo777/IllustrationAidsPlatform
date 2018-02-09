@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.top-sticky div{
+  z-index: 100;
+}
+
+.ui.menu .dropdown.item .menu{
+  z-index: 101;
+}
