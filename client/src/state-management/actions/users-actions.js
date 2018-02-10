@@ -50,6 +50,13 @@ export function fetchPendingUsers(){
   }
 }
 
+export function fetchConfirmedUsers(){
+  return {
+    type: 'FETCH_CONFIRMED_USERS',
+    payload: client.service("users").find({query: {status: "CONFIRMED"}})
+  }
+}
+
 export function approvePendingUser(user){
   return {
     type: 'APPROVE_USER',
@@ -57,9 +64,23 @@ export function approvePendingUser(user){
   }
 }
 
+export function updateUser(id, user){
+  return {
+    type: 'UPDATE_USER',
+    payload: client.service("users").patch(id, user)
+  }
+}
+
 export function deleteUser(user){
   return {
     type: 'DELETE_USER',
     payload: client.service("users").remove(user._id)
+  }
+}
+
+export function filterUsers(field, value){
+  return {
+    type: 'FILTER_USERS',
+    payload: {field: field, value: value}
   }
 }

@@ -1,5 +1,3 @@
-import { destroyPrompt } from '../actions/prompt-actions';
-
 const defaultState = {
   prompt: {}
 }

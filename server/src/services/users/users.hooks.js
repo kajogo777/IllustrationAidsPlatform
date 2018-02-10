@@ -4,6 +4,8 @@ const { restrictToOwner, restrictToRoles } = require('feathers-authentication-ho
 const { hashPassword } = require('feathers-authentication-local').hooks;
 
 const resgisterHook = require('./hooks/register');
+const protectedFields = require('./hooks/protectedFields');
+
 
 const isAdminOrOwner = [
   authenticate('jwt'),
@@ -35,12 +37,12 @@ const isAdmin = [
 module.exports = {
   before: {
     all: [],
-    find: [ authenticate('jwt') ],
+    find: [ ...isAdminOrOwner ],//authenticate('jwt') ],
     get: [ ...isAdminOrOwner ],
     create: [ hashPassword(), resgisterHook() ],
     update: [ ...isAdmin, hashPassword() ],
-    patch: [ ...isAdmin, hashPassword() ],
-    remove: [ ...isAdminOrOwner ]
+    patch: [ ...isAdminOrOwner, protectedFields(), hashPassword() ],
+    remove: [ ...isAdmin ]
   },
 
   after: {

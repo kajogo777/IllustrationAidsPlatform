@@ -11,9 +11,9 @@ import {
 import PrivateRoute from './PrivateRoute';
 import AdminRoute from './AdminRoute';
 import SearchField from './SearchField';
-import ManageAccount from './ManageAccount';
-import ManageAids from './ManageAids';
-import ManageUsers from './ManageUsers';
+import ManageAccountMenu from './ManageAccountMenu';
+import ManageAidsMenu from './ManageAidsMenu';
+import ManageUsersMenu from './ManageUsersMenu';
 
 
 function NavigationBar(props){
@@ -31,16 +31,16 @@ function NavigationBar(props){
         <Menu.Menu position='right'>
           <AdminRoute>
             <Menu.Item >
-              <ManageAids/>
+              <ManageAidsMenu/>
             </Menu.Item>
           </AdminRoute>
           <AdminRoute>
             <Menu.Item >
-              <ManageUsers/>
+              <ManageUsersMenu/>
             </Menu.Item>
           </AdminRoute>
           <Menu.Item >
-            <ManageAccount/>
+            <ManageAccountMenu/>
           </Menu.Item>
         </Menu.Menu>
       </Menu>

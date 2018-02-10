@@ -5,16 +5,16 @@ import {
   Input
 } from 'semantic-ui-react';
 
-class RegisterForm extends React.Component{
+class updateAccountForm extends React.Component{
 
   constructor(props){
     super(props);
     this.state = {
-      'name': '',
-      'email': '',
+      'name': props.auth.user.name,
+      'email': props.auth.user.email,
       'password': '',
       'password2': '',
-      'mobileNumber': ''
+      'mobileNumber': props.auth.user.mobileNumber
     };
   }
 
@@ -25,26 +25,30 @@ class RegisterForm extends React.Component{
   }
 
   handleClick = () => {
-    const fields = Object.keys(this.state);
-    for(var i = 0; i < fields.length; i++){
-      if(!this.state[fields[i]] || this.state[fields[i]] === ""){
-        this.props.prompt(fields[i]+" is missing", "failure");
-        return;
-      }
-    }
-
     if(this.state.password !== this.state.password2){
       this.props.prompt("password fields do not match", "failure");
       return;
     }
 
-    this.props.register(this.state.name, this.state.email, this.state.password, this.state.mobileNumber);
+    let user = Object.assign({}, {
+      '_id': this.props.auth.user._id,
+      'name': this.state.name,
+      'email': this.state.email,
+      'mobileNumber': this.state.mobileNumber
+    });
+    if(this.state.password !== ""){
+      user['password'] = this.state.password
+    }
+    this.props.updateAccount(user);
   }
 
   render(){
     return(
       <Card centered>
           <Card.Content>
+            <Card.Header>
+              Update Account
+            </Card.Header>
             <Card.Description>
               <Input
                 fluid
@@ -89,7 +93,7 @@ class RegisterForm extends React.Component{
               primary
               onClick={this.handleClick}
               >
-              register
+              save
             </Button>
           </Card.Content>
         </Card>
@@ -97,4 +101,4 @@ class RegisterForm extends React.Component{
   }
 }
 
-export default RegisterForm;
+export default updateAccountForm;

@@ -1,6 +1,7 @@
 import { connect }from 'react-redux';
 import UniversalContainer from './UniversalContainer';
-import { logout, login } from '../actions/auth-actions';
+import { logout, login, updateAccount } from '../actions/auth-actions';
+import { prompt } from '../actions/prompt-actions';
 
 
 function mapStateToProps (state, ownProps){
@@ -16,6 +17,12 @@ function mapDispatchToProps (dispatch){
     },
     logout: () => {
       dispatch(logout())
+    },
+    updateAccount: (user) => {
+      dispatch(updateAccount(user))
+    },
+    prompt: (message, type) => {
+      dispatch(prompt(message, type, null, 5))
     }
   };
 }
