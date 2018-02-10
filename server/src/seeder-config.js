@@ -12,7 +12,7 @@ module.exports = {
       }
     },
     {
-      count: 5,
+      count: 15,
       path: 'users',
       template: {
         name: '{{name.firstName}} {{name.lastName}}',
