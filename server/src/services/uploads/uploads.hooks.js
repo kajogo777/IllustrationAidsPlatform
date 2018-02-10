@@ -1,11 +1,20 @@
 const { authenticate } = require('feathers-authentication').hooks;
 const dauria = require('dauria');
 
-function transformFileHook(context){
-  if (!context.data.uri && context.params.file){
-      const file = context.params.file;
-      const uri = dauria.getBase64DataURI(file.buffer, file.mimetype);
-      context.data = {uri: uri};
+function transformFileHook(hook){
+  if (!hook.data.uri && hook.params.file){
+    const file = hook.params.file;
+    const uri = dauria.getBase64DataURI(file.buffer, file.mimetype);
+    hook.data = {uri: uri};
+  }
+}
+
+function dropFile(hook){
+  if (hook.result){
+    hook.result = {
+      id: hook.result.id,
+      size: hook.result.size
+    };
   }
 }
 
@@ -24,10 +33,10 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
-    remove: []
+    create: [ dropFile ],
+    update: [ dropFile ],
+    patch: [ dropFile ],
+    remove: [ dropFile ]
   },
 
   error: {
