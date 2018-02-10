@@ -7,14 +7,14 @@ import {
 } from 'react-router-dom';
 
 
-class ManageUsers extends React.Component {
+class ManageAidsMenu extends React.Component {
   render() {
     return (
       <div>
-        <Dropdown item text='Manage Users'>
+        <Dropdown item text='Manage Aids'>
           <Dropdown.Menu>
             <Dropdown.Item>
-              <Link to="/registration">Accept users</Link>
+              <Link to="/aids">View aids</Link>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -23,4 +23,4 @@ class ManageUsers extends React.Component {
   }
 }
 
-export default ManageUsers;
+export default ManageAidsMenu;

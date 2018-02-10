@@ -34,10 +34,10 @@ function ManageAccountHelper(props){
   );
 }
 
-function ManageAccount(props){
+function ManageAccountMenu(props){
   return (
     <AuthContainer component={ManageAccountHelper} {...props}/>
   );
 }
 
-export default ManageAccount;
+export default ManageAccountMenu;

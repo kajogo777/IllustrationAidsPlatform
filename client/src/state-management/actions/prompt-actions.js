@@ -1,4 +1,3 @@
-import client from '../feathers';
 import store from '../store';
 
 export function prompt(message, type, title=null, duration=3){

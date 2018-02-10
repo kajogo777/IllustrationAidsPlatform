@@ -1,14 +1,15 @@
 import React from 'react';
 import AidCardGrid from './AidCardGrid';
-import LoginForm from './LoginForm';
 import PrivateRoute from './PrivateRoute';
 import LoginPanel from './LoginPanel';
 import RegistrationPanel from './RegistrationPanel';
+import UsersPanel from './UsersPanel';
+
 
 import {
   AidContainer,
-  AuthContainer,
-  UserContainer
+  PendingUserContainer,
+  ConfirmedUserContainer
 } from '../state-management';
 import {
   Route,
@@ -31,7 +32,11 @@ class MainBody extends React.Component{
           </PrivateRoute>
 
           <PrivateRoute path="/registration">
-            <UserContainer component={RegistrationPanel}/>
+            <PendingUserContainer component={RegistrationPanel}/>
+          </PrivateRoute>
+
+          <PrivateRoute path="/users">
+            <ConfirmedUserContainer component={UsersPanel}/>
           </PrivateRoute>
 
           <Route path="/login" render={()=>

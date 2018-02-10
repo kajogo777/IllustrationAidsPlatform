@@ -7,14 +7,17 @@ import {
 } from 'react-router-dom';
 
 
-class ManageAids extends React.Component {
+class ManageUsersMenu extends React.Component {
   render() {
     return (
       <div>
-        <Dropdown item text='Manage Aids'>
+        <Dropdown item text='Manage Users'>
           <Dropdown.Menu>
             <Dropdown.Item>
-              <Link to="/aids">View aids</Link>
+              <Link to="/registration">Requests</Link>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <Link to="/users">Edit users</Link>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
@@ -23,4 +26,4 @@ class ManageAids extends React.Component {
   }
 }
 
-export default ManageAids;
+export default ManageUsersMenu;
