@@ -28,6 +28,13 @@ export default (state=defaultState, action={}) => {
         auth_error: action.payload
       });
 
+    case 'UPDATE_ACCOUNT_FULFILLED':
+      return Object.assign({}, state, {
+        auth: {
+          user: action.payload
+        }
+      });
+
     default:
       return state;
   }

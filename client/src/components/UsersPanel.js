@@ -29,7 +29,6 @@ class UserRow extends React.Component{
   handleClose = () => this.setState({ modalOpen: false })
 
   handleChange = (field, value) => {
-    console.log(field, value)
     this.setState({
       user: {
         ...this.state.user,

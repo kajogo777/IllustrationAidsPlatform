@@ -4,10 +4,11 @@ import PrivateRoute from './PrivateRoute';
 import LoginPanel from './LoginPanel';
 import RegistrationPanel from './RegistrationPanel';
 import UsersPanel from './UsersPanel';
-
+import updateAccountForm from './UpdateAccountForm';
 
 import {
   AidContainer,
+  AuthContainer,
   PendingUserContainer,
   ConfirmedUserContainer
 } from '../state-management';
@@ -37,6 +38,10 @@ class MainBody extends React.Component{
 
           <PrivateRoute path="/users">
             <ConfirmedUserContainer component={UsersPanel}/>
+          </PrivateRoute>
+
+          <PrivateRoute path="/account">
+            <AuthContainer component={updateAccountForm}/>
           </PrivateRoute>
 
           <Route path="/login" render={()=>
