@@ -7,12 +7,15 @@ module.exports = function (app) {
   const users = new mongooseClient.Schema({
     name: {
       type: String,
+      trim: true,
       requried: [true, "Missing user's name"],
       minlength: [5, "Name is too short, please choose a name longer than 5 letters"]
     },
     email: {
       type: String,
       unique: true,
+      lowercase: true,
+      trim: true,
       requried: [true, "Missing user's email"],
       validate: {
         validator: function(value){
@@ -28,6 +31,7 @@ module.exports = function (app) {
     },
     mobileNumber: {
       type: String,
+      trim: true,
       required: [true, "Missing user's mobile number"],
       validate: {
         validator: function(value){

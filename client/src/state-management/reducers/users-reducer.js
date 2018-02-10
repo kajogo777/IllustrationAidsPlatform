@@ -10,6 +10,7 @@ const defaultState = {
 
 export default (state=defaultState, action={}) => {
   let pending_users = [];
+  let confirmed_users = [];
 
   switch(action.type){
 
@@ -55,8 +56,25 @@ export default (state=defaultState, action={}) => {
         if(user._id !== action.payload._id)
           pending_users.push(user);
       }
+      for(let i = 0; i < state.confirmed_users.length; i++){
+        let user = Object.assign({}, state.confirmed_users[i]);
+        if(user._id !== action.payload._id)
+          confirmed_users.push(user);
+      }
       return Object.assign({}, state, {
-        pending_users: pending_users
+        pending_users: pending_users,
+        confirmed_users: confirmed_users
+      });
+
+    case 'UPDATE_USER_FULFILLED':
+      for(let i = 0; i < state.confirmed_users.length; i++){
+        let user = Object.assign({}, state.confirmed_users[i]);
+        if(user._id === action.payload._id)
+          user = Object.assign({}, state.confirmed_users[i], action.payload);
+        confirmed_users.push(user);
+      }
+      return Object.assign({}, state, {
+        confirmed_users: confirmed_users
       });
 
     case 'FETCH_CONFIRMED_USERS_PENDING':

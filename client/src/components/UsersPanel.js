@@ -2,17 +2,121 @@ import React from 'react';
 import {
   Input,
   Table,
+  Button,
+  Icon,
+  Modal,
+  Dropdown
 } from 'semantic-ui-react';
 
-function UserRow(props){
-  return(
-    <Table.Row>
-      <Table.Cell>{props.data.name}</Table.Cell>
-      <Table.Cell>{props.data.email}</Table.Cell>
-      <Table.Cell>{props.data.mobileNumber}</Table.Cell>
-      <Table.Cell>{props.data.role}</Table.Cell>
-    </Table.Row>
-  );
+
+class UserRow extends React.Component{
+
+  constructor(props){
+    super(props);
+    this.state = {
+      modalOpen: false,
+      user: {
+        name: props.user.name,
+        email: props.user.email,
+        mobileNumber: props.user.mobileNumber,
+        role: props.user.role
+      }
+    };
+  }
+
+  handleOpen = () => this.setState({ modalOpen: true })
+
+  handleClose = () => this.setState({ modalOpen: false })
+
+  handleChange = (field, value) => {
+    console.log(field, value)
+    this.setState({
+      user: {
+        ...this.state.user,
+        [field]: value
+      }
+    });
+  }
+
+  handleSave = () => {
+    let user = Object.assign({}, this.state.user);
+    this.props.updateUser(this.props.user._id, user);
+    this.handleClose();
+  }
+
+  handleDelete = () => {
+    this.props.deleteUser(this.props.user);
+    this.handleClose();
+  }
+
+  render(){
+    return(
+      <Table.Row>
+        <Table.Cell>{this.props.user.name}</Table.Cell>
+        <Table.Cell>{this.props.user.email}</Table.Cell>
+        <Table.Cell>{this.props.user.mobileNumber}</Table.Cell>
+        <Table.Cell>{this.props.user.role}</Table.Cell>
+        <Table.Cell collapsing>
+
+          <Modal trigger={
+            <Button color="olive" icon basic onClick={this.handleOpen}>
+              <Icon name='edit' size='large'/>
+            </Button>
+          }
+          open={this.state.modalOpen}
+          onClose={this.handleClose}
+          closeOnDimmerClick={false}
+          >
+            <Modal.Header>Edit User</Modal.Header>
+            <Modal.Content>
+              <Input
+                fluid
+                type="name"
+                placeholder='name'
+                value={this.state.user.name}
+                onChange={(e) => { this.handleChange('name', e.target.value) }}
+              />
+              <Input
+                fluid
+                type="email"
+                placeholder='email'
+                value={this.state.user.email}
+                onChange={(e) => { this.handleChange('email', e.target.value) }}
+              />
+              <Input
+                fluid
+                type="mobileNumber"
+                placeholder='mobile number'
+                value={this.state.user.mobileNumber}
+                onChange={(e) => { this.handleChange('mobileNumber', e.target.value) }}
+              />
+              <Dropdown
+                placeholder='role'
+                options={[{text: 'ADMIN', value: 'ADMIN'}, {text: 'SERVANT', value: 'SERVANT'}]}
+                value={this.state.user.role}
+                onChange={(e, {value}) => { this.handleChange('role', value) }}
+                fluid
+                closeOnChange
+                selection
+              />
+            </Modal.Content>
+            <Modal.Actions>
+              <Button color='red' onClick={this.handleDelete}>
+                delete
+              </Button>
+              <Button color='green' onClick={this.handleSave}>
+                save
+              </Button>
+              <Button color='yellow' onClick={this.handleClose}>
+                cancel
+              </Button>
+            </Modal.Actions>
+          </Modal>
+
+        </Table.Cell>
+      </Table.Row>
+    );
+  }
 }
 
 class UsersPanel extends React.Component{
@@ -47,6 +151,7 @@ class UsersPanel extends React.Component{
            <Table.HeaderCell>Email</Table.HeaderCell>
            <Table.HeaderCell>Mobile Number</Table.HeaderCell>
            <Table.HeaderCell>Role</Table.HeaderCell>
+           <Table.HeaderCell />
          </Table.Row>
         </Table.Header>
 
@@ -88,10 +193,11 @@ class UsersPanel extends React.Component{
                 onChange={(e) => { this.handleChange("role", e) }}
               />
             </Table.Cell>
+            <Table.Cell/>
           </Table.Row>
           {
             this.props.confirmed_users.map((item) =>
-              <UserRow key={item._id} data={item} />
+              <UserRow key={item._id} updateUser={this.props.updateUser} deleteUser={this.props.deleteUser} user={item} />
             )
           }
         </Table.Body>

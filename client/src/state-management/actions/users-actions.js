@@ -64,6 +64,13 @@ export function approvePendingUser(user){
   }
 }
 
+export function updateUser(id, user){
+  return {
+    type: 'UPDATE_USER',
+    payload: client.service("users").patch(id, user)
+  }
+}
+
 export function deleteUser(user){
   return {
     type: 'DELETE_USER',

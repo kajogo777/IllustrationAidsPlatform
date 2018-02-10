@@ -35,7 +35,7 @@ const isAdmin = [
 module.exports = {
   before: {
     all: [],
-    find: [ authenticate('jwt') ],
+    find: [ ...isAdminOrOwner ],//authenticate('jwt') ],
     get: [ ...isAdminOrOwner ],
     create: [ hashPassword(), resgisterHook() ],
     update: [ ...isAdmin, hashPassword() ],
