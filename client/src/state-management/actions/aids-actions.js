@@ -34,3 +34,27 @@ export function filterAids(field, value){
     payload: {field: field, value: value}
   }
 }
+
+export function clearFilter(){
+  return {
+    type: 'FILTER_AIDS',
+    payload: {field: "clear"}
+  }
+}
+
+
+export function fetchTags(){
+  return {
+    type: 'FETCH_TAGS',
+    payload: client.service("aids").find({
+      query: {
+        _aggregate: [
+          {$unwind:"$tags"},
+          {$group:{"_id":"$tags","count":{$sum:1}}},
+          {$group:{"_id":null,"all_tags":{$push:{"tag":"$_id", "count":"$count"}}}},
+          {$project:{"_id":0,"all_tags":1}}
+        ]
+      }
+    })
+  }
+}

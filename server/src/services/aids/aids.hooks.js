@@ -1,11 +1,12 @@
 const { authenticate } = require('feathers-authentication').hooks;
 const deduplicateTags = require('./hooks/deduplicateTags');
+const aggregateTags = require('./hooks/aggregateTags');
 
 
 module.exports = {
   before: {
     all: [],
-    find: [],
+    find: [ aggregateTags() ],
     get: [],
     create: [ authenticate('jwt'), deduplicateTags() ],
     update: [ authenticate('jwt'), deduplicateTags() ],

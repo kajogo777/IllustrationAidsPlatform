@@ -62,11 +62,25 @@ export default (state=defaultState, action={}) => {
 
     //filter
     case 'FILTER_AIDS':
+      if(action.payload.field === 'clear')
+        return Object.assign({}, state, {
+          filters: {}
+        });
       return Object.assign({}, state, {
         filters: {
           ...state.filters,
           [action.payload.field]: action.payload.value
         }
+      });
+
+    //get all tags
+    case 'FETCH_TAGS_FULFILLED':
+      return Object.assign({}, state, {
+        tags: action.payload.data
+      });
+    case 'FETCH_TAGS_REJECTED':
+      return Object.assign({}, state, {
+        error: action.payload.data
       });
 
     default:

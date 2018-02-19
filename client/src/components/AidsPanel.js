@@ -6,7 +6,8 @@ import {
   Icon,
   Modal,
   Form,
-  Label
+  Label,
+  Dropdown
 } from 'semantic-ui-react';
 
 
@@ -59,7 +60,7 @@ class AidRow extends React.Component{
         <Table.HeaderCell>{this.props.aid.human_id}</Table.HeaderCell>
         <Table.HeaderCell>{this.props.aid.name}</Table.HeaderCell>
         <Table.HeaderCell>{this.props.aid.description.substring(0,30)}{this.props.aid.description.length > 30 ? "..." : ""}</Table.HeaderCell>
-        <Table.HeaderCell>{(new Date(this.props.aid.date_added)).toLocaleDateString()}</Table.HeaderCell>
+        <Table.HeaderCell>{this.props.aid.date_added}</Table.HeaderCell>
         <Table.HeaderCell>{this.props.aid.reserved ? 'Yes' : 'No'}</Table.HeaderCell>
         <Table.HeaderCell>
           <Label.Group>
@@ -137,6 +138,7 @@ class AidsPanel extends React.Component{
       human_idFilter: '',
       nameFilter: '',
       reservedNumberFilter: '',
+      date_addedFilter: '',
       tagsFilter: []
     };
   }
@@ -150,6 +152,10 @@ class AidsPanel extends React.Component{
 
   componentDidMount(){
     this.props.onLoad();
+  }
+
+  componentWillUnmount(){
+    this.props.clearFilter();
   }
 
   render(){
@@ -168,7 +174,52 @@ class AidsPanel extends React.Component{
         </Table.Header>
 
         <Table.Body>
+        <Table.Row>
+          <Table.Cell>
+            <Input
+              fluid
+              type="human_id"
+              placeholder='id filter'
+              value={this.state.human_idFilter}
+              onChange={(e) => { this.handleChange("human_id", e) }}
+            />
+          </Table.Cell>
+          <Table.Cell>
+            <Input
+              fluid
+              type="name"
+              placeholder='name filter'
+              value={this.state.nameFilter}
+              onChange={(e) => { this.handleChange("name", e) }}
+            />
+          </Table.Cell>
+          <Table.Cell/>
+          <Table.Cell>
+            <Input
+              fluid
+              type="date_added"
+              placeholder='date filter'
+              value={this.state.date_addedFilter}
+              onChange={(e) => { this.handleChange("date_added", e) }}
+            />
+          </Table.Cell>
+          <Table.Cell>
 
+          </Table.Cell>
+          <Table.Cell>
+            <Dropdown
+              fluid
+              placeholder='Tags filter'
+              multiple
+              search
+              selection
+              value={this.state.tagsFilter}
+              options={this.props.tags}
+              onChange={(e, {value}) => { this.handleChange("tags", {target: {value: value}}) }}
+            />
+          </Table.Cell>
+          <Table.Cell />
+        </Table.Row>
           {
             this.props.aids.map((item) =>
               <AidRow key={item._id} updateAid={this.props.updateAid} deleteAid={this.props.deleteAid} aid={item} />

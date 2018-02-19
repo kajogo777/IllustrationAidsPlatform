@@ -89,6 +89,10 @@ export default (state=defaultState, action={}) => {
       });
 
     case 'FILTER_USERS':
+      if(action.payload.field === 'clear')
+        return Object.assign({}, state, {
+          filters: {}
+        });
       return Object.assign({}, state, {
         filters: {
           ...state.filters,
