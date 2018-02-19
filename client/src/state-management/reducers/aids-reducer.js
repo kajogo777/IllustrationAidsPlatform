@@ -33,8 +33,9 @@ export default (state=defaultState, action={}) => {
     case 'UPDATE_AID_FULFILLED':
       for(let i = 0; i < state.aids.length; i++){
         let aid = Object.assign({}, state.aids[i]);
-        if(aid._id !== action.payload._id)
-          aids.push(aid);
+        if(aid._id === action.payload._id)
+          aid = Object.assign({}, state.aids[i], action.payload);
+        aids.push(aid);
       }
       return Object.assign({}, state, {
         aids: aids

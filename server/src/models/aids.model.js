@@ -10,7 +10,7 @@ module.exports = function (app) {
     description: { type: String, required: true },
     date_added: { type: Date, default: Date.now },
     reserved: { type: Boolean, default: false},
-    human_id: { type: String },
+    human_id: { type: String, required: true},
     image_uri: { type: String },
     tags: [ String ]
   }, {
