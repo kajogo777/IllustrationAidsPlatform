@@ -5,8 +5,8 @@ import {
   Button,
   Icon,
   Modal,
-  Dropdown,
-  Form
+  Form,
+  Label
 } from 'semantic-ui-react';
 
 
@@ -58,10 +58,16 @@ class AidRow extends React.Component{
       <Table.Row>
         <Table.HeaderCell>{this.props.aid.human_id}</Table.HeaderCell>
         <Table.HeaderCell>{this.props.aid.name}</Table.HeaderCell>
-        <Table.HeaderCell>{this.props.aid.description}</Table.HeaderCell>
-        <Table.HeaderCell>{this.props.aid.date_added}</Table.HeaderCell>
+        <Table.HeaderCell>{this.props.aid.description.substring(0,30)}{this.props.aid.description.length > 30 ? "..." : ""}</Table.HeaderCell>
+        <Table.HeaderCell>{(new Date(this.props.aid.date_added)).toLocaleDateString()}</Table.HeaderCell>
         <Table.HeaderCell>{this.props.aid.reserved ? 'Yes' : 'No'}</Table.HeaderCell>
-        <Table.HeaderCell>{this.props.aid.tags}</Table.HeaderCell>
+        <Table.HeaderCell>
+          <Label.Group>
+            {
+              this.props.aid.tags.map((tag) => <Label key={tag} as='a' color='blue' >{tag}</Label>)
+            }
+          </Label.Group>
+        </Table.HeaderCell>
         <Table.Cell collapsing>
 
           <Modal trigger={
@@ -75,26 +81,25 @@ class AidRow extends React.Component{
           >
             <Modal.Header>Edit Aid</Modal.Header>
             <Modal.Content>
-              <Input
-                fluid
-                label="ID"
-                type="text"
-                placeholder='ID'
+            <Form>
+              <Form.Input
+                label='ID'
+                placeholder='id'
+                name='ID'
                 value={this.state.aid.human_id}
                 onChange={(e) => { this.handleChange('human_id', e.target.value) }}
               />
-              <Input
-                fluid
-                label="name"
-                type="text"
+              <Form.Input
+                label='Name'
                 placeholder='name'
+                name='name'
                 value={this.state.aid.name}
                 onChange={(e) => { this.handleChange('name', e.target.value) }}
               />
               <Form.TextArea
-                type="text"
-                rows='5'
+                label='Description'
                 placeholder='description'
+                name='description'
                 value={this.state.aid.description}
                 onChange={(e) => { this.handleChange('description', e.target.value) }}
               />
@@ -103,6 +108,7 @@ class AidRow extends React.Component{
                 checked={this.state.aid.reserved}
                 onChange={(e) => { this.handleChange('reserved', !this.state.aid.reserved) }}
               />
+            </Form>
             </Modal.Content>
             <Modal.Actions>
               <Button color='red' onClick={this.handleDelete}>
@@ -131,15 +137,15 @@ class AidsPanel extends React.Component{
       human_idFilter: '',
       nameFilter: '',
       reservedNumberFilter: '',
-      tagsFilter: ''
+      tagsFilter: []
     };
   }
 
   handleChange(field, event){
-    // this.setState({
-    //   [field + "Filter"]: event.target.value
-    // });
-    // this.props.filterAids(field, event.target.value);
+    this.setState({
+      [field + "Filter"]: event.target.value
+    });
+    this.props.filterAids(field, event.target.value);
   }
 
   componentDidMount(){
@@ -148,7 +154,7 @@ class AidsPanel extends React.Component{
 
   render(){
     return(
-      <Table celled stackable selectable textAlign='center'>
+      <Table celled stackable striped textAlign='center'>
         <Table.Header>
          <Table.Row>
            <Table.HeaderCell>ID</Table.HeaderCell>

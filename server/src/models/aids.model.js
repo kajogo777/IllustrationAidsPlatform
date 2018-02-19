@@ -12,7 +12,7 @@ module.exports = function (app) {
     reserved: { type: Boolean, default: false},
     human_id: { type: String, required: true},
     image_uri: { type: String },
-    tags: [ String ]
+    tags: [String]
   }, {
     timestamps: true
   });

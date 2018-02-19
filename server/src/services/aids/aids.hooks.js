@@ -1,13 +1,15 @@
 const { authenticate } = require('feathers-authentication').hooks;
+const deduplicateTags = require('./hooks/deduplicateTags');
+
 
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
-    create: [ authenticate('jwt') ],
-    update: [ authenticate('jwt') ],
-    patch: [ authenticate('jwt') ],
+    create: [ authenticate('jwt'), deduplicateTags() ],
+    update: [ authenticate('jwt'), deduplicateTags() ],
+    patch: [ authenticate('jwt'), deduplicateTags() ],
     remove: [ authenticate('jwt') ]
   },
 
