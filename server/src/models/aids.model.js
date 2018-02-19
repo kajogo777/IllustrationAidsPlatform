@@ -11,7 +11,8 @@ module.exports = function (app) {
     date_added: { type: Date, default: Date.now },
     reserved: { type: Boolean, default: false},
     human_id: { type: String },
-    image_uri: { type: String }
+    image_uri: { type: String },
+    tags: [ String ]
   }, {
     timestamps: true
   });
