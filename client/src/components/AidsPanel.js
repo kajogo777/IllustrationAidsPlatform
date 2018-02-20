@@ -139,6 +139,7 @@ class AidsPanel extends React.Component{
       nameFilter: '',
       reservedNumberFilter: '',
       date_addedFilter: '',
+      reservedFilter: '',
       tagsFilter: []
     };
   }
@@ -204,7 +205,12 @@ class AidsPanel extends React.Component{
             />
           </Table.Cell>
           <Table.Cell>
-
+            <Dropdown
+              fluid
+              value={this.state.reservedFilter}
+              options={[{key: 'true', value: 'true', text: 'reserved'}, {key: 'false', value: 'false', text: 'available'}, {key: 'all', value: '', text: 'all'}]}
+              onChange={(e, {value}) => { this.handleChange("reserved", {target: {value: value}}) }}
+            />
           </Table.Cell>
           <Table.Cell>
             <Dropdown
