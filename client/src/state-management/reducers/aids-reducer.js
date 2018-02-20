@@ -83,6 +83,14 @@ export default (state=defaultState, action={}) => {
         error: action.payload.data
       });
 
+    //get all tags
+    case 'ADD_TAG':
+      let tagSet = new Set(state.tags);
+      tagSet.add({ tag: action.payload, count: 0 });
+      return Object.assign({}, state, {
+        tags: Array.from(tagSet)
+      });
+
     default:
       return state;
   }

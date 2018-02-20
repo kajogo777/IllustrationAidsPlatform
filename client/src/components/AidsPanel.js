@@ -33,7 +33,6 @@ class AidRow extends React.Component{
   handleClose = () => this.setState({ modalOpen: false })
 
   handleChange = (field, value) => {
-    console.log(value);
     this.setState({
       aid: {
         ...this.state.aid,
@@ -42,9 +41,12 @@ class AidRow extends React.Component{
     });
   }
 
+  handleAddition = (value) => {
+    this.props.addTag(value);
+  }
+
   handleSave = () => {
     let aid = Object.assign({}, this.state.aid);
-    console.log(aid);
     this.props.updateAid(this.props.aid._id, aid);
     this.handleClose();
   }
@@ -108,6 +110,20 @@ class AidRow extends React.Component{
                 label='Reserved'
                 checked={this.state.aid.reserved}
                 onChange={(e) => { this.handleChange('reserved', !this.state.aid.reserved) }}
+              />
+              <Form.Dropdown
+                label='Tags'
+                fluid
+                placeholder='tags...'
+                additionLabel='Add new tag: '
+                multiple
+                search
+                selection
+                allowAdditions
+                value={this.state.aid.tags}
+                options={this.props.tags}
+                onAddItem={(e, {value}) => { this.handleAddition(value) }}
+                onChange={(e, {value}) => { this.handleChange("tags", value) }}
               />
             </Form>
             </Modal.Content>
@@ -219,6 +235,7 @@ class AidsPanel extends React.Component{
               multiple
               search
               selection
+              closeOnChange
               value={this.state.tagsFilter}
               options={this.props.tags}
               onChange={(e, {value}) => { this.handleChange("tags", {target: {value: value}}) }}
@@ -228,7 +245,7 @@ class AidsPanel extends React.Component{
         </Table.Row>
           {
             this.props.aids.map((item) =>
-              <AidRow key={item._id} updateAid={this.props.updateAid} deleteAid={this.props.deleteAid} aid={item} />
+              <AidRow key={item._id} updateAid={this.props.updateAid} deleteAid={this.props.deleteAid} addTag={this.props.addTag} aid={item} tags={this.props.tags} />
             )
           }
         </Table.Body>

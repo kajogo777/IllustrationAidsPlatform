@@ -1,6 +1,6 @@
 import { connect }from 'react-redux';
 import UniversalContainer from './UniversalContainer';
-import { fetchAids, addAid, updateAid, deleteAid, filterAids, clearFilter, fetchTags } from '../actions/aids-actions';
+import { fetchAids, addAid, updateAid, deleteAid, filterAids, clearFilter, fetchTags, addTag } from '../actions/aids-actions';
 
 function filterRows(list, filters){
   let listTemp = list.map((item) => {
@@ -53,6 +53,9 @@ function mapDispatchToProps (dispatch){
     },
     clearFilter: () => {
       dispatch(clearFilter())
+    },
+    addTag: (name) => {
+      dispatch(addTag(name))
     }
   };
 }
