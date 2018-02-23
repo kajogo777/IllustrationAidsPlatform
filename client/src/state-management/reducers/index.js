@@ -12,7 +12,7 @@ const reducers = {
   aidStore: AidReducer,
   authStore: AuthReducer,
   promptStore: PromptReducer,
-  //uploadStore: UploadReducer
+  uploadStore: UploadReducer
 }
 
 const rootReducer = combineReducers(reducers);

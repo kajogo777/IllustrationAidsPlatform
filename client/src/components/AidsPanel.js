@@ -2,188 +2,44 @@ import React from 'react';
 import {
   Input,
   Table,
-  Button,
-  Icon,
-  Modal,
-  Form,
   Label,
   Dropdown,
-  Image
 } from 'semantic-ui-react';
-import Dropzone from 'react-dropzone'
+import AidForm from './AidForm'
 
 
-class AidRow extends React.Component{
-
-  constructor(props){
-    super(props);
-    this.state = {
-      modalOpen: false,
-      file: null,
-      aid: {
-        'human_id': props.aid.human_id,
-        'name': props.aid.name,
-        'description': props.aid.description,
-        'date_added': props.aid.date_added,
-        'reserved': props.aid.reserved,
-        'tags': props.aid.tags,
-        'image_uri': props.aid.image_uri
-      }
-    };
-  }
-
-  handleOpen = () => this.setState({ modalOpen: true })
-
-  handleClose = () => this.setState({ modalOpen: false })
-
-  handleChange = (field, value) => {
-    this.setState({
-      aid: {
-        ...this.state.aid,
-        [field]: value
-      }
-    });
-  }
-
-  handleAddition = (value) => {
-    this.props.addTag(value);
-  }
-
-  handleSave = () => {
-    let aid = Object.assign({}, this.state.aid);
-    this.props.updateAid(this.props.aid._id, aid, this.state.file);
-
-    this.handleClose();
-  }
-
-  handleDelete = () => {
-    this.props.deleteAid(this.props.aid);
-    this.handleClose();
-  }
-
-  handleUpload = (acceptedFiles, rejectedFiles) => {
-    acceptedFiles.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = () => {
-            const file = reader.result;
-
-            this.setState({
-              file: file
-            });
-            //this.props.uploadFile(file);
-        };
-        reader.onabort = () => console.log('file reading was aborted');
-        reader.onerror = () => console.log('file reading has failed');
-
-        reader.readAsDataURL(file)
-    });
-  }
-
-  render(){
+function AidRow(props){
     return(
       <Table.Row>
-        <Table.HeaderCell>{this.props.aid.human_id}</Table.HeaderCell>
-        <Table.HeaderCell>{this.props.aid.name}</Table.HeaderCell>
-        <Table.HeaderCell>{this.props.aid.description.substring(0,30)}{this.props.aid.description.length > 30 ? "..." : ""}</Table.HeaderCell>
-        <Table.HeaderCell>{this.props.aid.date_added}</Table.HeaderCell>
-        <Table.HeaderCell>{this.props.aid.reserved ? 'Yes' : 'No'}</Table.HeaderCell>
+        <Table.HeaderCell>{props.aid.human_id}</Table.HeaderCell>
+        <Table.HeaderCell>{props.aid.name}</Table.HeaderCell>
+        <Table.HeaderCell>{props.aid.description.substring(0,30)}{props.aid.description.length > 30 ? "..." : ""}</Table.HeaderCell>
+        <Table.HeaderCell>{props.aid.date_added}</Table.HeaderCell>
+        <Table.HeaderCell>{props.aid.reserved ? 'Yes' : 'No'}</Table.HeaderCell>
         <Table.HeaderCell>
           <Label.Group>
             {
-              this.props.aid.tags.map((tag) => <Label key={tag} as='a' color='blue' >{tag}</Label>)
+              props.aid.tags.map((tag) => <Label key={tag} as='a' color='blue' >{tag}</Label>)
             }
           </Label.Group>
         </Table.HeaderCell>
         <Table.Cell collapsing>
 
-          <Modal trigger={
-            <Button color="olive" icon basic onClick={this.handleOpen}>
-              <Icon name='edit' size='large'/>
-            </Button>
-          }
-          open={this.state.modalOpen}
-          onClose={this.handleClose}
-          closeOnDimmerClick={false}
-          >
-            <Modal.Header>Edit Aid</Modal.Header>
-            <Modal.Content>
-            <Dropzone onDrop={this.handleUpload}>
-              {
-                //after deployment remove absolute urls
-                //TODO
-
-                this.state.file === null ?
-                  <Image alt="" src={"http://localhost:3030/uploads/" + this.state.aid.image_uri} />
-                :
-                  <Image alt="" src={this.state.file} />
-              }
-            </Dropzone>
-            </Modal.Content>
-            <Modal.Content>
-            <Form>
-              <Form.Input
-                label='ID'
-                placeholder='id'
-                name='ID'
-                value={this.state.aid.human_id}
-                onChange={(e) => { this.handleChange('human_id', e.target.value) }}
-              />
-              <Form.Input
-                label='Name'
-                placeholder='name'
-                name='name'
-                value={this.state.aid.name}
-                onChange={(e) => { this.handleChange('name', e.target.value) }}
-              />
-              <Form.TextArea
-                label='Description'
-                placeholder='description'
-                name='description'
-                value={this.state.aid.description}
-                onChange={(e) => { this.handleChange('description', e.target.value) }}
-              />
-              <Form.Checkbox
-                label='Reserved'
-                checked={this.state.aid.reserved}
-                onChange={(e) => { this.handleChange('reserved', !this.state.aid.reserved) }}
-              />
-              <Form.Dropdown
-                label='Tags'
-                fluid
-                placeholder='tags...'
-                additionLabel='Add new tag: '
-                multiple
-                search
-                selection
-                allowAdditions
-                value={this.state.aid.tags}
-                options={this.props.tags}
-                onAddItem={(e, {value}) => { this.handleAddition(value) }}
-                onChange={(e, {value}) => { this.handleChange("tags", value) }}
-              />
-            </Form>
-            </Modal.Content>
-            <Modal.Actions>
-              <Button color='red' onClick={this.handleDelete}>
-                delete
-              </Button>
-              <Button color='green' onClick={this.handleSave}>
-                save
-              </Button>
-              <Button color='yellow' onClick={this.handleClose}>
-                cancel
-              </Button>
-            </Modal.Actions>
-          </Modal>
+          <AidForm
+            updateAid={props.updateAid}
+            deleteAid={props.deleteAid}
+            addTag={props.addTag}
+            uploadFile={props.uploadFile}
+            aid={props.aid}
+            tags={props.tags}
+          />
 
         </Table.Cell>
       </Table.Row>
     );
-  }
 }
 
-class AidsPanel extends React.Component{
-
+class FilterRow extends React.Component{
   constructor(props){
     super(props);
     this.state = {
@@ -203,6 +59,69 @@ class AidsPanel extends React.Component{
     this.props.filterAids(field, event.target.value);
   }
 
+  render(){
+    return(
+      <Table.Row>
+        <Table.Cell>
+          <Input
+            fluid
+            type="human_id"
+            placeholder='id filter'
+            value={this.state.human_idFilter}
+            onChange={(e) => { this.handleChange("human_id", e) }}
+          />
+        </Table.Cell>
+        <Table.Cell>
+          <Input
+            fluid
+            type="name"
+            placeholder='name filter'
+            value={this.state.nameFilter}
+            onChange={(e) => { this.handleChange("name", e) }}
+          />
+        </Table.Cell>
+        <Table.Cell/>
+        <Table.Cell>
+          <Input
+            fluid
+            type="date_added"
+            placeholder='date filter'
+            value={this.state.date_addedFilter}
+            onChange={(e) => { this.handleChange("date_added", e) }}
+          />
+        </Table.Cell>
+        <Table.Cell>
+          <Dropdown
+            fluid
+            value={this.state.reservedFilter}
+            options={[
+              {key: 'true', value: 'true', text: 'reserved'},
+              {key: 'false', value: 'false', text: 'available'},
+              {key: 'all', value: '', text: 'all'}
+            ]}
+            onChange={(e, {value}) => { this.handleChange("reserved", {target: {value: value}}) }}
+          />
+        </Table.Cell>
+        <Table.Cell>
+          <Dropdown
+            fluid
+            placeholder='Tags filter'
+            multiple
+            search
+            selection
+            closeOnChange
+            value={this.state.tagsFilter}
+            options={this.props.tags}
+            onChange={(e, {value}) => { this.handleChange("tags", {target: {value: value}}) }}
+          />
+        </Table.Cell>
+        <Table.Cell />
+      </Table.Row>
+    );
+  }
+}
+
+class AidsPanel extends React.Component{
   componentDidMount(){
     this.props.onLoad();
   }
@@ -227,61 +146,18 @@ class AidsPanel extends React.Component{
         </Table.Header>
 
         <Table.Body>
-        <Table.Row>
-          <Table.Cell>
-            <Input
-              fluid
-              type="human_id"
-              placeholder='id filter'
-              value={this.state.human_idFilter}
-              onChange={(e) => { this.handleChange("human_id", e) }}
-            />
-          </Table.Cell>
-          <Table.Cell>
-            <Input
-              fluid
-              type="name"
-              placeholder='name filter'
-              value={this.state.nameFilter}
-              onChange={(e) => { this.handleChange("name", e) }}
-            />
-          </Table.Cell>
-          <Table.Cell/>
-          <Table.Cell>
-            <Input
-              fluid
-              type="date_added"
-              placeholder='date filter'
-              value={this.state.date_addedFilter}
-              onChange={(e) => { this.handleChange("date_added", e) }}
-            />
-          </Table.Cell>
-          <Table.Cell>
-            <Dropdown
-              fluid
-              value={this.state.reservedFilter}
-              options={[{key: 'true', value: 'true', text: 'reserved'}, {key: 'false', value: 'false', text: 'available'}, {key: 'all', value: '', text: 'all'}]}
-              onChange={(e, {value}) => { this.handleChange("reserved", {target: {value: value}}) }}
-            />
-          </Table.Cell>
-          <Table.Cell>
-            <Dropdown
-              fluid
-              placeholder='Tags filter'
-              multiple
-              search
-              selection
-              closeOnChange
-              value={this.state.tagsFilter}
-              options={this.props.tags}
-              onChange={(e, {value}) => { this.handleChange("tags", {target: {value: value}}) }}
-            />
-          </Table.Cell>
-          <Table.Cell />
-        </Table.Row>
+          <FilterRow filterAids={this.props.filterAids} tags={this.props.tags} />
           {
             this.props.aids.map((item) =>
-              <AidRow key={item._id} updateAid={this.props.updateAid} deleteAid={this.props.deleteAid} addTag={this.props.addTag} uploadFile={this.props.uploadFile} aid={item} tags={this.props.tags} />
+              <AidRow
+                key={item._id}
+                updateAid={this.props.updateAid}
+                deleteAid={this.props.deleteAid}
+                addTag={this.props.addTag}
+                uploadFile={this.props.uploadFile}
+                aid={item}
+                tags={this.props.tags}
+              />
             )
           }
         </Table.Body>

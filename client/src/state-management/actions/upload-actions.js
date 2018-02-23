@@ -1,4 +1,3 @@
-import store from '../store';
 import client from '../feathers';
 
 export function uploadFile(file){

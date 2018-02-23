@@ -1,5 +1,4 @@
 const defaultState = {
-  upload: {},
   uploadStatus: ''
 }
 
@@ -14,7 +13,6 @@ export default (state=defaultState, action={}) => {
     case 'UPLOAD_FULFILLED':
       console.log("fulfilled ", action.payload);
       return Object.assign({}, state, {
-        upload: action.payload,
         uploadStatus: 'Done'
       });
     case 'UPLOAD_REJECTED':
