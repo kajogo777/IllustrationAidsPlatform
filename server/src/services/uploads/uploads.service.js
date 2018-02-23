@@ -35,7 +35,21 @@ module.exports = function () {
           req.feathers.file = req.file;
           next();
       },
-      blobService({Model: blobStorage})
+      blobService({Model: blobStorage}),
+
+      // middleware to return images instead of datauri
+      function(req, res, next){
+        if(req.method === 'GET'){
+          let type = 'image/' + res.data.ext;
+          res.format({
+            [type]: function() {
+              res.end(res.data.data);
+            }
+          });
+        }else{
+          next();
+        }
+      }
   );
 
   // Get our initialized service so that we can register hooks and filters

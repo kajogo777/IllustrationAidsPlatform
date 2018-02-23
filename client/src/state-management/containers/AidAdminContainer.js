@@ -1,6 +1,7 @@
 import { connect }from 'react-redux';
 import UniversalContainer from './UniversalContainer';
 import { fetchAids, addAid, updateAid, deleteAid, filterAids, clearFilter, fetchTags, addTag } from '../actions/aids-actions';
+import { uploadFile } from '../actions/upload-actions';
 
 function filterRows(list, filters){
   let listTemp = list.map((item) => {
@@ -29,7 +30,9 @@ function getTags(list){
 function mapStateToProps (state){
   return {
     aids: filterRows(state.aidStore.aids, state.aidStore.filters),
-    tags: getTags(state.aidStore.tags)
+    tags: getTags(state.aidStore.tags),
+    // upload: state.uploadStore.upload,
+    // uploadStatus: state.uploadStore.uploadStatus
   };
 }
 
@@ -42,8 +45,8 @@ function mapDispatchToProps (dispatch){
     addAid: (aid) => {
       dispatch(addAid(aid))
     },
-    updateAid: (id, aid) => {
-      dispatch(updateAid(id, aid))
+    updateAid: (id, aid, file) => {
+      dispatch(updateAid(id, aid, file))
     },
     deleteAid: (aid) => {
       dispatch(deleteAid(aid))
@@ -56,6 +59,9 @@ function mapDispatchToProps (dispatch){
     },
     addTag: (name) => {
       dispatch(addTag(name))
+    },
+    uploadFile: (file) => {
+      dispatch(uploadFile(file))
     }
   };
 }

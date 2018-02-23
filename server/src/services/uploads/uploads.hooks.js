@@ -18,6 +18,22 @@ function dropFile(hook){
   }
 }
 
+function fileOnly(hook){
+  if (hook.result){
+    let regex = /^data:.+\/(.+);base64,(.*)$/;
+    let matches = hook.result.uri.match(regex);
+    let ext = matches[1];
+    let data = matches[2];
+    let buffer = new Buffer(data, 'base64');
+
+    //buffer turned to image in custom service middleware
+    hook.result = {
+      data: buffer,
+      ext: ext
+    }
+  }
+}
+
 module.exports = {
   before: {
     all: [ ],//authenticate('jwt') ],
@@ -32,7 +48,7 @@ module.exports = {
   after: {
     all: [],
     find: [],
-    get: [],
+    get: [ fileOnly ],
     create: [ dropFile ],
     update: [ dropFile ],
     patch: [ dropFile ],

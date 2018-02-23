@@ -14,11 +14,36 @@ export function addAid(aid){
   }
 }
 
-export function updateAid(id, aid){
-  return {
-    type: 'UPDATE_AID',
-    payload: client.service("aids").patch(id, aid)
+export function updateAid(id, aid, file=null){
+  let result = { type: 'UPDATE_AID' };
+
+  if(file === null){
+    result.payload = client.service("aids").patch(id, aid)
+  } else {
+    result.payload =  {
+        promise: new Promise((resolve, reject) => {
+          client.service("uploads").create({ uri: file })
+          .then(response => {
+            // would delete image if used by more that one aid
+            // if(aid.image_uri && aid.image_uri !== response.id)
+            //   client.service("uploads").remove(aid.image_uri);
+            aid.image_uri = response.id;
+            client.service("aids").patch(id, aid)
+            .then(response => {
+              resolve(response);
+            })
+            .catch(error => {
+              reject(error);
+            });
+          })
+          .catch(error => {
+            reject(error);
+          })
+        })
+    }
   }
+
+  return result;
 }
 
 export function deleteAid(aid){

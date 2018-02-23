@@ -7,8 +7,10 @@ import {
   Modal,
   Form,
   Label,
-  Dropdown
+  Dropdown,
+  Image
 } from 'semantic-ui-react';
+import Dropzone from 'react-dropzone'
 
 
 class AidRow extends React.Component{
@@ -17,6 +19,7 @@ class AidRow extends React.Component{
     super(props);
     this.state = {
       modalOpen: false,
+      file: null,
       aid: {
         'human_id': props.aid.human_id,
         'name': props.aid.name,
@@ -24,6 +27,7 @@ class AidRow extends React.Component{
         'date_added': props.aid.date_added,
         'reserved': props.aid.reserved,
         'tags': props.aid.tags,
+        'image_uri': props.aid.image_uri
       }
     };
   }
@@ -47,13 +51,32 @@ class AidRow extends React.Component{
 
   handleSave = () => {
     let aid = Object.assign({}, this.state.aid);
-    this.props.updateAid(this.props.aid._id, aid);
+    this.props.updateAid(this.props.aid._id, aid, this.state.file);
+
     this.handleClose();
   }
 
   handleDelete = () => {
     this.props.deleteAid(this.props.aid);
     this.handleClose();
+  }
+
+  handleUpload = (acceptedFiles, rejectedFiles) => {
+    acceptedFiles.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = () => {
+            const file = reader.result;
+
+            this.setState({
+              file: file
+            });
+            //this.props.uploadFile(file);
+        };
+        reader.onabort = () => console.log('file reading was aborted');
+        reader.onerror = () => console.log('file reading has failed');
+
+        reader.readAsDataURL(file)
+    });
   }
 
   render(){
@@ -83,6 +106,19 @@ class AidRow extends React.Component{
           closeOnDimmerClick={false}
           >
             <Modal.Header>Edit Aid</Modal.Header>
+            <Modal.Content>
+            <Dropzone onDrop={this.handleUpload}>
+              {
+                //after deployment remove absolute urls
+                //TODO
+
+                this.state.file === null ?
+                  <Image alt="" src={"http://localhost:3030/uploads/" + this.state.aid.image_uri} />
+                :
+                  <Image alt="" src={this.state.file} />
+              }
+            </Dropzone>
+            </Modal.Content>
             <Modal.Content>
             <Form>
               <Form.Input
@@ -245,7 +281,7 @@ class AidsPanel extends React.Component{
         </Table.Row>
           {
             this.props.aids.map((item) =>
-              <AidRow key={item._id} updateAid={this.props.updateAid} deleteAid={this.props.deleteAid} addTag={this.props.addTag} aid={item} tags={this.props.tags} />
+              <AidRow key={item._id} updateAid={this.props.updateAid} deleteAid={this.props.deleteAid} addTag={this.props.addTag} uploadFile={this.props.uploadFile} aid={item} tags={this.props.tags} />
             )
           }
         </Table.Body>
