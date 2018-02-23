@@ -26,7 +26,7 @@ function AidRow(props){
         <Table.Cell collapsing>
 
           <AidForm
-            updateAid={props.updateAid}
+            saveAid={props.updateAid}
             deleteAid={props.deleteAid}
             addTag={props.addTag}
             uploadFile={props.uploadFile}
@@ -141,7 +141,15 @@ class AidsPanel extends React.Component{
            <Table.HeaderCell>Date Added</Table.HeaderCell>
            <Table.HeaderCell>Reserved</Table.HeaderCell>
            <Table.HeaderCell>Tags</Table.HeaderCell>
-           <Table.HeaderCell />
+           <Table.HeaderCell>
+             <AidForm
+               saveAid={this.props.addAid}
+               deleteAid={this.props.deleteAid}
+               addTag={this.props.addTag}
+               uploadFile={this.props.uploadFile}
+               tags={this.props.tags}
+             />
+           </Table.HeaderCell>
          </Table.Row>
         </Table.Header>
 

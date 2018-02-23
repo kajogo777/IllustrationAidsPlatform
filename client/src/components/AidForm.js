@@ -13,10 +13,16 @@ class AidForm extends React.Component{
 
   constructor(props){
     super(props);
-    this.state = {
+
+    let state = {
       modalOpen: false,
       file: null,
-      aid: {
+      aid: {},
+      newAid: false
+    };
+
+    if(props.aid){
+      state.aid = {
         'human_id': props.aid.human_id,
         'name': props.aid.name,
         'description': props.aid.description,
@@ -24,8 +30,18 @@ class AidForm extends React.Component{
         'reserved': props.aid.reserved,
         'tags': props.aid.tags,
         'image_uri': props.aid.image_uri
-      }
-    };
+      };
+    }else{
+      state.newAid = true;
+      state.aid = {
+        'human_id': '',
+        'name': '',
+        'description': '',
+        'tags': []
+      };
+    }
+
+    this.state = state;
   }
 
   handleOpen = () => this.setState({ modalOpen: true })
@@ -47,7 +63,10 @@ class AidForm extends React.Component{
 
   handleSave = () => {
     let aid = Object.assign({}, this.state.aid);
-    this.props.updateAid(this.props.aid._id, aid, this.state.file);
+    if(this.state.newAid)
+      this.props.saveAid(aid, this.state.file);
+    else
+      this.props.saveAid(this.props.aid._id, aid, this.state.file);
 
     this.handleClose();
   }
@@ -78,23 +97,39 @@ class AidForm extends React.Component{
   render(){
     return (
       <Modal trigger={
-        <Button color="olive" icon basic onClick={this.handleOpen}>
-          <Icon name='edit' size='large'/>
-        </Button>
+        this.state.newAid ?
+          <Button color="green" icon basic onClick={this.handleOpen}>
+            <Icon name='add' size='large'/>
+          </Button>
+        :
+          <Button color="olive" icon basic onClick={this.handleOpen}>
+            <Icon name='edit' size='large'/>
+          </Button>
       }
       open={this.state.modalOpen}
       onClose={this.handleClose}
       closeOnDimmerClick={false}
       >
-        <Modal.Header>Edit Aid</Modal.Header>
+        <Modal.Header>
+        {
+          this.state.newAid ?
+            "New Aid"
+          :
+            "Edit Aid"
+        }
+        </Modal.Header>
         <Modal.Content>
         <Dropzone onDrop={this.handleUpload}>
           {
             //after deployment remove absolute urls
             //TODO
-
             this.state.file === null ?
-              <Image alt="" src={"http://localhost:3030/uploads/" + this.state.aid.image_uri} />
+              (
+                this.state.newAid ?
+                  null
+                :
+                  <Image alt="" src={"http://localhost:3030/uploads/" + this.state.aid.image_uri} />
+              )
             :
               <Image alt="" src={this.state.file} />
           }
@@ -123,11 +158,16 @@ class AidForm extends React.Component{
             value={this.state.aid.description}
             onChange={(e) => { this.handleChange('description', e.target.value) }}
           />
-          <Form.Checkbox
-            label='Reserved'
-            checked={this.state.aid.reserved}
-            onChange={(e) => { this.handleChange('reserved', !this.state.aid.reserved) }}
-          />
+          {
+            this.state.newAid ?
+              null
+            :
+              <Form.Checkbox
+                label='Reserved'
+                checked={this.state.aid.reserved}
+                onChange={(e) => { this.handleChange('reserved', !this.state.aid.reserved) }}
+              />
+          }
           <Form.Dropdown
             label='Tags'
             fluid
@@ -145,9 +185,14 @@ class AidForm extends React.Component{
         </Form>
         </Modal.Content>
         <Modal.Actions>
-          <Button color='red' onClick={this.handleDelete}>
-            delete
-          </Button>
+          {
+            this.state.newAid ?
+              null
+            :
+              <Button color='red' onClick={this.handleDelete}>
+                delete
+              </Button>
+          }
           <Button color='green' onClick={this.handleSave}>
             save
           </Button>

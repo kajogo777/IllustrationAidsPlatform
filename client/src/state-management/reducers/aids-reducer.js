@@ -23,6 +23,7 @@ export default (state=defaultState, action={}) => {
     //add
     case 'ADD_AID_FULFILLED':
       return Object.assign({}, state, {
+        aids: [...state.aids, action.payload]
       });
     case 'ADD_AID_REJECTEDs':
       return Object.assign({}, state, {

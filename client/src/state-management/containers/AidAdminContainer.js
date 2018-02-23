@@ -42,8 +42,8 @@ function mapDispatchToProps (dispatch){
       dispatch(fetchAids())
       dispatch(fetchTags())
     },
-    addAid: (aid) => {
-      dispatch(addAid(aid))
+    addAid: (aid, file) => {
+      dispatch(addAid(aid, file))
     },
     updateAid: (id, aid, file) => {
       dispatch(updateAid(id, aid, file))

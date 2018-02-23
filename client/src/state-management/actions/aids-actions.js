@@ -1,4 +1,6 @@
 import client from '../feathers';
+import { prompt } from '../actions/prompt-actions';
+
 
 export function fetchAids(){
   return {
@@ -7,11 +9,39 @@ export function fetchAids(){
   }
 }
 
-export function addAid(aid){
-  return {
-    type: 'ADD_AID',
-    payload: client.service("aids").create(aid)
-  }
+export function addAid(aid, file=null){
+  return (dispatch) => {
+    dispatch({
+      type: 'ADD_AID',
+      payload: {
+        promise: new Promise((resolve, reject) => {
+          client.service("uploads").create({ uri: file })
+          .then(response => {
+            // would delete image if used by more that one aid
+            // if(aid.image_uri && aid.image_uri !== response.id)
+            //   client.service("uploads").remove(aid.image_uri);
+            aid.image_uri = response.id;
+            client.service("aids").create(aid)
+            .then(response => {
+              dispatch(prompt("Aid created successfully", "success", null, 5));
+              resolve(response);
+            })
+            .catch(error => {
+              error.message = "make sure to fill all fields";
+              dispatch(prompt("Aid creation failed " + error.message, "failure", null, 5));
+              reject(error);
+            });
+          })
+          .catch(error => {
+            if(file === null)
+              error.message = "missing aid image";
+            dispatch(prompt("Aid creation failed " + error.message, "failure", null, 5));
+            reject(error);
+          })
+        })
+      }
+    });
+  };
 }
 
 export function updateAid(id, aid, file=null){
