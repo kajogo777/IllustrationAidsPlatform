@@ -141,6 +141,10 @@ class UsersPanel extends React.Component{
     this.props.onLoad();
   }
 
+  componentWillUnmount(){
+    this.props.clearFilter();
+  }
+
   render(){
     return(
       <Table celled stackable selectable textAlign='center'>

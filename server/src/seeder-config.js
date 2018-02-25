@@ -32,7 +32,15 @@ module.exports = {
         date_added: '{{date.past}}',
         reserved: '{{random.boolean}}',
         human_id: '{{random.uuid}}',
-        image_uri: 'default-avatar-business-bear.png'//'{{image.abstract}}'
+        image_uri: 'c452b19a3f9e03b1f3bfeafa680a8a52c5df34c8ff9db67bd993fde29567648e.jpeg',//'default-avatar-business-bear.png',//'{{image.abstract}}'
+        tags: () => {
+          let faker = require('faker');
+
+          let a = [];
+          for(let i = 0; i < 10; i++)
+              a.push(faker.fake("{{commerce.productAdjective}}"));
+          return a;
+        }
       }
     }
   ]

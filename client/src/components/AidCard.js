@@ -6,12 +6,12 @@ import {
   Button
 } from 'semantic-ui-react';
 
-//http://www.lovemarks.com/wp-content/uploads/profile-avatars/default-avatar-business-bear.png
-//<Image src={props.image} />
+//after deployment remove absolute urls
+//TODO
 function AidCard(props){
   return(
     <Card centered raised>
-      <Image src={props.image} />
+      <Image src={"http://localhost:3030/uploads/" + props.image} />
       <Card.Content>
         <Card.Header>
           {props.name}

@@ -4,13 +4,15 @@ import PrivateRoute from './PrivateRoute';
 import LoginPanel from './LoginPanel';
 import RegistrationPanel from './RegistrationPanel';
 import UsersPanel from './UsersPanel';
+import AidsPanel from './AidsPanel';
 import updateAccountForm from './UpdateAccountForm';
 
 import {
   AidContainer,
   AuthContainer,
   PendingUserContainer,
-  ConfirmedUserContainer
+  ConfirmedUserContainer,
+  AidAdminContainer
 } from '../state-management';
 import {
   Route,
@@ -38,6 +40,10 @@ class MainBody extends React.Component{
 
           <PrivateRoute path="/users">
             <ConfirmedUserContainer component={UsersPanel}/>
+          </PrivateRoute>
+
+          <PrivateRoute path="/aids">
+            <AidAdminContainer component={AidsPanel}/>
           </PrivateRoute>
 
           <PrivateRoute path="/account">

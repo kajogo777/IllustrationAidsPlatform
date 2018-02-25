@@ -1,13 +1,17 @@
 const { authenticate } = require('feathers-authentication').hooks;
+const deduplicateTags = require('./hooks/deduplicateTags');
+const aggregateTags = require('./hooks/aggregateTags');
+const deleteUpload = require('./hooks/deleteUpload');
+
 
 module.exports = {
   before: {
     all: [],
-    find: [],
+    find: [ aggregateTags() ],
     get: [],
-    create: [ authenticate('jwt') ],
-    update: [ authenticate('jwt') ],
-    patch: [ authenticate('jwt') ],
+    create: [ authenticate('jwt'), deduplicateTags() ],
+    update: [ authenticate('jwt'), deduplicateTags() ],
+    patch: [ authenticate('jwt'), deduplicateTags() ],
     remove: [ authenticate('jwt') ]
   },
 
@@ -18,7 +22,7 @@ module.exports = {
     create: [],
     update: [],
     patch: [],
-    remove: []
+    remove: [ deleteUpload() ]
   },
 
   error: {

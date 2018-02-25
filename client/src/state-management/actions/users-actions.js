@@ -84,3 +84,10 @@ export function filterUsers(field, value){
     payload: {field: field, value: value}
   }
 }
+
+export function clearFilter(){
+  return {
+    type: 'FILTER_USERS',
+    payload: {field: "clear"}
+  }
+}

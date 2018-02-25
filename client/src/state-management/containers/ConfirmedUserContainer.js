@@ -1,6 +1,6 @@
 import { connect }from 'react-redux';
 import UniversalContainer from './UniversalContainer';
-import { fetchConfirmedUsers, deleteUser, filterUsers, updateUser } from '../actions/users-actions';
+import { fetchConfirmedUsers, deleteUser, filterUsers, clearFilter, updateUser } from '../actions/users-actions';
 
 function filterRows(list, filters){
   const filterKeys = Object.keys(filters);
@@ -28,6 +28,9 @@ function mapDispatchToProps (dispatch){
     },
     filterUsers: (field, value) => {
       dispatch(filterUsers(field, value))
+    },
+    clearFilter: () => {
+      dispatch(clearFilter())
     }
   };
 }
