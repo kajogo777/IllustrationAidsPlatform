@@ -1,0 +1,53 @@
+
+version: '3.4'
+services:
+
+  db:
+    image: 'bitnami/mongodb:latest'
+    environment:
+      - MONGODB_USERNAME=stmary
+      - MONGODB_PASSWORD=stmary
+      - MONGODB_DATABASE=stmary
+    volumes:
+      - ./data/db:/data/db
+
+  client:
+    image: client
+    build:
+      context: client
+    command: npm start
+    volumes:
+      - ./client:/usr/app
+
+  server:
+    image: server
+    build:
+      context: server
+    links:
+      - db
+    environment:
+      - MONGODB_USERNAME=stmary
+      - MONGODB_PASSWORD=stmary
+      - MONGODB_DATABASE=stmary
+    command: npm start
+    volumes:
+      - ./server:/usr/app
+      - ./uploads-store:/uploads-store
+    depends_on:
+      - db
+
+  proxy:
+    image: nginx:alpine
+    ports:
+      - 8000:80
+    links:
+      - server
+      - client
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./client/build:/var/www/html
+      #- ./uploads-store:/var/www/uploads
+    restart: always
+    depends_on:
+      - client
+      - server
