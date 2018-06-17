@@ -1,5 +1,4 @@
 const hooks = require('./uploads.hooks');
-const filters = require('./uploads.filters');
 
 
 // feathers-blob service
@@ -56,8 +55,4 @@ module.exports = function () {
   const service = app.service('uploads');
 
   service.hooks(hooks);
-
-  if (service.filter) {
-    service.filter(filters);
-  }
 };

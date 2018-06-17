@@ -7,14 +7,11 @@ module.exports = function () {
   db = mongoose.connect(conn, {
     user: process.env.MONGODB_USERNAME,
     pass: process.env.MONGODB_PASSWORD,
-    useMongoClient: true
+    auto_reconnect:true,
+    reconnectTries: Number.MAX_VALUE,
   });
 
   mongoose.Promise = global.Promise;
-
-  db.on('error', (err) => {
-  	console.log(err);
-  });
 
   app.set('mongooseClient', mongoose);
 };
