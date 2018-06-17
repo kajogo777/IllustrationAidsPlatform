@@ -49,6 +49,15 @@ class UserRow extends React.Component{
   }
 
   render(){
+
+    const inlineStyle = {
+      modal : {
+        marginTop: '0px !important',
+        marginLeft: 'auto',
+        marginRight: 'auto'
+      }
+    };
+
     return(
       <Table.Row>
         <Table.Cell>{this.props.user.name}</Table.Cell>
@@ -65,6 +74,7 @@ class UserRow extends React.Component{
           open={this.state.modalOpen}
           onClose={this.handleClose}
           closeOnDimmerClick={false}
+          style={inlineStyle.modal}
           >
             <Modal.Header>Edit User</Modal.Header>
             <Modal.Content>
