@@ -27,6 +27,7 @@ function AidRow(props){
 
           <AidForm
             saveAid={props.updateAid}
+            duplicateAid={props.addAid}
             deleteAid={props.deleteAid}
             addTag={props.addTag}
             uploadFile={props.uploadFile}
@@ -161,6 +162,7 @@ class AidsPanel extends React.Component{
                 key={item._id}
                 updateAid={this.props.updateAid}
                 deleteAid={this.props.deleteAid}
+                addAid={this.props.addAid}
                 addTag={this.props.addTag}
                 uploadFile={this.props.uploadFile}
                 aid={item}

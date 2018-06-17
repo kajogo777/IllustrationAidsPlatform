@@ -15,12 +15,7 @@ export function addAid(aid, file=null){
       type: 'ADD_AID',
       payload: {
         promise: new Promise((resolve, reject) => {
-          client.service("uploads").create({ uri: file })
-          .then(response => {
-            // would delete image if used by more that one aid
-            // if(aid.image_uri && aid.image_uri !== response.id)
-            //   client.service("uploads").remove(aid.image_uri);
-            aid.image_uri = response.id;
+          if (aid.image_uri){
             client.service("aids").create(aid)
             .then(response => {
               dispatch(prompt("Aid created successfully", "success", null, 5));
@@ -31,13 +26,28 @@ export function addAid(aid, file=null){
               dispatch(prompt("Aid creation failed " + error.message, "failure", null, 5));
               reject(error);
             });
-          })
-          .catch(error => {
-            if(file === null)
-              error.message = "missing aid image";
-            dispatch(prompt("Aid creation failed " + error.message, "failure", null, 5));
-            reject(error);
-          })
+          }else{
+            client.service("uploads").create({ uri: file })
+            .then(response => {
+              aid.image_uri = response.id;
+              client.service("aids").create(aid)
+              .then(response => {
+                dispatch(prompt("Aid created successfully", "success", null, 5));
+                resolve(response);
+              })
+              .catch(error => {
+                error.message = "make sure to fill all fields";
+                dispatch(prompt("Aid creation failed " + error.message, "failure", null, 5));
+                reject(error);
+              });
+            })
+            .catch(error => {
+              if(file === null)
+                error.message = "missing aid image";
+              dispatch(prompt("Aid creation failed " + error.message, "failure", null, 5));
+              reject(error);
+            })
+          }
         })
       }
     });
