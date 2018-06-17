@@ -95,6 +95,14 @@ class AidForm extends React.Component{
   }
 
   render(){
+    const inlineStyle = {
+      modal : {
+        marginTop: '0px !important',
+        marginLeft: 'auto',
+        marginRight: 'auto'
+      }
+    };
+    
     return (
       <Modal trigger={
         this.state.newAid ?
@@ -109,6 +117,7 @@ class AidForm extends React.Component{
       open={this.state.modalOpen}
       onClose={this.handleClose}
       closeOnDimmerClick={false}
+      style={inlineStyle.modal}
       >
         <Modal.Header>
         {

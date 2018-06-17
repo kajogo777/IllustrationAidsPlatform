@@ -1,4 +1,4 @@
-const { authenticate } = require('feathers-authentication').hooks;
+const { authenticate } = require('@feathersjs/authentication').hooks;
 const deduplicateTags = require('./hooks/deduplicateTags');
 const aggregateTags = require('./hooks/aggregateTags');
 const deleteUpload = require('./hooks/deleteUpload');

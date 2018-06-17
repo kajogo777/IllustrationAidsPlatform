@@ -11,7 +11,7 @@ import {
 function AidCard(props){
   return(
     <Card centered raised>
-      <Image src={"http://localhost:3030/uploads/" + props.image} />
+      <Image src={"api/uploads/" + props.image} />
       <Card.Content>
         <Card.Header>
           {props.name}

@@ -1,5 +1,4 @@
 const hooks = require('./uploads.hooks');
-const filters = require('./uploads.filters');
 
 
 // feathers-blob service
@@ -12,7 +11,7 @@ const fs = require('fs-blob-store');
 
 // File storage location. Folder must be created before upload.
 // Example: './uploads' will be located under feathers app top level.
-const blobStorage = fs('../uploads-store');
+const blobStorage = fs('/uploads-store');
 
 const multer = require('multer');
 const multipartMiddleware = multer();
@@ -56,8 +55,4 @@ module.exports = function () {
   const service = app.service('uploads');
 
   service.hooks(hooks);
-
-  if (service.filter) {
-    service.filter(filters);
-  }
 };

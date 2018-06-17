@@ -1,11 +1,11 @@
 import React from 'react';
-import AidCardGrid from './AidCardGrid';
+import AidCardGrid from './aid-module/AidCardGrid';
 import PrivateRoute from './PrivateRoute';
-import LoginPanel from './LoginPanel';
-import RegistrationPanel from './RegistrationPanel';
-import UsersPanel from './UsersPanel';
-import AidsPanel from './AidsPanel';
-import updateAccountForm from './UpdateAccountForm';
+import LoginPanel from './account-module/LoginPanel';
+import RegistrationPanel from './account-module/RegistrationPanel';
+import UsersPanel from './user-module/UsersPanel';
+import AidsPanel from './aid-module/AidsPanel';
+import updateAccountForm from './account-module/UpdateAccountForm';
 
 import {
   AidContainer,
