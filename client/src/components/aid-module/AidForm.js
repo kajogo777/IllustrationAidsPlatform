@@ -46,7 +46,18 @@ class AidForm extends React.Component{
 
   handleOpen = () => this.setState({ modalOpen: true })
 
-  handleClose = () => this.setState({ modalOpen: false })
+  handleClose = () => {
+    if(this.state.newAid)
+      this.setState({
+        modalOpen: false,
+        file: null,
+        aid: {}
+      });
+    else
+      this.setState({
+        modalOpen: false
+      });
+  }
 
   handleChange = (field, value) => {
     this.setState({
@@ -102,7 +113,7 @@ class AidForm extends React.Component{
         marginRight: 'auto'
       }
     };
-    
+
     return (
       <Modal trigger={
         this.state.newAid ?
@@ -130,14 +141,12 @@ class AidForm extends React.Component{
         <Modal.Content>
         <Dropzone onDrop={this.handleUpload}>
           {
-            //after deployment remove absolute urls
-            //TODO
             this.state.file === null ?
               (
                 this.state.newAid ?
                   null
                 :
-                  <Image alt="" src={"http://localhost:3030/uploads/" + this.state.aid.image_uri} />
+                  <Image alt="" src={"api/uploads/" + this.state.aid.image_uri} />
               )
             :
               <Image alt="" src={this.state.file} />
