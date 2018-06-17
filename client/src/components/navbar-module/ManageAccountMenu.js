@@ -5,7 +5,7 @@ import {
 import {
   Link
 } from 'react-router-dom'
-import { AuthContainer } from '../state-management';
+import { AuthContainer } from '../../state-management';
 
 
 function ManageAccountHelper(props){

@@ -8,8 +8,8 @@ import {
 import {
   Link
 } from 'react-router-dom'
-import PrivateRoute from './PrivateRoute';
-import AdminRoute from './AdminRoute';
+import PrivateRoute from '../PrivateRoute';
+import AdminRoute from '../AdminRoute';
 import SearchField from './SearchField';
 import ManageAccountMenu from './ManageAccountMenu';
 import ManageAidsMenu from './ManageAidsMenu';

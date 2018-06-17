@@ -1,6 +1,6 @@
 import React from 'react';
 
-import NavigationBar from './NavigationBar';
+import NavigationBar from './navbar-module/NavigationBar';
 import MainBody from './MainBody';
 
 class App extends React.Component {

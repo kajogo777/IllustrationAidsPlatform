@@ -10,7 +10,7 @@ import {
 import {
   RegisterContainer,
   AuthContainer
-} from '../state-management';
+} from '../../state-management';
 
 const panes = [
   { menuItem: 'Login', render: () => <Tab.Pane><AuthContainer component={LoginForm}/></Tab.Pane> },
