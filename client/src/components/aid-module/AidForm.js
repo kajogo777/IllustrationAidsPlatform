@@ -105,6 +105,18 @@ class AidForm extends React.Component{
     });
   }
 
+  handleDuplicate = () => {
+    let aid = {
+      'human_id': this.state.aid.human_id,
+      'name': this.state.aid.name,
+      'description': this.state.aid.description,
+      'tags': this.state.aid.tags,
+      'image_uri': this.state.aid.image_uri
+    }
+    this.props.duplicateAid(aid, aid.image_uri);
+    this.handleClose();
+  }
+
   render(){
     const inlineStyle = {
       modal : {
@@ -209,6 +221,14 @@ class AidForm extends React.Component{
             :
               <Button color='red' onClick={this.handleDelete}>
                 delete
+              </Button>
+          }
+          {
+            this.state.newAid ?
+              null
+            :
+              <Button color='blue' onClick={this.handleDuplicate}>
+                duplicate
               </Button>
           }
           <Button color='green' onClick={this.handleSave}>

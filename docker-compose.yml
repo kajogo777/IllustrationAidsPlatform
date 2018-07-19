@@ -6,9 +6,9 @@ services:
     image: 'bitnami/mongodb:latest'
     restart: always
     environment:
-      - MONGODB_USERNAME
-      - MONGODB_PASSWORD
-      - MONGODB_DATABASE
+      - MONGODB_USERNAME=stmary
+      - MONGODB_PASSWORD=stmary
+      - MONGODB_DATABASE=stmary
     volumes:
       - ./data/db:/data/db
 
@@ -29,9 +29,9 @@ services:
     links:
       - db
     environment:
-      - MONGODB_USERNAME
-      - MONGODB_PASSWORD
-      - MONGODB_DATABASE
+      - MONGODB_USERNAME=stmary
+      - MONGODB_PASSWORD=stmary
+      - MONGODB_DATABASE=stmary
     command: npm start
     volumes:
       - ./server:/usr/app
@@ -42,7 +42,7 @@ services:
   proxy:
     image: nginx:alpine
     ports:
-      - 80:80
+      - 8000:80
     links:
       - server
       - client
