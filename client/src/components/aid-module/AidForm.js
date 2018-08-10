@@ -188,16 +188,6 @@ class AidForm extends React.Component{
             value={this.state.aid.description}
             onChange={(e) => { this.handleChange('description', e.target.value) }}
           />
-          {
-            this.state.newAid ?
-              null
-            :
-              <Form.Checkbox
-                label='Reserved'
-                checked={this.state.aid.reserved}
-                onChange={(e) => { this.handleChange('reserved', !this.state.aid.reserved) }}
-              />
-          }
           <Form.Dropdown
             label='Tags'
             fluid

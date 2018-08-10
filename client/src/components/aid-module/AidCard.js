@@ -26,7 +26,7 @@ function AidCard(props){
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button.Group attached="buttom" fluid>
+        <Button.Group attached fluid>
           <Button color='green' disabled={props.reserved}>
             <Icon name="in cart"/>
             Reserve
