@@ -5,6 +5,7 @@ import LoginPanel from './account-module/LoginPanel';
 import RegistrationPanel from './account-module/RegistrationPanel';
 import UsersPanel from './user-module/UsersPanel';
 import AidsPanel from './aid-module/AidsPanel';
+import ReservationsPanel from './reservation-module/ReservationsPanel';
 import updateAccountForm from './account-module/UpdateAccountForm';
 
 import {
@@ -12,7 +13,8 @@ import {
   AuthContainer,
   PendingUserContainer,
   ConfirmedUserContainer,
-  AidAdminContainer
+  AidAdminContainer,
+  ReservationAdminContainer
 } from '../state-management';
 import {
   Route,
@@ -44,6 +46,10 @@ class MainBody extends React.Component{
 
           <PrivateRoute path="/aids">
             <AidAdminContainer component={AidsPanel}/>
+          </PrivateRoute>
+
+          <PrivateRoute path="/reservations">
+            <ReservationAdminContainer component={ReservationsPanel}/>
           </PrivateRoute>
 
           <PrivateRoute path="/account">

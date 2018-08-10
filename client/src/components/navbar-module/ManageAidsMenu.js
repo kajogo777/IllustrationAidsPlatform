@@ -16,6 +16,9 @@ class ManageAidsMenu extends React.Component {
             <Dropdown.Item>
               <Link to="/aids">View aids</Link>
             </Dropdown.Item>
+            <Dropdown.Item>
+              <Link to="/reservations">View reservations</Link>
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>
