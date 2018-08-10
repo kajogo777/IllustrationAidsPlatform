@@ -17,7 +17,7 @@ class UserRow extends React.Component{
       modalOpen: false,
       user: {
         name: props.user.name,
-        email: props.user.email,
+        username: props.user.username,
         mobileNumber: props.user.mobileNumber,
         role: props.user.role
       }
@@ -61,7 +61,7 @@ class UserRow extends React.Component{
     return(
       <Table.Row>
         <Table.Cell>{this.props.user.name}</Table.Cell>
-        <Table.Cell>{this.props.user.email}</Table.Cell>
+        <Table.Cell>{this.props.user.username}</Table.Cell>
         <Table.Cell>{this.props.user.mobileNumber}</Table.Cell>
         <Table.Cell>{this.props.user.role}</Table.Cell>
         <Table.Cell collapsing>
@@ -87,10 +87,10 @@ class UserRow extends React.Component{
               />
               <Input
                 fluid
-                type="email"
-                placeholder='email'
-                value={this.state.user.email}
-                onChange={(e) => { this.handleChange('email', e.target.value) }}
+                type="username"
+                placeholder='username'
+                value={this.state.user.username}
+                onChange={(e) => { this.handleChange('username', e.target.value) }}
               />
               <Input
                 fluid
@@ -134,7 +134,7 @@ class UsersPanel extends React.Component{
     super(props);
     this.state = {
       nameFilter: '',
-      emailFilter: '',
+      usernameFilter: '',
       mobileNumberFilter: '',
       roleFilter: ''
     };
@@ -161,7 +161,7 @@ class UsersPanel extends React.Component{
         <Table.Header>
          <Table.Row>
            <Table.HeaderCell>Name</Table.HeaderCell>
-           <Table.HeaderCell>Email</Table.HeaderCell>
+           <Table.HeaderCell>Username</Table.HeaderCell>
            <Table.HeaderCell>Mobile Number</Table.HeaderCell>
            <Table.HeaderCell>Role</Table.HeaderCell>
            <Table.HeaderCell />
@@ -182,10 +182,10 @@ class UsersPanel extends React.Component{
             <Table.Cell>
               <Input
                 fluid
-                type="email"
-                placeholder='email filter'
-                value={this.state.emailFilter}
-                onChange={(e) => { this.handleChange("email", e) }}
+                type="username"
+                placeholder='username filter'
+                value={this.state.usernameFilter}
+                onChange={(e) => { this.handleChange("username", e) }}
               />
             </Table.Cell>
             <Table.Cell>

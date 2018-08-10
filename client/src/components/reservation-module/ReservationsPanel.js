@@ -17,11 +17,11 @@ class ReservationRow extends React.Component{
       modalOpen: false,
       reservation: {
         human_id: props.reservation.human_id,
-        user_id: props.reservation.user_id,
+        username: props.reservation.username,
         pickup_date: props.reservation.pickup_date,
-        returned: props.reservation.returned,
         date_reserved: props.reservation.date_reserved,
-        duration_in_weeks: props.reservation.duration_in_weeks
+        duration_in_weeks: props.reservation.duration_in_weeks,
+        status: props.reservation.status
       }
     };
   }
@@ -63,11 +63,11 @@ class ReservationRow extends React.Component{
     return(
       <Table.Row>
         <Table.Cell>{this.props.reservation.human_id}</Table.Cell>
-        <Table.Cell>{this.props.reservation.user_id}</Table.Cell>
+        <Table.Cell>{this.props.reservation.username}</Table.Cell>
         <Table.Cell>{this.props.reservation.pickup_date}</Table.Cell>
-        <Table.Cell>{""+this.props.reservation.returned}</Table.Cell>
         <Table.Cell>{this.props.reservation.date_reserved}</Table.Cell>
         <Table.Cell>{this.props.reservation.duration_in_weeks}</Table.Cell>
+        <Table.Cell>{this.props.reservation.status}</Table.Cell>
 
         <Table.Cell collapsing>
 
@@ -102,10 +102,20 @@ class ReservationRow extends React.Component{
                 closeOnChange
                 selection
               />
-              <Form.Checkbox
-                label='Returned'
-                checked={this.state.reservation.returned}
-                onChange={(e) => { this.handleChange('returned', !this.state.reservation.returned) }}
+              <Form.Dropdown
+                label='Reservation Status'
+                placeholder='status'
+                options={[
+                  {text: 'PENDING', value: 'PENDING'},
+                  {text: 'CHECKED OUT', value: 'CHECKED OUT'},
+                  {text: 'RETURNED', value: 'RETURNED'},
+                  {text: 'OVERDUE', value: 'OVERDUE'},
+                ]}
+                value={this.state.reservation.status}
+                onChange={(e, {value}) => { this.handleChange('status', value) }}
+                fluid
+                closeOnChange
+                selection
               />
             </Form>
             </Modal.Content>
@@ -134,9 +144,8 @@ class ReservationsPanel extends React.Component{
     super(props);
     this.state = {
       human_idFilter: '',
-      user_idFilter: '',
+      usernameFilter: '',
       pickup_dateFilter: '',
-      returnedFilter: '',
       date_reservedFilter: '',
       duration_in_weeksFilter: ''
     };
@@ -163,11 +172,11 @@ class ReservationsPanel extends React.Component{
         <Table.Header>
          <Table.Row>
            <Table.HeaderCell>Aid ID</Table.HeaderCell>
-           <Table.HeaderCell>User ID</Table.HeaderCell>
+           <Table.HeaderCell>Username</Table.HeaderCell>
            <Table.HeaderCell>Pickup Date</Table.HeaderCell>
-           <Table.HeaderCell>Returned</Table.HeaderCell>
            <Table.HeaderCell>Date Reserved</Table.HeaderCell>
            <Table.HeaderCell>Duration (weeks)</Table.HeaderCell>
+           <Table.HeaderCell>Status</Table.HeaderCell>
            <Table.HeaderCell />
          </Table.Row>
         </Table.Header>
@@ -186,10 +195,10 @@ class ReservationsPanel extends React.Component{
             <Table.Cell>
               <Input
                 fluid
-                type="user_id"
+                type="username"
                 placeholder='user id filter'
-                value={this.state.user_idFilter}
-                onChange={(e) => { this.handleChange("user_id", e) }}
+                value={this.state.usernameFilter}
+                onChange={(e) => { this.handleChange("username", e) }}
               />
             </Table.Cell>
             <Table.Cell>
@@ -199,15 +208,6 @@ class ReservationsPanel extends React.Component{
                 placeholder='pick up date filter'
                 value={this.state.pickup_dateFilter}
                 onChange={(e) => { this.handleChange("pickup_date", e) }}
-              />
-            </Table.Cell>
-            <Table.Cell>
-              <Input
-                fluid
-                type="returned"
-                placeholder='returned filter'
-                value={this.state.returnedFilter}
-                onChange={(e) => { this.handleChange("returned", e) }}
               />
             </Table.Cell>
             <Table.Cell>
@@ -226,6 +226,15 @@ class ReservationsPanel extends React.Component{
                 placeholder='duration filter'
                 value={this.state.duration_in_weeksFilter}
                 onChange={(e) => { this.handleChange("duration_in_weeks", e) }}
+              />
+            </Table.Cell>
+            <Table.Cell>
+              <Input
+                fluid
+                type="status"
+                placeholder='status filter'
+                value={this.state.status}
+                onChange={(e) => { this.handleChange("status", e) }}
               />
             </Table.Cell>
             <Table.Cell/>

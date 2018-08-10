@@ -36,6 +36,7 @@ Promise.all([
     for(let i = 0; i < 15; i++){
       user = faker.random.arrayElement(users);
       aid  = faker.random.arrayElement(aids);
+      status = faker.random.arrayElement(['PENDING', 'CHECKED OUT', 'RETURNED', 'OVERDUE']);
 
       let date_reserved = faker.date.past();
       let pickup_date = faker.date.past(1, date_reserved);
@@ -45,10 +46,11 @@ Promise.all([
       app.service('reservations').create({
         human_id: aid.human_id,
         aid_id: aid._id,
+        username: user.username,
         user_id: user._id,
         pickup_date: pickup_date,
-        returned: faker.random.boolean(),
-        date_reserved: date_reserved
+        date_reserved: date_reserved,
+        status: status
       });
       console.log("info: after: reservaions - Method: create\n");
     }
