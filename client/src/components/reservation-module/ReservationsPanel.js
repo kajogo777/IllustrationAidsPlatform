@@ -120,9 +120,6 @@ class ReservationRow extends React.Component{
             </Form>
             </Modal.Content>
             <Modal.Actions>
-              <Button color='red' onClick={this.handleDelete}>
-                delete
-              </Button>
               <Button color='green' onClick={this.handleSave}>
                 save
               </Button>
