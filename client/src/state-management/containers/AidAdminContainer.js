@@ -6,7 +6,7 @@ import { uploadFile } from '../actions/upload-actions';
 function filterRows(list, filters){
   let listTemp = list.map((item) => {
     return Object.assign(item, {
-      date_added: (new Date(item.date_added)).toLocaleDateString()
+      date_added: (new Date(item.date_added)).toISOString().split('T')[0]
     })
   })
 

@@ -10,3 +10,5 @@ export {default as PromptContainer} from './containers/PromptContainer';
 
 export {default as PendingUserContainer} from './containers/PendingUserContainer';
 export {default as ConfirmedUserContainer} from './containers/ConfirmedUserContainer';
+
+export {default as ReservationAdminContainer} from './containers/ReservationAdminContainer';

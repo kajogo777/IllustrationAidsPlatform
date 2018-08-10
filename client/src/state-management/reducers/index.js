@@ -4,6 +4,8 @@ import UserReducer from './users-reducer';
 import AuthReducer from './auth-reducer';
 import PromptReducer from './prompt-reducer';
 import UploadReducer from './upload-reducer';
+import ReservationReducer from './reservations-reducer';
+
 
 
 
@@ -12,7 +14,8 @@ const reducers = {
   aidStore: AidReducer,
   authStore: AuthReducer,
   promptStore: PromptReducer,
-  uploadStore: UploadReducer
+  uploadStore: UploadReducer,
+  reservationStore: ReservationReducer,
 }
 
 const rootReducer = combineReducers(reducers);
