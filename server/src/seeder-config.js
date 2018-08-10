@@ -30,7 +30,6 @@ module.exports = {
         name: '{{commerce.productName}}',
         description: '{{lorem.sentences}}',
         date_added: '{{date.past}}',
-        reserved: '{{random.boolean}}',
         human_id: '{{random.uuid}}',
         image_uri: 'c452b19a3f9e03b1f3bfeafa680a8a52c5df34c8ff9db67bd993fde29567648e.jpeg',
         tags: () => {

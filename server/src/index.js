@@ -33,9 +33,9 @@ Promise.all([
 
     let faker = require('faker');
 
-    for(let i = 0; i < 15; i++){
+    for(let i = 0; i < 6; i++){
       user = faker.random.arrayElement(users);
-      aid  = faker.random.arrayElement(aids);
+      aid  = aids[i];
       status = faker.random.arrayElement(['PENDING', 'CHECKED OUT', 'RETURNED', 'OVERDUE']);
 
       let date_reserved = faker.date.past();

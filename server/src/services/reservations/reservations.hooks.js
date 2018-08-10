@@ -1,5 +1,8 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
 
+const updateAid = require('./hooks/updateAid');
+
+
 module.exports = {
   before: {
     all: [ authenticate('jwt') ],
@@ -15,9 +18,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
+    create: [ updateAid() ],
+    update: [ updateAid() ],
+    patch: [ updateAid() ],
     remove: []
   },
 
