@@ -14,7 +14,7 @@ function filterRows(list, filters){
     return filterKeys.reduce((acc, key) => {
       if(key === 'tags')
         return !filters[key].some(val => row[key].indexOf(val) === -1);
-      return acc && (""+row[key]).toLowerCase().indexOf(filters[key]) !== -1;
+      return acc && (""+row[key]).toLowerCase().indexOf(filters[key].toLowerCase()) !== -1;
     } , true);
   });
 }
