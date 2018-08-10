@@ -26,14 +26,14 @@ function AidCard(props){
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button.Group>
+        <Button.Group attached="buttom" fluid>
           <Button color='green' disabled={props.reserved}>
             <Icon name="in cart"/>
             Reserve
           </Button>
-          <Button color='blue' disabled={props.wished}>
+          <Button basic color='blue'>
             <Icon name="bookmark"/>
-            Add to wish list
+            Tag
           </Button>
         </Button.Group>
       </Card.Content>
