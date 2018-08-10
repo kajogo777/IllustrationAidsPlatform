@@ -21,7 +21,7 @@ Promise.all([
 ])
 .then(() => {
   const usersPromise = app.service('users').find();
-  const aidsPromise = app.service('users').find();
+  const aidsPromise = app.service('aids').find();
 
   Promise.all([
     usersPromise,
@@ -38,21 +38,20 @@ Promise.all([
       aid  = faker.random.arrayElement(aids);
 
       let date_reserved = faker.date.past();
-      let pickup_date = faker.date.past(1, date_reserved)
+      let pickup_date = faker.date.past(1, date_reserved);
 
       pickup_date.setDate(pickup_date.getDate() + (5+(7-pickup_date.getDay())) % 7);
 
       app.service('reservations').create({
-        aid_id: user._id,
-        user_id: aid._id,
+        human_id: aid.human_id,
+        aid_id: aid._id,
+        user_id: user._id,
         pickup_date: pickup_date,
         returned: faker.random.boolean(),
         date_reserved: date_reserved
       });
       console.log("info: after: reservaions - Method: create\n");
     }
-
-
   })
   .catch(err => console.log(err));
 

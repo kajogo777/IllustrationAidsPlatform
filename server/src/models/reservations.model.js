@@ -6,6 +6,7 @@ module.exports = function (app) {
   const mongooseClient = app.get('mongooseClient');
   const { Schema } = mongooseClient;
   const reservations = new Schema({
+    human_id: { type: String, required: true},
     aid_id: { type: Schema.Types.ObjectId, ref: 'aids', requried: [true, "Missing aid id"] },
     user_id: { type: Schema.Types.ObjectId, ref: 'users', requried: [true, "Missing user id"] },
     pickup_date: {
