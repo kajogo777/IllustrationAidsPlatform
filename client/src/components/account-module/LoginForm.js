@@ -13,14 +13,14 @@ class LoginForm extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      'email': '',
+      'username': '',
       'password': ''
     };
   }
 
-  handleChangeEmail = (event) => {
+  handleChangeUsername = (event) => {
     this.setState({
-      'email': event.target.value
+      'username': event.target.value
     });
   };
 
@@ -31,8 +31,8 @@ class LoginForm extends React.Component{
   };
 
   handleClick = () => {
-    if(this.state.email && this.state.password)
-      this.props.login(this.state.email, this.state.password);
+    if(this.state.username && this.state.password)
+      this.props.login(this.state.username, this.state.password);
   }
 
   render(){
@@ -46,10 +46,10 @@ class LoginForm extends React.Component{
             <Card.Description>
               <Input
                 fluid
-                type="email"
-                placeholder='email'
-                value={this.state.email}
-                onChange={this.handleChangeEmail}
+                type="username"
+                placeholder='username'
+                value={this.state.username}
+                onChange={this.handleChangeUsername}
               />
               <Input
                 fluid

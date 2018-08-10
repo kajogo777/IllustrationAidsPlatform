@@ -11,7 +11,7 @@ class updateAccountForm extends React.Component{
     super(props);
     this.state = {
       'name': props.auth.user.name,
-      'email': props.auth.user.email,
+      'username': props.auth.user.username,
       'password': '',
       'password2': '',
       'mobileNumber': props.auth.user.mobileNumber
@@ -33,7 +33,7 @@ class updateAccountForm extends React.Component{
     let user = Object.assign({}, {
       '_id': this.props.auth.user._id,
       'name': this.state.name,
-      'email': this.state.email,
+      'username': this.state.username,
       'mobileNumber': this.state.mobileNumber
     });
     if(this.state.password !== ""){
@@ -59,10 +59,10 @@ class updateAccountForm extends React.Component{
               />
               <Input
                 fluid
-                type="email"
-                placeholder='email'
-                value={this.state.email}
-                onChange={(e) => { this.handleChange('email', e) }}
+                type="username"
+                placeholder='username'
+                value={this.state.username}
+                onChange={(e) => { this.handleChange('username', e) }}
               />
               <Input
                 fluid

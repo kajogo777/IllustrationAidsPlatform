@@ -16,7 +16,7 @@ function RegEntry(props){
           <TimeAgo date={props.createdAt}/>
         </Card.Meta>
         <Card.Description>
-          Email: {props.email}
+          Username: {props.username}
           <br/>
           Mobile Number: {props.mobileNumber}
         </Card.Description>
@@ -50,7 +50,7 @@ class RegistrationPanel extends React.Component{
               key={item._id}
               name={item.name}
               createdAt={item.createdAt}
-              email={item.email}
+              username={item.username}
               mobileNumber={item.mobileNumber}
               onAccept={ () => this.props.approveUser(item) }
               onReject={ () => this.props.deleteUser(item) }

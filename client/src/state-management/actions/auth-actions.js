@@ -10,10 +10,10 @@ export function logout(){
   };
 }
 
-export function login(email, password){
+export function login(username, password){
   const userPromise = client.authenticate({
     strategy: 'local',
-    email: email,
+    username: username,
     password: password
   })
   .then(response => {

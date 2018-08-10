@@ -1,6 +1,6 @@
 module.exports = function () {
   return (hook) => {
-    if(hook.data.email !== 'bla@stmary.com'){
+    if(hook.data.username !== 'admin'){
       hook.data.status = 'PENDING';
       hook.data.role = 'SERVANT';
     }

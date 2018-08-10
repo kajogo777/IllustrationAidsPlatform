@@ -11,7 +11,7 @@ class RegisterForm extends React.Component{
     super(props);
     this.state = {
       'name': '',
-      'email': '',
+      'username': '',
       'password': '',
       'password2': '',
       'mobileNumber': ''
@@ -38,7 +38,7 @@ class RegisterForm extends React.Component{
       return;
     }
 
-    this.props.register(this.state.name, this.state.email, this.state.password, this.state.mobileNumber);
+    this.props.register(this.state.name, this.state.username, this.state.password, this.state.mobileNumber);
   }
 
   render(){
@@ -55,10 +55,10 @@ class RegisterForm extends React.Component{
               />
               <Input
                 fluid
-                type="email"
-                placeholder='email'
-                value={this.state.email}
-                onChange={(e) => { this.handleChange('email', e) }}
+                type="username"
+                placeholder='username'
+                value={this.state.username}
+                onChange={(e) => { this.handleChange('username', e) }}
               />
               <Input
                 fluid

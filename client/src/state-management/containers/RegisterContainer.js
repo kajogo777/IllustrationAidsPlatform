@@ -12,8 +12,8 @@ function mapStateToProps (state){
 
 function mapDispatchToProps (dispatch){
   return {
-    register: (name, email, password, mobileNumber) => {
-      dispatch(addUser(name, email, password, mobileNumber))
+    register: (name, username, password, mobileNumber) => {
+      dispatch(addUser(name, username, password, mobileNumber))
     },
     prompt: (message, type) => {
       dispatch(prompt(message, type, null, 5))

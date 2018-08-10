@@ -4,7 +4,7 @@ module.exports = {
       path: 'users',
       template: {
         name: '{{name.firstName}} {{name.lastName}}',
-        email: 'bla@stmary.com',//'{{internet.email}}',
+        username: 'admin',//'{{internet.username}}',
         password: '12345', //'{{internet.password}}'
         status: 'CONFIRMED',
         role: 'ADMIN',
@@ -16,7 +16,7 @@ module.exports = {
       path: 'users',
       template: {
         name: '{{name.firstName}} {{name.lastName}}',
-        email: '{{internet.email}}',
+        username: '{{internet.userName}}',
         password: '12345', //'{{internet.password}}'
         status: 'PENDING',
         role: 'SERVANT',

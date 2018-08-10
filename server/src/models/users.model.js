@@ -11,18 +11,12 @@ module.exports = function (app) {
       requried: [true, "Missing user's name"],
       minlength: [5, "Name is too short, please choose a name longer than 5 letters"]
     },
-    email: {
+    username: {
       type: String,
       unique: true,
       lowercase: true,
       trim: true,
-      requried: [true, "Missing user's email"],
-      validate: {
-        validator: function(value){
-          return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(value);
-        },
-        message: "invalid email"
-      }
+      requried: [true, "Missing username"]
     },
     password: {
       type: String,

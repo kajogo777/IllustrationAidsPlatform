@@ -1,12 +1,12 @@
 import client from '../feathers';
 import { prompt } from '../actions/prompt-actions';
 
-// export function addUser(name, email, password, mobileNumber){
+// export function addUser(name, username, password, mobileNumber){
 //   return {
 //     type: 'ADD_USER',
 //     payload: client.service("users").create({
 //       name: name,
-//       email: email,
+//       username: username,
 //       password: password,
 //       mobileNumber: mobileNumber,
 //       role: 'SERVANT',
@@ -15,7 +15,7 @@ import { prompt } from '../actions/prompt-actions';
 //   }
 // }
 
-export function addUser(name, email, password, mobileNumber){
+export function addUser(name, username, password, mobileNumber){
   return (dispatch) => {
     dispatch({
       type: 'ADD_USER',
@@ -23,7 +23,7 @@ export function addUser(name, email, password, mobileNumber){
         promise: new Promise((resolve, reject) => {
           client.service("users").create({
             name: name,
-            email: email,
+            username: username,
             password: password,
             mobileNumber: mobileNumber,
             role: 'SERVANT',
