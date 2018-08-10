@@ -18,8 +18,8 @@ module.exports = function () {
             reconnectTries: Number.MAX_VALUE,
           }, function(err) {
             if (err) {
-              console.error('Failed to connect to mongo on startup - retrying in 3 sec', err);
-              setTimeout(connectWithRetry, 3000);
+              console.error('Failed to connect to mongo on startup - retrying in 1 sec', err);
+              setTimeout(connectWithRetry, 1000);
             }
           });
   };

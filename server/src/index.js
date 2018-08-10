@@ -12,10 +12,52 @@ server.on('listening', () =>
   logger.info('Feathers application started on http://%s:%d', app.get('host'), port)
 );
 
+const seedPromise = app.seed();
+const removeReservationsPromise = app.service('reservations').remove(id=null);
 
-// seed values for development
-app.seed().then(() => {
+Promise.all([
+  seedPromise,
+  removeReservationsPromise
+])
+.then(() => {
+  const usersPromise = app.service('users').find();
+  const aidsPromise = app.service('users').find();
+
+  Promise.all([
+    usersPromise,
+    aidsPromise
+  ])
+  .then((values) => {
+    users = values[0].data;
+    aids  = values[1].data;
+
+    let faker = require('faker');
+
+    for(let i = 0; i < 15; i++){
+      user = faker.random.arrayElement(users);
+      aid  = faker.random.arrayElement(aids);
+
+      let date_reserved = faker.date.past();
+      let pickup_date = faker.date.past(1, date_reserved)
+
+      pickup_date.setDate(pickup_date.getDate() + (5+(7-pickup_date.getDay())) % 7);
+
+      app.service('reservations').create({
+        aid_id: user._id,
+        user_id: aid._id,
+        pickup_date: pickup_date,
+        returned: faker.random.boolean(),
+        date_reserved: date_reserved
+      });
+      console.log("info: after: reservaions - Method: create\n");
+    }
+
+
+  })
+  .catch(err => console.log(err));
+
   logger.info('Seed values created');
-}).catch(err => {
+})
+.catch(err => {
   logger.info('seed values creation failed ', err);
 });
