@@ -12,8 +12,8 @@ class App extends React.Component {
   render() {
     return (
       <div ref={contextRef => !this.state.contextRef && this.setState({ contextRef })}>
-        <NavigationBar contextRef={this.state.contextRef}/>
-        <MainBody/>
+        <NavigationBar/>
+        <MainBody contextRef={this.state.contextRef}/>
       </div>
     );
   }

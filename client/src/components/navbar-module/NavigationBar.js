@@ -1,16 +1,12 @@
 import React from 'react';
 import {
-  Menu,
-  Container,
-  Segment,
-  Sticky
+  Menu
 } from 'semantic-ui-react';
 import {
   Link
 } from 'react-router-dom'
 import PrivateRoute from '../PrivateRoute';
 import AdminRoute from '../AdminRoute';
-import SearchField from './SearchField';
 import ManageAccountMenu from './ManageAccountMenu';
 import ManageAidsMenu from './ManageAidsMenu';
 import ManageUsersMenu from './ManageUsersMenu';
@@ -44,15 +40,6 @@ function NavigationBar(props){
           </Menu.Item>
         </Menu.Menu>
       </Menu>
-      <PrivateRoute path="/aidgrid">
-        <Container text>
-          <Sticky context={props.contextRef} offset={0} className="top-sticky">
-            <Segment>
-              <SearchField/>
-            </Segment>
-          </Sticky>
-        </Container>
-      </PrivateRoute>
     </div>
   );
 }

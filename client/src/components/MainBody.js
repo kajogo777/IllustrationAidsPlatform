@@ -27,13 +27,11 @@ class MainBody extends React.Component{
   render(){
     return(
       <div>
-        <br/>
         <PromptBanner/>
-        <br/>
         <Switch>
 
           <PrivateRoute path="/aidgrid">
-            <AidContainer component={AidCardGrid}/>
+            <AidContainer component={AidCardGrid} contextRef={this.props.contextRef}/>
           </PrivateRoute>
 
           <PrivateRoute path="/registration">

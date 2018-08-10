@@ -17,7 +17,7 @@ class ManageUsersMenu extends React.Component {
               <Link to="/registration">Requests</Link>
             </Dropdown.Item>
             <Dropdown.Item>
-              <Link to="/users">Edit users</Link>
+              <Link to="/users">All Users</Link>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

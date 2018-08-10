@@ -14,10 +14,10 @@ class ManageAidsMenu extends React.Component {
         <Dropdown item text='Manage Aids'>
           <Dropdown.Menu>
             <Dropdown.Item>
-              <Link to="/aids">View aids</Link>
+              <Link to="/aids">All Aids</Link>
             </Dropdown.Item>
             <Dropdown.Item>
-              <Link to="/reservations">View reservations</Link>
+              <Link to="/reservations">All Reservations</Link>
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
