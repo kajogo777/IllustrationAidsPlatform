@@ -34,6 +34,8 @@ services:
     links:
       - db
     environment:
+      - ADMIN_PASSWORD
+      - ADMIN_NUMBER
       - MONGODB_USERNAME
       - MONGODB_PASSWORD
       - MONGODB_DATABASE=stmary
