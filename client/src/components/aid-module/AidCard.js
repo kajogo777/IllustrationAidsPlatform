@@ -11,7 +11,7 @@ import {
 function AidCard(props){
   return(
     <Card centered raised>
-      <Image src={"api/uploads/" + props.image} />
+      <Image src={"api/uploads/" + props.image} size='huge' />
       <Card.Content>
         <Card.Header>
           {props.name}
@@ -25,20 +25,21 @@ function AidCard(props){
           {props.description}
         </Card.Description>
       </Card.Content>
-      <Card.Content extra>
-        <Button.Group attached fluid>
-          <Button color='green' disabled={props.reserved}>
-            <Icon name="in cart"/>
-            Reserve
-          </Button>
-          <Button basic color='blue'>
-            <Icon name="bookmark"/>
-            Tag
-          </Button>
-        </Button.Group>
-      </Card.Content>
     </Card>
   );
 }
 
 export default AidCard;
+
+// <Card.Content extra>
+//   <Button.Group attached fluid>
+//     <Button color='green' disabled={props.reserved}>
+//       <Icon name="in cart"/>
+//       Reserve
+//     </Button>
+//     <Button basic color='blue'>
+//       <Icon name="bookmark"/>
+//       Tag
+//     </Button>
+//   </Button.Group>
+// </Card.Content>
