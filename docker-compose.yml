@@ -6,8 +6,8 @@ services:
     image: 'bitnami/mongodb:latest'
     restart: always
     environment:
-      - MONGODB_USERNAME=stmary
-      - MONGODB_PASSWORD=stmary
+      - MONGODB_USERNAME
+      - MONGODB_PASSWORD
       - MONGODB_DATABASE=stmary
     volumes:
       - ./data/db:/data/db
@@ -29,8 +29,8 @@ services:
     links:
       - db
     environment:
-      - MONGODB_USERNAME=stmary
-      - MONGODB_PASSWORD=stmary
+      - MONGODB_USERNAME
+      - MONGODB_PASSWORD
       - MONGODB_DATABASE=stmary
     command: npm start
     volumes:
