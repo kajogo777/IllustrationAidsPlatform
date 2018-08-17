@@ -13,6 +13,6 @@ client.configure(authentication({
   storage: window.localStorage
 }));
 
-client.service('uploads').timeout = 120000;
+client.service('uploads').timeout = 60000;
 
 export default client;
