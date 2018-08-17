@@ -5,7 +5,8 @@ import {
   Button,
   Icon,
   Modal,
-  Form
+  Form,
+  Pagination
 } from 'semantic-ui-react';
 
 
@@ -248,3 +249,12 @@ class ReservationsPanel extends React.Component{
 }
 
 export default ReservationsPanel;
+
+// pagination example
+// <Table.Footer>
+//   <Table.Row>
+//     <Table.HeaderCell colSpan='7'>
+//       <Pagination defaultActivePage={1} totalPages={10} />
+//     </Table.HeaderCell>
+//   </Table.Row>
+// </Table.Footer>
