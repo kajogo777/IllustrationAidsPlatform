@@ -48,7 +48,7 @@ services:
   proxy:
     image: nginx:alpine
     ports:
-      - 8000:80
+      - 80:80
     links:
       - server
       - client
