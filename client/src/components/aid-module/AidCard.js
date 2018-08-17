@@ -2,8 +2,8 @@ import React from 'react';
 import {
   Card,
   Image,
-  Icon,
-  Button
+  // Icon,
+  // Button
 } from 'semantic-ui-react';
 
 //after deployment remove absolute urls
