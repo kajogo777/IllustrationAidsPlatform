@@ -1,6 +1,7 @@
 import { connect }from 'react-redux';
 import UniversalContainer from './UniversalContainer';
 import { fetchAids, filterAids, clearFilter, fetchTags, addTag } from '../actions/aids-actions';
+import { getAidReservations, addReservation } from '../actions/reservations-actions';
 
 function filterRows(list, filters){
   let listTemp = list.map((item) => {
@@ -30,6 +31,7 @@ function mapStateToProps (state){
   return {
     aids: filterRows(state.aidStore.aids, state.aidStore.filters),
     tags: getTags(state.aidStore.tags),
+    selected_reservations: state.reservationStore.selected_reservations,
     // upload: state.uploadStore.upload,
     // uploadStatus: state.uploadStore.uploadStatus
   };
@@ -49,6 +51,12 @@ function mapDispatchToProps (dispatch){
     },
     addTag: (name) => {
       dispatch(addTag(name))
+    },
+    addReservation: (reservation) => {
+      dispatch(addReservation(reservation))
+    },
+    getAidReservations: (aid_id) => {
+      dispatch(getAidReservations(aid_id))
     }
   };
 }

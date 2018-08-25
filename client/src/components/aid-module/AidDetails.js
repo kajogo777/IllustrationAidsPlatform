@@ -6,7 +6,7 @@ import {
   Label,
   Button,
   Icon,
-  Grid
+  Dropdown
 } from 'semantic-ui-react';
 
 import 'react-dates/initialize';
@@ -21,22 +21,47 @@ class AidDetails extends React.Component{
 
     let state = {
       date: null,
-      focused: false
+      focused: false,
+      duration_in_weeks: 1
     };
 
     this.state = state;
   }
 
-  getRandomColor(){
+  componentDidMount(){
+    this.props.getAidReservations(this.props.item._id);
+  }
+
+  getRandomColor = () => {
     return colors[Math.floor(Math.random()*colors.length)];
   }
 
-  isBlocked(date){
-    if(date.weekday() == 5){
-      return false;
-    }else{
+  isBlocked = (date) => {
+    if(date.weekday() !== 5)
       return true;
+
+    for(let i in this.props.reservations){
+      let res = this.props.reservations[i];
+      let startDate = new Date(res.pickup_date);
+      let endDate = new Date(res.pickup_date);
+      endDate.setDate(endDate.getDate() + res.duration_in_weeks*7);
+
+      let d = date.toDate();
+
+      if(startDate <= d && d < endDate)
+        return true;
     }
+
+    return false;
+  }
+
+  handleReserve = () => {
+    this.props.addReservation({
+      human_id: this.props.item.human_id,
+      aid_id: this.props.item._id,
+      pickup_date: this.state.date,
+      duration_in_weeks: this.state.duration_in_weeks
+    });
   }
 
   render(){
@@ -76,11 +101,23 @@ class AidDetails extends React.Component{
             id="your_unique_id"
             numberOfMonths={1}
             openDirection="up"
-            block
             noBorder
+            block
             isDayBlocked={this.isBlocked}
           />
-          <Button color='green' disabled={this.state.date == null} attached='bottom'>
+          <Dropdown
+            disabled={this.state.date == null}
+            options={[
+              {text: '1 Week', value: 1},
+              {text: '2 Weeks', value: 2},
+            ]}
+            value={this.state.duration_in_weeks}
+            onChange={(e, {value}) => this.setState({ duration_in_weeks: value })}
+            fluid
+            closeOnChange
+            selection
+          />
+          <Button color='green' disabled={this.state.date == null} attached='bottom' onClick={this.handleReserve}>
             <Icon name="in cart"/>
             Reserve
           </Button>

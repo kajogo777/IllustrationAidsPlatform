@@ -50,7 +50,13 @@ class AidCardGrid extends React.Component{
           <Container text>
             <Button fluid onClick={(event, data) => this.handleFocus(null)} >Back</Button>
             <Divider clearing />
-            <AidDetails item={this.state.selected} tags={this.props.tags} />
+            <AidDetails
+              item={this.state.selected}
+              reservations={this.props.selected_reservations}
+              tags={this.props.tags}
+              getAidReservations={this.props.getAidReservations}
+              addReservation={this.props.addReservation}
+            />
           </Container>
         </div>
 
