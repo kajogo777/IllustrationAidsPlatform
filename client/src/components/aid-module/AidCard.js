@@ -11,7 +11,7 @@ function AidCard(props){
     <Card centered raised onClick={(event, data) => props.handleFocus(props.item)}>
       <Image src={"api/uploads/" + props.item.image_uri} size='huge' />
       <Card.Content>
-        <Card.Header>
+        <Card.Header textAlign='center'>
           {props.item.name}
         </Card.Header>
         <Card.Meta>
