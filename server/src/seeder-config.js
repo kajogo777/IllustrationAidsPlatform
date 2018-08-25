@@ -1,29 +1,6 @@
 module.exports = {
   services: [
     {
-      path: 'users',
-      template: {
-        name: '{{name.firstName}} {{name.lastName}}',
-        username: 'admin',//'{{internet.username}}',
-        password: '12345', //'{{internet.password}}'
-        status: 'CONFIRMED',
-        role: 'ADMIN',
-        mobileNumber: '01000000000'
-      }
-    },
-    {
-      count: 15,
-      path: 'users',
-      template: {
-        name: '{{name.firstName}} {{name.lastName}}',
-        username: '{{internet.userName}}',
-        password: '12345', //'{{internet.password}}'
-        status: 'PENDING',
-        role: 'SERVANT',
-        mobileNumber: '01000000000'
-      }
-    },
-    {
       count: 10,
       path: 'aids',
       template: {
@@ -31,7 +8,7 @@ module.exports = {
         description: '{{lorem.sentences}}',
         date_added: '{{date.past}}',
         human_id: '{{random.uuid}}',
-        image_uri: 'c452b19a3f9e03b1f3bfeafa680a8a52c5df34c8ff9db67bd993fde29567648e.jpeg',
+        image_uri: 'e6f96c905054c64d9cae1c5b3739682291c8359e6d1408f6898f6e603ba96f0b.png',
         tags: () => {
           let faker = require('faker');
 

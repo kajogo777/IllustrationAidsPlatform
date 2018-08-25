@@ -33,3 +33,5 @@ server.on('listening', () => {
   });
 
 });
+
+//app.seed().then(()=> console.log("seed values added"));
