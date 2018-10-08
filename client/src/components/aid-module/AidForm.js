@@ -27,6 +27,7 @@ class AidForm extends React.Component{
         'name': props.aid.name,
         'description': props.aid.description,
         'date_added': props.aid.date_added,
+        'location': props.aid.location,
         'reserved': props.aid.reserved,
         'tags': props.aid.tags,
         'image_uri': props.aid.image_uri
@@ -139,6 +140,7 @@ class AidForm extends React.Component{
       'human_id': this.state.aid.human_id,
       'name': this.state.aid.name,
       'description': this.state.aid.description,
+      'location': this.state.aid.location,
       'tags': this.state.aid.tags,
       'image_uri': this.state.aid.image_uri
     }
@@ -216,6 +218,13 @@ class AidForm extends React.Component{
             name='description'
             value={this.state.aid.description}
             onChange={(e) => { this.handleChange('description', e.target.value) }}
+          />
+          <Form.Input
+            label='Location'
+            placeholder='location'
+            name='location'
+            value={this.state.aid.location}
+            onChange={(e) => { this.handleChange('location', e.target.value) }}
           />
           <Form.Dropdown
             label='Tags'
