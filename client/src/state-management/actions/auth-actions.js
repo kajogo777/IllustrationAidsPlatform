@@ -10,12 +10,19 @@ export function logout(){
   };
 }
 
-export function login(username, password){
-  const userPromise = client.authenticate({
-    strategy: 'local',
-    username: username,
-    password: password
-  })
+export function login(username, password, jwt){
+  let userPromise = null;
+
+  if(jwt == null)
+    userPromise = client.authenticate({
+      strategy: 'local',
+      username: username,
+      password: password
+    });
+  else
+    userPromise = client.authenticate();
+
+  userPromise
   .then(response => {
     return client.passport.verifyJWT(response.accessToken);
   })
@@ -24,6 +31,7 @@ export function login(username, password){
     return client.service('users').get(payload.userId);
   })
   .catch(err => {
+    console.log(err);
     store.dispatch(prompt("Log in Failed: " + err.message, "failure", null, 5));
     return new Promise((res, rej)=>{
       rej(err);

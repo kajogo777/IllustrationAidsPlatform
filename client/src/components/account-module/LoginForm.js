@@ -36,6 +36,12 @@ class LoginForm extends React.Component{
   }
 
   render(){
+    let jwt = localStorage.getItem('feathers-jwt');
+
+    if (jwt) {
+      this.props.login(null, null, jwt);
+    }
+
     if(this.props.auth.user){
       return <Redirect to='/aidgrid' />
     }

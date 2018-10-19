@@ -12,8 +12,8 @@ function mapStateToProps (state, ownProps){
 
 function mapDispatchToProps (dispatch){
   return {
-    login: (username, password) => {
-      dispatch(login(username, password))
+    login: (username=null, password=null, jwt=null) => {
+      dispatch(login(username, password, jwt))
     },
     logout: () => {
       dispatch(logout())
