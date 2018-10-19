@@ -3,23 +3,6 @@ import UniversalContainer from './UniversalContainer';
 import { fetchAids, addAid, updateAid, deleteAid, filterAids, clearFilter, fetchTags, addTag } from '../actions/aids-actions';
 import { uploadFile } from '../actions/upload-actions';
 
-function filterRows(list, filters){
-  let listTemp = list.map((item) => {
-    return Object.assign(item, {
-      date_added: (new Date(item.date_added)).toISOString().split('T')[0]
-    })
-  })
-
-  const filterKeys = Object.keys(filters);
-  return listTemp.filter((row) => {
-    return filterKeys.reduce((acc, key) => {
-      if(key === 'tags')
-        return !filters[key].some(val => row[key].indexOf(val) === -1);
-      return acc && (""+row[key]).toLowerCase().indexOf(filters[key].toLowerCase()) !== -1;
-    } , true);
-  });
-}
-
 function getTags(list){
   if(list)
     return list.map( item => { return { key: item.tag, value: item.tag, text: item.tag } } );
@@ -29,7 +12,7 @@ function getTags(list){
 
 function mapStateToProps (state){
   return {
-    aids: filterRows(state.aidStore.aids, state.aidStore.filters),
+    aids: state.aidStore.aids,
     tags: getTags(state.aidStore.tags),
     // upload: state.uploadStore.upload,
     // uploadStatus: state.uploadStore.uploadStatus
@@ -38,9 +21,12 @@ function mapStateToProps (state){
 
 function mapDispatchToProps (dispatch){
   return {
-    onLoad: () => {
-      dispatch(fetchAids())
+    onLoad: (limit) => {
+      dispatch(fetchAids(0, limit))
       dispatch(fetchTags())
+    },
+    fetchAids: (offset, limit, terms) => {
+      dispatch(fetchAids(offset, limit, terms))
     },
     addAid: (aid, file) => {
       dispatch(addAid(aid, file))

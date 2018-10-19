@@ -39,9 +39,12 @@ function mapStateToProps (state){
 
 function mapDispatchToProps (dispatch){
   return {
-    onLoad: () => {
-      dispatch(fetchAids())
+    onLoad: (limit) => {
+      dispatch(fetchAids(0, limit))
       dispatch(fetchTags())
+    },
+    fetchAids: (offset, limit, terms) => {
+      dispatch(fetchAids(offset, limit, terms))
     },
     filterAids: (field, value) => {
       dispatch(filterAids(field, value))

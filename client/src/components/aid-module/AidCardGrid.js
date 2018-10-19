@@ -19,7 +19,9 @@ class AidCardGrid extends React.Component{
 
     let state = {
       selected: null,
-      tagsFilter: [],
+      tags: [],
+      offset: 0,
+      limit: 20,
     };
 
     this.state = state;
@@ -28,14 +30,15 @@ class AidCardGrid extends React.Component{
   handleFocus = (aid) => this.setState({ selected: aid })
 
   handleChange = (event) => {
-    this.setState({
-      tagsFilter: event.target.value,
-    });
-    this.props.filterAids("tags", event.target.value);
+    const filters = {
+      tags: event.target.value,
+    };
+    this.setState(filters);
+    this.props.fetchAids(this.state.offset, this.state.limit, filters);
   };
 
   componentDidMount(){
-    this.props.onLoad();
+    this.props.onLoad(this.state.limit);
   }
 
   render(){
@@ -66,7 +69,7 @@ class AidCardGrid extends React.Component{
             <Container text>
               <Sticky context={this.props.contextRef} offset={0} className="top-sticky">
                 <Segment>
-                  <SearchField tags={this.props.tags} tagsFilter={this.state.tagsFilter} filterAids={this.handleChange} />
+                  <SearchField tags={this.props.tags} tagsFilter={this.state.tags} filterAids={this.handleChange} />
                 </Segment>
               </Sticky>
             </Container>

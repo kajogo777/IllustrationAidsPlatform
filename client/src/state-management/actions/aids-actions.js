@@ -2,10 +2,28 @@ import client from '../feathers';
 import { prompt } from '../actions/prompt-actions';
 
 
-export function fetchAids(){
+export function fetchAids(offset=0, limit=30, terms={}){
+  let searchItems = Object.assign({},
+    ...Object.keys(terms).map(
+      item => {
+        if(item === "tags")
+          return { [item]: { '$all': terms[item] } };
+        return { [item]: { '$like': terms[item] } };
+      }
+    )
+  );
   return {
     type: 'FETCH_AIDS',
-    payload: client.service("aids").find({})
+    payload: client.service("aids").find({
+      query: {
+        $sort: {
+          date_added: -1
+        },
+        $limit: limit,
+        $skip: offset,
+        ...searchItems
+      }
+    })
   }
 }
 

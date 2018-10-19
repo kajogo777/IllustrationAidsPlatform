@@ -1,7 +1,7 @@
 module.exports = {
   services: [
     {
-      count: 10,
+      count: 200,
       path: 'aids',
       template: {
         name: '{{commerce.productName}}',

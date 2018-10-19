@@ -4,6 +4,7 @@ import {
   Table,
   Label,
   Dropdown,
+  Pagination,
 } from 'semantic-ui-react';
 import AidForm from './AidForm'
 
@@ -14,7 +15,7 @@ function AidRow(props){
         <Table.HeaderCell>{props.aid.human_id}</Table.HeaderCell>
         <Table.HeaderCell>{props.aid.name}</Table.HeaderCell>
         <Table.HeaderCell>{props.aid.description.substring(0,30)}{props.aid.description.length > 30 ? "..." : ""}</Table.HeaderCell>
-        <Table.HeaderCell>{props.aid.date_added}</Table.HeaderCell>
+        <Table.HeaderCell>{props.aid.date_added.split("T")[0]}</Table.HeaderCell>
         <Table.HeaderCell>{props.aid.location}</Table.HeaderCell>
         <Table.HeaderCell>{props.aid.reserved ? 'Yes' : 'No'}</Table.HeaderCell>
         <Table.HeaderCell>
@@ -45,21 +46,33 @@ class FilterRow extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      human_idFilter: '',
-      nameFilter: '',
-      reservedNumberFilter: '',
-      date_addedFilter: '',
-      locationFilter: '',
-      reservedFilter: '',
-      tagsFilter: []
+      filter: {
+        human_id: '',
+        name: '',
+        reservedNumber: '',
+        location: '',
+        reserved: '',
+        tags: []
+      },
+
+      offset: 0,
+      limit: 10,
     };
   }
 
   handleChange(field, event){
+    const filters = Object.assign({},
+      this.state.filter,
+      { [field]: event.target.value }
+    );
     this.setState({
-      [field + "Filter"]: event.target.value
+      filter: filters
     });
-    this.props.filterAids(field, event.target.value);
+    this.props.fetchAids(this.state.offset, this.state.limit, filters);
+  }
+
+  componentDidMount(){
+    this.props.onLoad(this.state.limit);
   }
 
   render(){
@@ -70,7 +83,7 @@ class FilterRow extends React.Component{
             fluid
             type="human_id"
             placeholder='id filter'
-            value={this.state.human_idFilter}
+            value={this.state.filter.human_id}
             onChange={(e) => { this.handleChange("human_id", e) }}
           />
         </Table.Cell>
@@ -79,33 +92,26 @@ class FilterRow extends React.Component{
             fluid
             type="name"
             placeholder='name filter'
-            value={this.state.nameFilter}
+            value={this.state.filter.name}
             onChange={(e) => { this.handleChange("name", e) }}
           />
         </Table.Cell>
         <Table.Cell/>
         <Table.Cell>
-          <Input
-            fluid
-            type="date_added"
-            placeholder='date filter'
-            value={this.state.date_addedFilter}
-            onChange={(e) => { this.handleChange("date_added", e) }}
-          />
         </Table.Cell>
         <Table.Cell>
           <Input
             fluid
             type="location"
             placeholder='location filter'
-            value={this.state.locationFilter}
+            value={this.state.filter.location}
             onChange={(e) => { this.handleChange("location", e) }}
           />
         </Table.Cell>
         <Table.Cell>
           <Dropdown
             fluid
-            value={this.state.reservedFilter}
+            value={this.state.filter.reserved}
             options={[
               {key: 'true', value: 'true', text: 'reserved'},
               {key: 'false', value: 'false', text: 'available'},
@@ -122,7 +128,7 @@ class FilterRow extends React.Component{
             search
             selection
             closeOnChange
-            value={this.state.tagsFilter}
+            value={this.state.filter.tags}
             options={this.props.tags}
             onChange={(e, {value}) => { this.handleChange("tags", {target: {value: value}}) }}
           />
@@ -134,9 +140,6 @@ class FilterRow extends React.Component{
 }
 
 class AidsPanel extends React.Component{
-  componentDidMount(){
-    this.props.onLoad();
-  }
 
   componentWillUnmount(){
     this.props.clearFilter();
@@ -167,7 +170,7 @@ class AidsPanel extends React.Component{
         </Table.Header>
 
         <Table.Body>
-          <FilterRow filterAids={this.props.filterAids} tags={this.props.tags} />
+          <FilterRow onLoad={this.props.onLoad} filterAids={this.props.filterAids} fetchAids={this.props.fetchAids} tags={this.props.tags} />
           {
             this.props.aids.map((item) =>
               <AidRow
@@ -183,6 +186,13 @@ class AidsPanel extends React.Component{
             )
           }
         </Table.Body>
+        <Table.Footer>
+          <Table.Row>
+            <Table.HeaderCell colSpan='7'>
+              <Pagination defaultActivePage={1} totalPages={10} />
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Footer>
       </Table>
     );
   }
