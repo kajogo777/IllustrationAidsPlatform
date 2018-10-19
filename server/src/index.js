@@ -8,57 +8,30 @@ process.on('unhandledRejection', (reason, p) =>
   logger.error('Unhandled Rejection at: Promise ', p, reason)
 );
 
-server.on('listening', () =>
-  logger.info('Feathers application started on http://%s:%d', app.get('host'), port)
-);
+server.on('listening', () => {
+  logger.info('Feathers application started on http://%s:%d', app.get('host'), port);
 
-const seedPromise = app.seed();
-const removeReservationsPromise = app.service('reservations').remove(id=null);
+  let user = {
+    name: 'admin stmary',
+    username: 'admin',
+    password: process.env.ADMIN_PASSWORD,
+    status: 'CONFIRMED',
+    role: 'ADMIN',
+    mobileNumber: process.env.ADMIN_NUMBER
+  }
 
-Promise.all([
-  seedPromise,
-  removeReservationsPromise
-])
-.then(() => {
-  const usersPromise = app.service('users').find();
-  const aidsPromise = app.service('aids').find();
+  app.service('users').find({username: 'admin'})
+  .then((result) => {
+    if(result.total == 0)
+      app.service('users').create(user)
+      .then(result => {
+        logger.info("created default admin");
+      })
+      .catch(err => {
+        logger.info('admin creation failed ', err);
+      })
+  });
 
-  Promise.all([
-    usersPromise,
-    aidsPromise
-  ])
-  .then((values) => {
-    users = values[0].data;
-    aids  = values[1].data;
-
-    let faker = require('faker');
-
-    for(let i = 0; i < 6; i++){
-      user = faker.random.arrayElement(users);
-      aid  = aids[i];
-      status = faker.random.arrayElement(['PENDING', 'CHECKED OUT', 'RETURNED', 'OVERDUE']);
-
-      let date_reserved = faker.date.past();
-      let pickup_date = faker.date.past(1, date_reserved);
-
-      pickup_date.setDate(pickup_date.getDate() + (5+(7-pickup_date.getDay())) % 7);
-
-      app.service('reservations').create({
-        human_id: aid.human_id,
-        aid_id: aid._id,
-        username: user.username,
-        user_id: user._id,
-        pickup_date: pickup_date,
-        date_reserved: date_reserved,
-        status: status
-      });
-      console.log("info: after: reservaions - Method: create\n");
-    }
-  })
-  .catch(err => console.log(err));
-
-  logger.info('Seed values created');
-})
-.catch(err => {
-  logger.info('seed values creation failed ', err);
 });
+
+//app.seed().then(()=> console.log("seed values added"));

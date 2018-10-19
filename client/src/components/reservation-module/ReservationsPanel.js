@@ -6,7 +6,7 @@ import {
   Icon,
   Modal,
   Form,
-  Pagination
+//  Pagination
 } from 'semantic-ui-react';
 
 

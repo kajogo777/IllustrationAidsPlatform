@@ -1,5 +1,7 @@
 const defaultState = {
   reservations: [],
+  selected_reservations: [],
+  user_reservations: [],
   filters: {
   }
 }
@@ -16,6 +18,29 @@ export default (state=defaultState, action={}) => {
         reservations: action.payload.data
       });
     case 'FETCH_RESERVATIONS_REJECTED':
+      return Object.assign({}, state, {
+        error: action.payload.data
+      });
+
+    //get
+    case 'GET_AID_RESERVATIONS_PENDING':
+      return state;
+    case 'GET_AID_RESERVATIONS_FULFILLED':
+      return Object.assign({}, state, {
+        selected_reservations: action.payload.data
+      });
+    case 'GET_AID_RESERVATIONS_REJECTED':
+      return Object.assign({}, state, {
+        error: action.payload.data
+      });
+    //get
+    case 'GET_USER_RESERVATIONS_PENDING':
+      return state;
+    case 'GET_USER_RESERVATIONS_FULFILLED':
+      return Object.assign({}, state, {
+        user_reservations: action.payload.data
+      });
+    case 'GET_USER_RESERVATIONS_REJECTED':
       return Object.assign({}, state, {
         error: action.payload.data
       });

@@ -1,4 +1,4 @@
 uploads-store/
 data/
 packade-lock.json
-app.env
+.env

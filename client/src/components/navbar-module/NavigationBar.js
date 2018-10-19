@@ -20,7 +20,7 @@ function NavigationBar(props){
         </Menu.Item>
         <Menu.Item header>
           <Link to="/aidgrid">
-            St. Mary Illustration Aids Library
+            St. Mary Illustration Aids Library (alpha)
           </Link>
         </Menu.Item>
         <Menu.Menu position='right'>

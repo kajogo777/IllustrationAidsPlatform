@@ -15,6 +15,7 @@ function AidRow(props){
         <Table.HeaderCell>{props.aid.name}</Table.HeaderCell>
         <Table.HeaderCell>{props.aid.description.substring(0,30)}{props.aid.description.length > 30 ? "..." : ""}</Table.HeaderCell>
         <Table.HeaderCell>{props.aid.date_added}</Table.HeaderCell>
+        <Table.HeaderCell>{props.aid.location}</Table.HeaderCell>
         <Table.HeaderCell>{props.aid.reserved ? 'Yes' : 'No'}</Table.HeaderCell>
         <Table.HeaderCell>
           <Label.Group>
@@ -48,6 +49,7 @@ class FilterRow extends React.Component{
       nameFilter: '',
       reservedNumberFilter: '',
       date_addedFilter: '',
+      locationFilter: '',
       reservedFilter: '',
       tagsFilter: []
     };
@@ -89,6 +91,15 @@ class FilterRow extends React.Component{
             placeholder='date filter'
             value={this.state.date_addedFilter}
             onChange={(e) => { this.handleChange("date_added", e) }}
+          />
+        </Table.Cell>
+        <Table.Cell>
+          <Input
+            fluid
+            type="location"
+            placeholder='location filter'
+            value={this.state.locationFilter}
+            onChange={(e) => { this.handleChange("location", e) }}
           />
         </Table.Cell>
         <Table.Cell>
@@ -140,6 +151,7 @@ class AidsPanel extends React.Component{
            <Table.HeaderCell>Name</Table.HeaderCell>
            <Table.HeaderCell>Description</Table.HeaderCell>
            <Table.HeaderCell>Date Added</Table.HeaderCell>
+           <Table.HeaderCell>Location</Table.HeaderCell>
            <Table.HeaderCell>Reserved</Table.HeaderCell>
            <Table.HeaderCell>Tags</Table.HeaderCell>
            <Table.HeaderCell>

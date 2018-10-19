@@ -8,6 +8,7 @@
     "@feathersjs/socketio-client": "^1.1.0",
     "material-ui": "^0.19.4",
     "react": "^16.4.1",
+    "react-dates": "^17.2.0",
     "react-dom": "^16.4.1",
     "react-dropzone": "^4.2.11",
     "react-redux": "^5.0.7",

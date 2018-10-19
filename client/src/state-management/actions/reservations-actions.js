@@ -9,6 +9,20 @@ export function fetchReservations(){
   }
 }
 
+export function getUserReservations(user_id){
+  return {
+    type: 'GET_USER_RESERVATIONS',
+    payload: client.service("reservations").find({query: {user_id: user_id}})
+  }
+}
+
+export function getAidReservations(aid_id){
+  return {
+    type: 'GET_AID_RESERVATIONS',
+    payload: client.service("reservations").find({query: {aid_id: aid_id}})
+  }
+}
+
 export function addReservation(reservation){
   return (dispatch) => {
     dispatch({

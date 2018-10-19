@@ -8,6 +8,7 @@ module.exports = function (app) {
   const aids = new Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
+    location: { type: String },
     date_added: { type: Date, default: Date.now },
     reserved: { type: Boolean, default: false},
     human_id: { type: String, required: true},
