@@ -32,10 +32,13 @@ export function login(username, password, jwt){
     return client.service('users').get(payload.userId);
   })
   .catch(err => {
-    store.dispatch(prompt("Log in Failed: " + err.message, "failure", null, 5));
-    return new Promise((res, rej)=>{
-      rej(err);
-    });
+    if(jwt == null){
+      store.dispatch(prompt("Log in Failed: " + err.message, "failure", null, 5));
+      return new Promise((res, rej)=>{
+        rej(err);
+      });
+    }
+    client.logout();
   });
 
   return {

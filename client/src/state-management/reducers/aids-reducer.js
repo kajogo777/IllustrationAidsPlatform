@@ -13,7 +13,10 @@ export default (state=defaultState, action={}) => {
       return state;
     case 'FETCH_AIDS_FULFILLED':
       return Object.assign({}, state, {
-        aids: action.payload.data
+        aids: action.payload.data,
+        aids_total: action.payload.total,
+        aids_skip: action.payload.skip,
+        aids_limit: action.payload.limit
       });
     case 'FETCH_AIDS_REJECTED':
       return Object.assign({}, state, {

@@ -5,7 +5,9 @@ import {
   Segment,
   Sticky,
   Button,
-  Divider
+  Divider,
+  Pagination,
+  Table,
 } from 'semantic-ui-react';
 import AidCard from './AidCard';
 import SearchField from './SearchField';
@@ -20,7 +22,6 @@ class AidCardGrid extends React.Component{
     let state = {
       selected: null,
       tags: [],
-      offset: 0,
       limit: 20,
     };
 
@@ -34,8 +35,13 @@ class AidCardGrid extends React.Component{
       tags: event.target.value,
     };
     this.setState(filters);
-    this.props.fetchAids(this.state.offset, this.state.limit, filters);
+    this.props.fetchAids(0, this.state.limit, filters);
   };
+
+  handlePaginationChange = (e, { activePage }) => {
+    const newSkip = (activePage - 1) * this.props.limit;
+    this.props.fetchAids(newSkip, this.props.limit, { tags: this.state.tags });
+  }
 
   componentDidMount(){
     this.props.onLoad(this.state.limit);
@@ -85,8 +91,25 @@ class AidCardGrid extends React.Component{
                 )
               }
             </Card.Group>
-          </div>
 
+            <Table basic='very' stackable  textAlign='center'>
+              <Table.Footer>
+                <Table.Row>
+                  <Table.HeaderCell colSpan='7'>
+                    <Pagination
+                      activePage={Math.floor(this.props.skip/this.props.limit) + 1}
+                      totalPages={Math.ceil(this.props.total/this.props.limit)}
+                      onPageChange={this.handlePaginationChange}
+                      boundaryRange={0}
+                      prevItem={null}
+                      nextItem={null}
+                      ellipsisItem={null}
+                    />
+                  </Table.HeaderCell>
+                </Table.Row>
+              </Table.Footer>
+            </Table>
+          </div>
         }
         <div>
           <br/>

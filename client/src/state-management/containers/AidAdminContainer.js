@@ -13,6 +13,9 @@ function getTags(list){
 function mapStateToProps (state){
   return {
     aids: state.aidStore.aids,
+    total: state.aidStore.aids_total,
+    skip: state.aidStore.aids_skip,
+    limit: state.aidStore.aids_limit,
     tags: getTags(state.aidStore.tags),
     // upload: state.uploadStore.upload,
     // uploadStatus: state.uploadStore.uploadStatus
