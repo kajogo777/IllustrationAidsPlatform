@@ -34,4 +34,4 @@ server.on('listening', () => {
 
 });
 
-app.seed().then(()=> console.log("seed values added"));
+//app.seed().then(()=> console.log("seed values added"));
