@@ -16,11 +16,11 @@ function NavigationBar(props){
     <div>
       <Menu attached='top' size="huge" compact stackable>
         <Menu.Item>
-          <img src="church-logo.jpg" alt={"logo"}/>
+          <img src="family-logo.jpg" alt={"logo"} style={{"width": 120}}/>
         </Menu.Item>
         <Menu.Item header>
           <Link to="/aidgrid">
-            St. Mary Illustration Aids Library (alpha)
+            St. Mary Illustration Aids Library
           </Link>
         </Menu.Item>
         <Menu.Menu position='right'>
