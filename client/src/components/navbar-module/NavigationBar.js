@@ -16,7 +16,7 @@ function NavigationBar(props){
     <div>
       <Menu attached='top' size="huge" compact stackable>
         <Menu.Item>
-          <img src="family-logo.jpg" alt={"logo"} style={{"width": 120}}/>
+          <img src="family-logo.jpg" alt={"logo"} style={{"width": 90}}/>
         </Menu.Item>
         <Menu.Item header>
           <Link to="/aidgrid">
