@@ -30,7 +30,9 @@ class AidForm extends React.Component{
         'location': props.aid.location,
         'reserved': props.aid.reserved,
         'tags': props.aid.tags,
-        'image_uri': props.aid.image_uri
+        'image_uri': props.aid.image_uri,
+        'url': props.aid.url,
+        'type': props.aid.type
       };
     }else{
       state.newAid = true;
@@ -38,6 +40,7 @@ class AidForm extends React.Component{
         'human_id': '',
         'name': '',
         'description': '',
+        'type': props.types[0].value,
         'tags': []
       };
     }
@@ -142,7 +145,9 @@ class AidForm extends React.Component{
       'description': this.state.aid.description,
       'location': this.state.aid.location,
       'tags': this.state.aid.tags,
-      'image_uri': this.state.aid.image_uri
+      'image_uri': this.state.aid.image_uri,
+      'url': this.state.aid.url,
+      'type': this.state.aid.type
     }
     this.props.duplicateAid(aid, aid.image_uri);
     this.handleClose();
@@ -156,6 +161,11 @@ class AidForm extends React.Component{
         marginRight: 'auto'
       }
     };
+
+    const isDigital = this.state.aid.type == 'DIGITAL';
+    if( isDigital ){
+      this.state.aid.location = "";
+    }
 
     return (
       <Modal trigger={
@@ -219,12 +229,31 @@ class AidForm extends React.Component{
             value={this.state.aid.description}
             onChange={(e) => { this.handleChange('description', e.target.value) }}
           />
+          {
+            ! isDigital ?
+            <Form.Input
+              label='Location'
+              placeholder='location'
+              name='location'
+              value={this.state.aid.location}
+              onChange={(e) => { this.handleChange('location', e.target.value) }}
+            />
+            : null
+          }
           <Form.Input
-            label='Location'
-            placeholder='location'
-            name='location'
-            value={this.state.aid.location}
-            onChange={(e) => { this.handleChange('location', e.target.value) }}
+            label='URL'
+            placeholder='url'
+            name='url'
+            value={this.state.aid.url}
+            onChange={(e) => { this.handleChange('url', e.target.value) }}
+          />
+          <Form.Dropdown
+            label='Type'
+            placeholder='type'
+            selection
+            value={this.state.aid.type}
+            options={this.props.types}
+            onChange={(e, {value}) => { this.handleChange("type", value) }}
           />
           <Form.Dropdown
             label='Tags'
@@ -252,7 +281,7 @@ class AidForm extends React.Component{
               </Button>
           }
           {
-            this.state.newAid ?
+            this.state.newAid || this.state.aid.type == 'DIGITAL' ?
               null
             :
               <Button color='blue' onClick={this.handleDuplicate}>

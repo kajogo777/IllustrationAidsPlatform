@@ -10,6 +10,10 @@ function getTags(list){
     return [];
 }
 
+function getTypes(){
+  return ['REGULAR', 'DIGITAL'].map( item => { return { key: item, value: item, text: item } } );
+}
+
 function mapStateToProps (state){
   return {
     aids: state.aidStore.aids,
@@ -17,6 +21,7 @@ function mapStateToProps (state){
     skip: state.aidStore.aids_skip,
     limit: state.aidStore.aids_limit,
     tags: getTags(state.aidStore.tags),
+    types: getTypes(),
     // upload: state.uploadStore.upload,
     // uploadStatus: state.uploadStore.uploadStatus
   };

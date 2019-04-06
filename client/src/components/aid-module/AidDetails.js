@@ -72,7 +72,15 @@ class AidDetails extends React.Component{
           <br/>
           ({this.props.item.date_added})
         </Header>
-        <Segment attached>
+        <Segment attached onClick={()=> window.open(this.props.item.url, "_blank")}>
+          {
+            this.props.item.type == 'DIGITAL' ? 
+              <Label color='violet' ribbon>
+                      <strong> click to use! </strong>
+              </Label>
+            :
+              null
+          }
           <Image fluid src={"api/uploads/" + this.props.item.image_uri}/>
         </Segment>
         <Segment attached>
@@ -91,37 +99,42 @@ class AidDetails extends React.Component{
             )
           }
         </Segment>
-        <div>
-          <SingleDatePicker
-            placeholder='Pickup Date (click)'
-            date={this.state.date}
-            onDateChange={date => this.setState({ date })}
-            focused={this.state.focused}
-            onFocusChange={({ focused }) => this.setState({ focused })}
-            id="your_unique_id"
-            numberOfMonths={1}
-            openDirection="up"
-            noBorder
-            block
-            isDayBlocked={this.isBlocked}
-          />
-          <Dropdown
-            disabled={this.state.date == null}
-            options={[
-              {text: '1 Week', value: 1},
-              {text: '2 Weeks', value: 2},
-            ]}
-            value={this.state.duration_in_weeks}
-            onChange={(e, {value}) => this.setState({ duration_in_weeks: value })}
-            fluid
-            closeOnChange
-            selection
-          />
-          <Button color='green' disabled={this.state.date == null} attached='bottom' onClick={this.handleReserve}>
-            <Icon name="in cart"/>
-            Reserve
-          </Button>
-        </div>
+        {
+          this.props.item.type == 'REGULAR' ?
+          <div>
+            <SingleDatePicker
+              placeholder='Pickup Date (click)'
+              date={this.state.date}
+              onDateChange={date => this.setState({ date })}
+              focused={this.state.focused}
+              onFocusChange={({ focused }) => this.setState({ focused })}
+              id="your_unique_id"
+              numberOfMonths={1}
+              openDirection="up"
+              noBorder
+              block
+              isDayBlocked={this.isBlocked}
+            />
+            <Dropdown
+              disabled={this.state.date == null}
+              options={[
+                {text: '1 Week', value: 1},
+                {text: '2 Weeks', value: 2},
+              ]}
+              value={this.state.duration_in_weeks}
+              onChange={(e, {value}) => this.setState({ duration_in_weeks: value })}
+              fluid
+              closeOnChange
+              selection
+            />
+            <Button color='green' disabled={this.state.date == null} attached='bottom' onClick={this.handleReserve}>
+              <Icon name="in cart"/>
+              Reserve
+            </Button>
+          </div>
+          :
+          null
+        }
       </div>
     );
   }

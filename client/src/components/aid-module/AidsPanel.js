@@ -16,7 +16,9 @@ function AidRow(props){
         <Table.HeaderCell>{props.aid.name}</Table.HeaderCell>
         <Table.HeaderCell>{props.aid.description.substring(0,30)}{props.aid.description.length > 30 ? "..." : ""}</Table.HeaderCell>
         <Table.HeaderCell>{props.aid.date_added.split("T")[0]}</Table.HeaderCell>
+        <Table.HeaderCell>{props.aid.type}</Table.HeaderCell>
         <Table.HeaderCell>{props.aid.location}</Table.HeaderCell>
+        <Table.HeaderCell>{props.aid.url}</Table.HeaderCell>
         <Table.HeaderCell>{props.aid.reserved ? 'Yes' : 'No'}</Table.HeaderCell>
         <Table.HeaderCell>
           <Label.Group>
@@ -35,6 +37,7 @@ function AidRow(props){
             uploadFile={props.uploadFile}
             aid={props.aid}
             tags={props.tags}
+            types={props.types}
           />
 
         </Table.Cell>
@@ -67,6 +70,18 @@ function FilterRow(props){
       <Table.Cell>
       </Table.Cell>
       <Table.Cell>
+        <Dropdown
+          fluid
+          value={props.filter.type}
+          options={[
+            props.types[0],
+            props.types[1],
+            {key: 'all', value: '', text: 'ALL'}
+          ]}
+          onChange={(e, {value}) => { props.handleChange("type", {target: {value: value}}) }}
+        />
+      </Table.Cell>
+      <Table.Cell>
         <Input
           fluid
           type="location"
@@ -76,13 +91,15 @@ function FilterRow(props){
         />
       </Table.Cell>
       <Table.Cell>
+      </Table.Cell>
+      <Table.Cell>
         <Dropdown
           fluid
           value={props.filter.reserved}
           options={[
-            {key: 'true', value: 'true', text: 'reserved'},
-            {key: 'false', value: 'false', text: 'available'},
-            {key: 'all', value: '', text: 'all'}
+            {key: 'true', value: 'true', text: 'RESERVED'},
+            {key: 'false', value: 'false', text: 'AVAILABLE'},
+            {key: 'all', value: '', text: 'ALL'}
           ]}
           onChange={(e, {value}) => { props.handleChange("reserved", {target: {value: value}}) }}
         />
@@ -116,6 +133,7 @@ class AidsPanel extends React.Component{
         reservedNumber: '',
         location: '',
         reserved: '',
+        type: '',
         tags: []
       },
 
@@ -156,7 +174,9 @@ class AidsPanel extends React.Component{
            <Table.HeaderCell>Name</Table.HeaderCell>
            <Table.HeaderCell>Description</Table.HeaderCell>
            <Table.HeaderCell>Date Added</Table.HeaderCell>
+           <Table.HeaderCell>Type</Table.HeaderCell>
            <Table.HeaderCell>Location</Table.HeaderCell>
+           <Table.HeaderCell>URL</Table.HeaderCell>
            <Table.HeaderCell>Reserved</Table.HeaderCell>
            <Table.HeaderCell>Tags</Table.HeaderCell>
            <Table.HeaderCell>
@@ -166,13 +186,14 @@ class AidsPanel extends React.Component{
                addTag={this.props.addTag}
                uploadFile={this.props.uploadFile}
                tags={this.props.tags}
+               types={this.props.types}
              />
            </Table.HeaderCell>
          </Table.Row>
         </Table.Header>
 
         <Table.Body>
-          <FilterRow handleChange={this.handleChange} tags={this.props.tags} filter={this.state.filter} />
+          <FilterRow handleChange={this.handleChange} tags={this.props.tags} filter={this.state.filter} types={this.props.types} />
           {
             this.props.aids.map((item) =>
               <AidRow
@@ -184,13 +205,14 @@ class AidsPanel extends React.Component{
                 uploadFile={this.props.uploadFile}
                 aid={item}
                 tags={this.props.tags}
+                types={this.props.types}
               />
             )
           }
         </Table.Body>
         <Table.Footer>
           <Table.Row>
-            <Table.HeaderCell colSpan='7'>
+            <Table.HeaderCell colSpan='9'>
               <Pagination
                 activePage={Math.floor(this.props.skip/this.props.limit) + 1}
                 totalPages={Math.ceil(this.props.total/this.props.limit)}
