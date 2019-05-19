@@ -14,7 +14,7 @@ services:
       - MONGODB_PASSWORD
       - MONGODB_DATABASE=stmary
     volumes:
-      - ./data/db:/data/db
+      - ./data/db:/bitnami
 
   client:
     image: client
