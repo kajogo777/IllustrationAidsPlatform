@@ -59,7 +59,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./client/build:/var/www/html
-      - uploads-store:/var/www/uploads
+      - upload_store:/var/www/uploads
     restart: always
     depends_on:
       - client
