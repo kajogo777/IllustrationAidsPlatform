@@ -12,7 +12,7 @@ function AidCard(props){
     <Card centered raised onClick={(event, data) => props.handleFocus(props.item)}>
       { props.item.type == 'DIGITAL' ? <Label color='violet' attached='top'>DIGITAL</Label> : null }
 
-      <Image src={"api/uploads/" + props.item.image_uri} size='huge' />
+      <Image src={"uploads/" + props.item.image_uri} size='huge' />
       <Card.Content>
         <Card.Header textAlign='center'>
           {props.item.name}

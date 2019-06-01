@@ -199,7 +199,7 @@ class AidForm extends React.Component{
                 this.state.newAid ?
                   null
                 :
-                  <Image alt="" src={"api/uploads/" + this.state.aid.image_uri} />
+                  <Image alt="" src={"uploads/" + this.state.aid.image_uri} />
               )
             :
               <Image alt="" src={this.state.file} />

@@ -81,7 +81,7 @@ class AidDetails extends React.Component{
             :
               null
           }
-          <Image fluid src={"api/uploads/" + this.props.item.image_uri}/>
+          <Image fluid src={"uploads/" + this.props.item.image_uri}/>
         </Segment>
         <Segment attached>
           {this.props.item.description}
