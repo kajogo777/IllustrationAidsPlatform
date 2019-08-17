@@ -52,7 +52,7 @@ services:
   proxy:
     image: nginx:alpine
     ports:
-      - 8321:80
+      - 80:80
     links:
       - server
       - client
