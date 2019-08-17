@@ -4,10 +4,10 @@ const defaultState = {
   }
 }
 
-export default (state=defaultState, action={}) => {
+export default (state = defaultState, action = {}) => {
   let aids = []
 
-  switch(action.type){
+  switch (action.type) {
     //fetch
     case 'FETCH_AIDS_PENDING':
       return state;
@@ -35,9 +35,9 @@ export default (state=defaultState, action={}) => {
 
     //update
     case 'UPDATE_AID_FULFILLED':
-      for(let i = 0; i < state.aids.length; i++){
+      for (let i = 0; i < state.aids.length; i++) {
         let aid = Object.assign({}, state.aids[i]);
-        if(aid._id === action.payload._id)
+        if (aid._id === action.payload._id)
           aid = Object.assign({}, state.aids[i], action.payload);
         aids.push(aid);
       }
@@ -51,9 +51,9 @@ export default (state=defaultState, action={}) => {
 
     //delete
     case 'DELETE_AID_FULFILLED':
-      for(let i = 0; i < state.aids.length; i++){
+      for (let i = 0; i < state.aids.length; i++) {
         let aid = Object.assign({}, state.aids[i]);
-        if(aid._id !== action.payload._id)
+        if (aid._id !== action.payload._id)
           aids.push(aid);
       }
       return Object.assign({}, state, {
@@ -66,7 +66,7 @@ export default (state=defaultState, action={}) => {
 
     //filter
     case 'FILTER_AIDS':
-      if(action.payload.field === 'clear')
+      if (action.payload.field === 'clear')
         return Object.assign({}, state, {
           filters: {}
         });

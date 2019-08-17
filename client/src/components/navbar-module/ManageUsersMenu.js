@@ -2,28 +2,19 @@ import React from 'react';
 import {
   Dropdown
 } from 'semantic-ui-react';
-import {
-  Link
-} from 'react-router-dom';
 
 
-class ManageUsersMenu extends React.Component {
-  render() {
-    return (
-      <div>
-        <Dropdown item text='Manage Users'>
-          <Dropdown.Menu>
-            <Dropdown.Item>
-              <Link to="/registration">Requests</Link>
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <Link to="/users">All Users</Link>
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      </div>
-    );
-  }
+function ManageUsersMenu(props) {
+  return (
+    <Dropdown item text='Manage Users'>
+      <Dropdown.Menu>
+        <Dropdown.Item text='Requests' onClick={(event, data) => props.history.push("/registration")}>
+        </Dropdown.Item>
+        <Dropdown.Item text='All Users' onClick={(event, data) => props.history.push("/users")}>
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  );
 }
 
 export default ManageUsersMenu;

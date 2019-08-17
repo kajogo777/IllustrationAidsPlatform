@@ -2,41 +2,34 @@ import React from 'react';
 import {
   Dropdown
 } from 'semantic-ui-react';
-import {
-  Link
-} from 'react-router-dom'
 import { AuthContainer } from '../../state-management';
 
 
-function ManageAccountHelper(props){
+function ManageAccountHelper(props) {
   return (
-    <div>
-      <Dropdown item text='Account'>
+    <Dropdown item text={props.auth.user ? props.auth.user.name : "Account"}>
       {
         props.auth.user ?
           <Dropdown.Menu>
             <Dropdown.Item onClick={props.logout}>
               Log out
             </Dropdown.Item>
-            <Dropdown.Item>
-              <Link to="/account">Edit account</Link>
+            <Dropdown.Item text='Edit account' onClick={(event, data) => props.history.push("/account")}>
             </Dropdown.Item>
           </Dropdown.Menu>
-        :
+          :
           <Dropdown.Menu>
-            <Dropdown.Item>
-              <Link to="/login">Log in</Link>
+            <Dropdown.Item text='Log in' onClick={(event, data) => props.history.push("/login")}>
             </Dropdown.Item>
           </Dropdown.Menu>
       }
-      </Dropdown>
-    </div>
+    </Dropdown>
   );
 }
 
-function ManageAccountMenu(props){
+function ManageAccountMenu(props) {
   return (
-    <AuthContainer component={ManageAccountHelper} {...props}/>
+    <AuthContainer component={ManageAccountHelper} {...props} />
   );
 }
 

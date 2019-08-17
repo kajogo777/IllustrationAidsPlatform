@@ -8,15 +8,16 @@ import {
   Divider,
   Pagination,
   Table,
+  Icon
 } from 'semantic-ui-react';
 import AidCard from './AidCard';
 import SearchField from './SearchField';
 import AidDetails from './AidDetails';
 
 
-class AidCardGrid extends React.Component{
+class AidCardGrid extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
 
     let state = {
@@ -43,79 +44,91 @@ class AidCardGrid extends React.Component{
     this.props.fetchAids(newSkip, this.props.limit, { tags: this.state.tags });
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.onLoad(this.state.limit);
   }
 
-  render(){
-    return(
+  render() {
+    if (this.props.aids.length === 0)
+      return <h2>
+        No illustration aids available, please contact your admin.
+      </h2>;
+    return (
       <div>
-      {
+        {
 
-        this.state.selected ?
+          this.state.selected ?
 
-        <div>
-          <br/>
-          <Container text>
-            <Button fluid onClick={(event, data) => this.handleFocus(null)} >Back</Button>
-            <Divider clearing />
-            <AidDetails
-              item={this.state.selected}
-              reservations={this.props.selected_reservations}
-              tags={this.props.tags}
-              getAidReservations={this.props.getAidReservations}
-              addReservation={this.props.addReservation}
-            />
-          </Container>
-        </div>
+            <div>
+              <br />
+              <Container text>
+                <Button fluid onClick={(event, data) => this.handleFocus(null)} >
+                  <Icon name="angle double left" />
+                  Back To All Aids
+                </Button>
+                <Divider clearing />
+                <AidDetails
+                  item={this.state.selected}
+                  reservations={this.props.selected_reservations}
+                  tags={this.props.tags}
+                  getAidReservations={this.props.getAidReservations}
+                  addReservation={this.props.addReservation}
+                />
+                <Divider clearing />
+                <Button fluid onClick={(event, data) => this.handleFocus(null)} >
+                  <Icon name="angle double left" />
+                  Back To All Aids
+                </Button>
+              </Container>
+            </div>
 
-        :
+            :
 
-        <div>
-            <Container text>
-              <Sticky context={this.props.contextRef} offset={0} className="top-sticky">
-                <Segment>
-                  <SearchField tags={this.props.tags} tagsFilter={this.state.tags} filterAids={this.handleChange} />
-                </Segment>
-              </Sticky>
-            </Container>
-            <br/>
-            <Card.Group stackable doubling>
-              {
-                this.props.aids.map((item) =>
-                  <AidCard
-                    item={item}
-                    key={item._id}
-                    handleFocus={this.handleFocus}
-                  />
-                )
-              }
-            </Card.Group>
-
-            <Table basic='very' stackable  textAlign='center'>
-              <Table.Footer>
-                <Table.Row>
-                  <Table.HeaderCell colSpan='7'>
-                    <Pagination
-                      activePage={Math.floor(this.props.skip/this.props.limit) + 1}
-                      totalPages={Math.ceil(this.props.total/this.props.limit)}
-                      onPageChange={this.handlePaginationChange}
-                      boundaryRange={0}
-                      prevItem={null}
-                      nextItem={null}
-                      ellipsisItem={null}
+            <div>
+              <Container text>
+                <Sticky context={this.props.contextRef} offset={0} className="top-sticky">
+                  <Segment>
+                    <SearchField tags={this.props.tags} tagsFilter={this.state.tags} filterAids={this.handleChange} />
+                  </Segment>
+                </Sticky>
+              </Container>
+              <br />
+              <Card.Group stackable doubling>
+                {
+                  this.props.aids.map((item) =>
+                    <AidCard
+                      item={item}
+                      key={item._id}
+                      handleFocus={this.handleFocus}
                     />
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Footer>
-            </Table>
-          </div>
+                  )
+                }
+              </Card.Group>
+
+              <Table basic='very' stackable textAlign='center'>
+                <Table.Footer>
+                  <Table.Row>
+                    <Table.HeaderCell colSpan='7'>
+                      <Pagination
+                        activePage={Math.floor(this.props.skip / this.props.limit) + 1}
+                        totalPages={Math.ceil(this.props.total / this.props.limit)}
+                        onPageChange={this.handlePaginationChange}
+                        boundaryRange={0}
+                        prevItem={null}
+                        nextItem={null}
+                        ellipsisItem={null}
+                      />
+                    </Table.HeaderCell>
+                  </Table.Row>
+                </Table.Footer>
+              </Table>
+            </div>
         }
         <div>
-          <br/>
-          <br/>
-          <br/>
-          <br/>
+          <br />
+          <br />
+          <br />
+          <br />
         </div>
       </div>
     );

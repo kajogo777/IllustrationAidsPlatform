@@ -5,48 +5,52 @@ import {
   Label,
   Dropdown,
   Pagination,
+  Button,
+  Icon
 } from 'semantic-ui-react';
 import AidForm from './AidForm'
 
 
-function AidRow(props){
-    return(
-      <Table.Row>
-        <Table.HeaderCell>{props.aid.human_id}</Table.HeaderCell>
-        <Table.HeaderCell>{props.aid.name}</Table.HeaderCell>
-        <Table.HeaderCell>{props.aid.description.substring(0,30)}{props.aid.description.length > 30 ? "..." : ""}</Table.HeaderCell>
-        <Table.HeaderCell>{props.aid.date_added.split("T")[0]}</Table.HeaderCell>
-        <Table.HeaderCell>{props.aid.type}</Table.HeaderCell>
-        <Table.HeaderCell>{props.aid.location}</Table.HeaderCell>
-        <Table.HeaderCell>{props.aid.url}</Table.HeaderCell>
-        <Table.HeaderCell>{props.aid.reserved ? 'Yes' : 'No'}</Table.HeaderCell>
-        <Table.HeaderCell>
-          <Label.Group>
-            {
-              props.aid.tags.map((tag) => <Label key={tag} as='a' color='blue' >{tag}</Label>)
-            }
-          </Label.Group>
-        </Table.HeaderCell>
-        <Table.Cell collapsing>
+function AidRow(props) {
+  return (
+    <Table.Row>
+      <Table.HeaderCell>{props.aid.human_id}</Table.HeaderCell>
+      <Table.HeaderCell>{props.aid.name}</Table.HeaderCell>
+      <Table.HeaderCell>{props.aid.description.substring(0, 30)}{props.aid.description.length > 30 ? "..." : ""}</Table.HeaderCell>
+      <Table.HeaderCell>{props.aid.date_added.split("T")[0]}</Table.HeaderCell>
+      <Table.HeaderCell>{props.aid.type}</Table.HeaderCell>
+      <Table.HeaderCell>{props.aid.location}</Table.HeaderCell>
+      <Table.HeaderCell>
+        <Button circular icon='linkify' onClick={() => window.open(props.aid.url, "_blank")} />
+      </Table.HeaderCell>
+      <Table.HeaderCell>{props.aid.reserved ? 'Yes' : 'No'}</Table.HeaderCell>
+      <Table.HeaderCell>
+        <Label.Group>
+          {
+            props.aid.tags.map((tag) => <Label key={tag} as='a' color='blue' >{tag}</Label>)
+          }
+        </Label.Group>
+      </Table.HeaderCell>
+      <Table.Cell collapsing>
 
-          <AidForm
-            saveAid={props.updateAid}
-            duplicateAid={props.addAid}
-            deleteAid={props.deleteAid}
-            addTag={props.addTag}
-            uploadFile={props.uploadFile}
-            aid={props.aid}
-            tags={props.tags}
-            types={props.types}
-          />
+        <AidForm
+          saveAid={props.updateAid}
+          duplicateAid={props.addAid}
+          deleteAid={props.deleteAid}
+          addTag={props.addTag}
+          uploadFile={props.uploadFile}
+          aid={props.aid}
+          tags={props.tags}
+          types={props.types}
+        />
 
-        </Table.Cell>
-      </Table.Row>
-    );
+      </Table.Cell>
+    </Table.Row>
+  );
 }
 
-function FilterRow(props){
-  return(
+function FilterRow(props) {
+  return (
     <Table.Row>
       <Table.Cell>
         <Input
@@ -66,7 +70,7 @@ function FilterRow(props){
           onChange={(e) => { props.handleChange("name", e) }}
         />
       </Table.Cell>
-      <Table.Cell/>
+      <Table.Cell />
       <Table.Cell>
       </Table.Cell>
       <Table.Cell>
@@ -76,9 +80,9 @@ function FilterRow(props){
           options={[
             props.types[0],
             props.types[1],
-            {key: 'all', value: '', text: 'ALL'}
+            { key: 'all', value: '', text: 'ALL' }
           ]}
-          onChange={(e, {value}) => { props.handleChange("type", {target: {value: value}}) }}
+          onChange={(e, { value }) => { props.handleChange("type", { target: { value: value } }) }}
         />
       </Table.Cell>
       <Table.Cell>
@@ -97,11 +101,11 @@ function FilterRow(props){
           fluid
           value={props.filter.reserved}
           options={[
-            {key: 'true', value: 'true', text: 'RESERVED'},
-            {key: 'false', value: 'false', text: 'AVAILABLE'},
-            {key: 'all', value: '', text: 'ALL'}
+            { key: 'true', value: 'true', text: 'RESERVED' },
+            { key: 'false', value: 'false', text: 'AVAILABLE' },
+            { key: 'all', value: '', text: 'ALL' }
           ]}
-          onChange={(e, {value}) => { props.handleChange("reserved", {target: {value: value}}) }}
+          onChange={(e, { value }) => { props.handleChange("reserved", { target: { value: value } }) }}
         />
       </Table.Cell>
       <Table.Cell>
@@ -114,7 +118,7 @@ function FilterRow(props){
           closeOnChange
           value={props.filter.tags}
           options={props.tags}
-          onChange={(e, {value}) => { props.handleChange("tags", {target: {value: value}}) }}
+          onChange={(e, { value }) => { props.handleChange("tags", { target: { value: value } }) }}
         />
       </Table.Cell>
       <Table.Cell />
@@ -122,9 +126,9 @@ function FilterRow(props){
   );
 }
 
-class AidsPanel extends React.Component{
+class AidsPanel extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       filter: {
@@ -141,7 +145,7 @@ class AidsPanel extends React.Component{
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.onLoad(this.state.limit);
   }
 
@@ -165,31 +169,31 @@ class AidsPanel extends React.Component{
     this.props.fetchAids(newSkip, this.props.limit, this.state.filter);
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <Table celled stackable striped textAlign='center'>
         <Table.Header>
-         <Table.Row>
-           <Table.HeaderCell>ID</Table.HeaderCell>
-           <Table.HeaderCell>Name</Table.HeaderCell>
-           <Table.HeaderCell>Description</Table.HeaderCell>
-           <Table.HeaderCell>Date Added</Table.HeaderCell>
-           <Table.HeaderCell>Type</Table.HeaderCell>
-           <Table.HeaderCell>Location</Table.HeaderCell>
-           <Table.HeaderCell>URL</Table.HeaderCell>
-           <Table.HeaderCell>Reserved</Table.HeaderCell>
-           <Table.HeaderCell>Tags</Table.HeaderCell>
-           <Table.HeaderCell>
-             <AidForm
-               saveAid={this.props.addAid}
-               deleteAid={this.props.deleteAid}
-               addTag={this.props.addTag}
-               uploadFile={this.props.uploadFile}
-               tags={this.props.tags}
-               types={this.props.types}
-             />
-           </Table.HeaderCell>
-         </Table.Row>
+          <Table.Row>
+            <Table.HeaderCell>ID</Table.HeaderCell>
+            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>Description</Table.HeaderCell>
+            <Table.HeaderCell>Date Added</Table.HeaderCell>
+            <Table.HeaderCell>Type</Table.HeaderCell>
+            <Table.HeaderCell>Location</Table.HeaderCell>
+            <Table.HeaderCell>URL</Table.HeaderCell>
+            <Table.HeaderCell>Reserved</Table.HeaderCell>
+            <Table.HeaderCell>Tags</Table.HeaderCell>
+            <Table.HeaderCell>
+              <AidForm
+                saveAid={this.props.addAid}
+                deleteAid={this.props.deleteAid}
+                addTag={this.props.addTag}
+                uploadFile={this.props.uploadFile}
+                tags={this.props.tags}
+                types={this.props.types}
+              />
+            </Table.HeaderCell>
+          </Table.Row>
         </Table.Header>
 
         <Table.Body>
@@ -214,8 +218,8 @@ class AidsPanel extends React.Component{
           <Table.Row>
             <Table.HeaderCell colSpan='9'>
               <Pagination
-                activePage={Math.floor(this.props.skip/this.props.limit) + 1}
-                totalPages={Math.ceil(this.props.total/this.props.limit)}
+                activePage={Math.floor(this.props.skip / this.props.limit) + 1}
+                totalPages={Math.ceil(this.props.total / this.props.limit)}
                 onPageChange={this.handlePaginationChange}
                 boundaryRange={0}
                 prevItem={null}
