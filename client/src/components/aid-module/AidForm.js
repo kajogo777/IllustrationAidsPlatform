@@ -71,7 +71,7 @@ class AidForm extends React.Component {
       }
     };
 
-    if (newState.aid.type === 'DIGITAL' && newState.aid.location.length > 0) {
+    if (newState.aid.type === 'DIGITAL' && newState.aid.location && newState.aid.location.length > 0) {
       newState.aid.location = "";
     }
 
