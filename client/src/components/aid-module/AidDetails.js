@@ -65,6 +65,7 @@ class AidDetails extends React.Component {
   }
 
   render() {
+    const emptyUrl = this.props.item.url === '' || this.props.item.url === null || this.props.item.url === undefined;
     return (
       <div>
         <Header as='h3' block attached='top' textAlign='center'>
@@ -73,9 +74,9 @@ class AidDetails extends React.Component {
           ID: {this.props.item.human_id}
         </Header>
         <Segment attached onClick={() => {
-          if (this.props.item.url !== '')
-            window.open(this.props.item.url, "_blank")
-        }} style={this.props.item.url !== '' ? { cursor: 'pointer' } : {}}>
+          if (!emptyUrl)
+            window.open(this.props.item.url, "_blank");
+        }} style={!emptyUrl ? { cursor: 'pointer' } : {}}>
           {
             this.props.item.type === 'DIGITAL' ?
               <Label color='violet' ribbon>
@@ -84,7 +85,7 @@ class AidDetails extends React.Component {
               :
               null
           }
-          <Image fluid src={"uploads/" + this.props.item.image_uri} />
+          < Image fluid src={"uploads/" + this.props.item.image_uri} />
         </Segment>
         <Segment attached>
           {this.props.item.description}
@@ -138,7 +139,7 @@ class AidDetails extends React.Component {
             :
             null
         } */}
-      </div>
+      </div >
     );
   }
 }
