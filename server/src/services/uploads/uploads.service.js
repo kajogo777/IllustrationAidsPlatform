@@ -24,31 +24,31 @@ module.exports = function () {
 
   // Upload Service with multipart support
   app.use('/uploads',
-      // multer parses the file named 'uri'.
-      // Without extra params the data is
-      // temporarely kept in memory
-      multipartMiddleware.single('file'),
-      // another middleware, this time to
-      // transfer the received file to feathers
-      function(req,res,next){
-          req.feathers.file = req.file;
-          next();
-      },
-      blobService({Model: blobStorage}),
+    // multer parses the file named 'uri'.
+    // Without extra params the data is
+    // temporarely kept in memory
+    multipartMiddleware.single('filepond'),
+    // another middleware, this time to
+    // transfer the received file to feathers
+    function (req, res, next) {
+      req.feathers.file = req.file;
+      next();
+    },
+    blobService({ Model: blobStorage }),
 
-      // middleware to return images instead of datauri
-      function(req, res, next){
-        if(req.method === 'GET'){
-          let type = 'image/' + res.data.ext;
-          res.format({
-            [type]: function() {
-              res.end(res.data.data);
-            }
-          });
-        }else{
-          next();
-        }
+    // middleware to return images instead of datauri
+    function (req, res, next) {
+      if (req.method === 'GET') {
+        let type = 'image/' + res.data.ext;
+        res.format({
+          [type]: function () {
+            res.end(res.data.data);
+          }
+        });
+      } else {
+        next();
       }
+    }
   );
 
   // Get our initialized service so that we can register hooks and filters

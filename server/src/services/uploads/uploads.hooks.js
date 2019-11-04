@@ -1,16 +1,16 @@
 const { authenticate } = require('@feathersjs/authentication').hooks;
 const dauria = require('dauria');
 
-function transformFileHook(hook){
-  if (!hook.data.uri && hook.params.file){
+function transformFileHook(hook) {
+  if (!hook.data.uri && hook.params.file) {
     const file = hook.params.file;
     const uri = dauria.getBase64DataURI(file.buffer, file.mimetype);
-    hook.data = {uri: uri};
+    hook.data = { uri: uri };
   }
 }
 
-function dropFile(hook){
-  if (hook.result){
+function dropFile(hook) {
+  if (hook.result) {
     hook.result = {
       id: hook.result.id,
       size: hook.result.size
@@ -18,8 +18,8 @@ function dropFile(hook){
   }
 }
 
-function fileOnly(hook){
-  if (hook.result){
+function fileOnly(hook) {
+  if (hook.result) {
     let regex = /^data:.+\/(.+);base64,(.*)$/;
     let matches = hook.result.uri.match(regex);
     let ext = matches[1];
@@ -30,16 +30,16 @@ function fileOnly(hook){
     hook.result = {
       data: buffer,
       ext: ext
-    }
+    };
   }
 }
 
 module.exports = {
   before: {
-    all: [ ],//authenticate('jwt') ],
+    all: [],//authenticate('jwt') ],
     find: [],
     get: [],
-    create: [ transformFileHook ],
+    create: [transformFileHook],
     update: [],
     patch: [],
     remove: []
@@ -48,11 +48,11 @@ module.exports = {
   after: {
     all: [],
     find: [],
-    get: [ fileOnly ],
-    create: [ dropFile ],
-    update: [ dropFile ],
-    patch: [ dropFile ],
-    remove: [ dropFile ]
+    get: [fileOnly],
+    create: [dropFile],
+    update: [dropFile],
+    patch: [dropFile],
+    remove: [dropFile]
   },
 
   error: {
