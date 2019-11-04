@@ -167,7 +167,8 @@ class AidForm extends React.Component {
             ref={ref => (this.pond = ref)}
             files={this.state.files}
             imageResizeTargetWidth={800}
-            imageResizeMode="cover"
+            imageResizeTargetheight={800}
+            imageResizeMode="contain"
             server={{
               process: {
                 url: 'api/uploads/',
