@@ -1,20 +1,20 @@
-import { connect }from 'react-redux';
+import { connect } from 'react-redux';
 import UniversalContainer from './UniversalContainer';
 import { fetchAids, addAid, updateAid, deleteAid, filterAids, clearFilter, fetchTags, addTag } from '../actions/aids-actions';
 import { uploadFile } from '../actions/upload-actions';
 
-function getTags(list){
-  if(list)
-    return list.map( item => { return { key: item.tag, value: item.tag, text: item.tag } } );
+function getTags(list) {
+  if (list)
+    return list.map(item => { return { key: item.tag, value: item.tag, text: item.tag } });
   else
     return [];
 }
 
-function getTypes(){
-  return ['REGULAR', 'DIGITAL'].map( item => { return { key: item, value: item, text: item } } );
+function getTypes() {
+  return ['REGULAR', 'DIGITAL'].map(item => { return { key: item, value: item, text: item } });
 }
 
-function mapStateToProps (state){
+function mapStateToProps(state) {
   return {
     aids: state.aidStore.aids,
     total: state.aidStore.aids_total,
@@ -27,7 +27,7 @@ function mapStateToProps (state){
   };
 }
 
-function mapDispatchToProps (dispatch){
+function mapDispatchToProps(dispatch) {
   return {
     onLoad: (limit) => {
       dispatch(fetchAids(0, limit))
@@ -36,11 +36,11 @@ function mapDispatchToProps (dispatch){
     fetchAids: (offset, limit, terms) => {
       dispatch(fetchAids(offset, limit, terms))
     },
-    addAid: (aid, file) => {
-      dispatch(addAid(aid, file))
+    addAid: (aid) => {
+      dispatch(addAid(aid))
     },
-    updateAid: (id, aid, file) => {
-      dispatch(updateAid(id, aid, file))
+    updateAid: (id, aid) => {
+      dispatch(updateAid(id, aid))
     },
     deleteAid: (aid) => {
       dispatch(deleteAid(aid))

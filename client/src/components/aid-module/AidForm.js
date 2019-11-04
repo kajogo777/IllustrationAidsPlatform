@@ -4,10 +4,9 @@ import {
   Icon,
   Modal,
   Form,
-  Image,
 } from 'semantic-ui-react';
-import Dropzone from 'react-dropzone'
 
+import { FilePond } from "react-filepond";
 
 class AidForm extends React.Component {
 
@@ -16,9 +15,9 @@ class AidForm extends React.Component {
 
     let state = {
       modalOpen: false,
-      file: null,
       aid: {},
-      newAid: false
+      newAid: false,
+      files: []
     };
 
     if (props.aid) {
@@ -34,6 +33,12 @@ class AidForm extends React.Component {
         'url': props.aid.url,
         'type': props.aid.type
       };
+      state.files = [{
+        source: props.aid.image_uri,
+        options: {
+          type: 'local'
+        }
+      }];
     } else {
       state.newAid = true;
       state.aid = {
@@ -41,6 +46,8 @@ class AidForm extends React.Component {
         'name': '',
         'description': '',
         'type': props.types[0].value,
+        'location': '',
+        'url': '',
         'tags': []
       };
     }
@@ -54,12 +61,18 @@ class AidForm extends React.Component {
     if (this.state.newAid)
       this.setState({
         modalOpen: false,
-        file: null,
-        aid: {}
+        aid: {},
+        files: []
       });
     else
       this.setState({
-        modalOpen: false
+        modalOpen: false,
+        files: [{
+          source: this.state.aid.image_uri,
+          options: {
+            type: 'local'
+          }
+        }]
       });
   }
 
@@ -85,9 +98,9 @@ class AidForm extends React.Component {
   handleSave = () => {
     let aid = Object.assign({}, this.state.aid);
     if (this.state.newAid)
-      this.props.saveAid(aid, this.state.file);
+      this.props.saveAid(aid);
     else
-      this.props.saveAid(this.props.aid._id, aid, this.state.file);
+      this.props.saveAid(this.props.aid._id, aid);
 
     this.handleClose();
   }
@@ -95,53 +108,6 @@ class AidForm extends React.Component {
   handleDelete = () => {
     this.props.deleteAid(this.props.aid);
     this.handleClose();
-  }
-
-  handleUpload = (acceptedFiles, rejectedFiles) => {
-    acceptedFiles.forEach(file => {
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        var img = document.createElement("img");
-        img.onload = () => {
-          var canvas = document.createElement('canvas');
-          var ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0);
-
-          var MAX_WIDTH = 500;
-          var MAX_HEIGHT = 500;
-          var width = img.width;
-          var height = img.height;
-
-          if (width > height) {
-            if (width > MAX_WIDTH) {
-              height *= MAX_WIDTH / width;
-              width = MAX_WIDTH;
-            }
-          } else {
-            if (height > MAX_HEIGHT) {
-              width *= MAX_HEIGHT / height;
-              height = MAX_HEIGHT;
-            }
-          }
-          canvas.width = width;
-          canvas.height = height;
-          var ctx2 = canvas.getContext("2d");
-          ctx2.drawImage(img, 0, 0, width, height);
-          var dataurl = canvas.toDataURL("image/png");
-
-          this.setState({
-            file: dataurl
-          });
-        }
-        img.src = e.target.result;
-      }
-
-      reader.onabort = () => console.log('file reading was aborted');
-      reader.onerror = () => console.log('file reading has failed');
-
-      reader.readAsDataURL(file)
-    });
   }
 
   handleDuplicate = () => {
@@ -195,19 +161,39 @@ class AidForm extends React.Component {
           }
         </Modal.Header>
         <Modal.Content>
-          <Dropzone disablePreview onDrop={this.handleUpload}>
-            {
-              this.state.file === null ?
-                (
-                  this.state.newAid ?
-                    null
-                    :
-                    <Image alt="" src={"uploads/" + this.state.aid.image_uri} />
-                )
-                :
-                <Image alt="" src={this.state.file} />
-            }
-          </Dropzone>
+          <FilePond
+            required={true}
+            acceptedFileTypes={['image/png', 'image/jpeg']}
+            ref={ref => (this.pond = ref)}
+            files={this.state.files}
+            imageResizeTargetWidth={800}
+            imageResizeMode="cover"
+            server={{
+              process: {
+                url: 'api/uploads/',
+                method: 'POST',
+                headers: {
+                  'Authorization': localStorage.getItem('feathers-jwt')
+                },
+                onload: (response) => {
+                  response = JSON.parse(response);
+                  this.handleChange('image_uri', response.id);
+                  return response.id;
+                },
+              },
+              revert: null,
+              load: (id, load) => {
+                fetch('uploads/' + id)
+                  .then(res => res.blob())
+                  .then(load);
+              },
+            }}
+            onupdatefiles={fileItems => {
+              this.setState({
+                files: fileItems.map(fileItem => fileItem.file)
+              });
+            }}
+          />
         </Modal.Content>
         <Modal.Content>
           <Form>
