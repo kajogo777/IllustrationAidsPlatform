@@ -9,11 +9,7 @@ function SearchField(props) {
   return (
     <div>
       <Dropdown
-        fluid
-        placeholder='Search aids...'
-        multiple
-        search
-        selection
+        placeholder='Category'
         closeOnChange
         value={props.tagsFilter}
         options={props.tags}

@@ -7,8 +7,7 @@ import {
 } from 'react-router-dom'
 import AdminRoute from '../AdminRoute';
 import ManageAccountMenu from './ManageAccountMenu';
-import ManageAidsMenu from './ManageAidsMenu';
-import ManageUsersMenu from './ManageUsersMenu';
+import ManageMenu from './ManageMenu';
 
 
 function NavigationBar(props) {
@@ -25,12 +24,7 @@ function NavigationBar(props) {
       <Menu.Menu position='right'>
         <AdminRoute>
           <Menu.Item >
-            <ManageAidsMenu history={props.history} />
-          </Menu.Item>
-        </AdminRoute>
-        <AdminRoute>
-          <Menu.Item >
-            <ManageUsersMenu history={props.history} />
+            <ManageMenu history={props.history} />
           </Menu.Item>
         </AdminRoute>
         <Menu.Item >

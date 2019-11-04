@@ -8,9 +8,9 @@ import {
   Redirect
 } from 'react-router-dom';
 
-class LoginForm extends React.Component{
+class LoginForm extends React.Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       'username': '',
@@ -31,51 +31,51 @@ class LoginForm extends React.Component{
   };
 
   handleClick = () => {
-    if(this.state.username && this.state.password)
+    if (this.state.username && this.state.password)
       this.props.login(this.state.username, this.state.password);
   }
 
-  render(){
+  render() {
     let jwt = localStorage.getItem('feathers-jwt');
 
     if (jwt) {
       this.props.login(null, null, jwt);
     }
 
-    if(this.props.auth.user){
+    if (this.props.auth.user) {
       return <Redirect to='/aidgrid' />
     }
 
-    return(
+    return (
       <Card centered>
-          <Card.Content>
-            <Card.Description>
-              <Input
-                fluid
-                type="username"
-                placeholder='username'
-                value={this.state.username}
-                onChange={this.handleChangeUsername}
-              />
-              <Input
-                fluid
-                type="password"
-                placeholder='password'
-                value={this.state.password}
-                onChange={this.handleChangePassword}
-                />
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <Button
+        <Card.Content>
+          <Card.Description>
+            <Input
               fluid
-              primary
-              onClick={this.handleClick}
-              >
-              login
+              type="username"
+              placeholder='username'
+              value={this.state.username}
+              onChange={this.handleChangeUsername}
+            />
+            <Input
+              fluid
+              type="password"
+              placeholder='password'
+              value={this.state.password}
+              onChange={this.handleChangePassword}
+            />
+          </Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          <Button
+            fluid
+            primary
+            onClick={this.handleClick}
+          >
+            login
             </Button>
-          </Card.Content>
-        </Card>
+        </Card.Content>
+      </Card>
     );
   }
 }

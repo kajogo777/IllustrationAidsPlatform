@@ -12,6 +12,7 @@ import {
 } from 'semantic-ui-react';
 import AidCard from './AidCard';
 import SearchField from './SearchField';
+import CategoryField from './CategoryField';
 import AidDetails from './AidDetails';
 
 
@@ -87,9 +88,14 @@ class AidCardGrid extends React.Component {
             <div>
               <Container text>
                 <Sticky context={this.props.contextRef} offset={0} className="top-sticky">
+                  {/* <Segment.Group horizontal> */}
                   <Segment>
                     <SearchField tags={this.props.tags} tagsFilter={this.state.tags} filterAids={this.handleChange} />
                   </Segment>
+                  {/* <Segment>
+                      <CategoryField tags={this.props.tags} tagsFilter={this.state.tags} filterAids={this.handleChange} />
+                    </Segment> */}
+                  {/* </Segment.Group> */}
                 </Sticky>
               </Container>
               <br />

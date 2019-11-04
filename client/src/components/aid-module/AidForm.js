@@ -195,7 +195,7 @@ class AidForm extends React.Component {
           }
         </Modal.Header>
         <Modal.Content>
-          <Dropzone onDrop={this.handleUpload}>
+          <Dropzone disablePreview onDrop={this.handleUpload}>
             {
               this.state.file === null ?
                 (
