@@ -11,23 +11,23 @@ module.exports = function (app) {
     description: { type: String, required: true },
     location: { type: String },
     date_added: { type: Date, default: Date.now },
-    reserved: { type: Boolean, default: false},
-    human_id: { type: String, required: true},
+    reserved: { type: Boolean, default: false },
+    human_id: { type: String, required: true },
     image_uri: { type: String },
     tags: [String],
-    url: { 
+    url: {
       type: String,
       validate: {
-        validator: function(value){
-          var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-          '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-          '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
-          '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-          '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-          '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
-          return !!pattern.test(value);
+        validator: function (value) {
+          var pattern = new RegExp('^(https?:\\/\\/)?' + // protocol
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
+            '((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
+            '(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
+            '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+          return !!pattern.test(value) || value == '';
         },
-        message: "{VALUE} is not a valid url"
+        message: '{VALUE} is not a valid url'
       }
     },
     type: {

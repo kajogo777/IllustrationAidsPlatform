@@ -72,7 +72,10 @@ class AidDetails extends React.Component {
           <br />
           ID: {this.props.item.human_id}
         </Header>
-        <Segment attached onClick={() => window.open(this.props.item.url, "_blank")} style={{ cursor: 'pointer' }}>
+        <Segment attached onClick={() => {
+          if (this.props.item.url !== '')
+            window.open(this.props.item.url, "_blank")
+        }} style={this.props.item.url !== '' ? { cursor: 'pointer' } : {}}>
           {
             this.props.item.type === 'DIGITAL' ?
               <Label color='violet' ribbon>
