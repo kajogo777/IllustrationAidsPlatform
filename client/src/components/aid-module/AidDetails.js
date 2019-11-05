@@ -87,10 +87,12 @@ class AidDetails extends React.Component {
           }
           < Image fluid src={"uploads/" + this.props.item.image_uri} />
         </Segment>
-        <Segment attached>
-          {this.props.item.description}
+        <Segment attached textAlign='center'>
+          <p className="word-wrap">
+            {this.props.item.description}
+          </p>
         </Segment>
-        <Segment attached>
+        <Segment attached textAlign='center'>
           {
             this.props.item.tags.map((item) =>
               <Label
