@@ -26,12 +26,14 @@ function AidCard(props) {
           {props.item.description}
         </Card.Description>
       </Card.Content>
-      {
-        props.item.type === 'DIGITAL' ?
-          <Label color='violet' tag attached='bottom right'>DIGITAL</Label>
-          :
-          <Label color='blue' tag attached='bottom right'>REGULAR</Label>
-      }
+      <Card.Content extra textAlign="right">
+        {
+          props.item.type === 'DIGITAL' ?
+            <Label color='violet' tag >DIGITAL</Label>
+            :
+            <Label color='blue' tag >REGULAR</Label>
+        }
+      </Card.Content>
     </Card>
   );
 }
