@@ -33,10 +33,6 @@ export function addAid(aid) {
       type: 'ADD_AID',
       payload: {
         promise: new Promise((resolve, reject) => {
-          if (!aid.image_uri) {
-            dispatch(prompt("Aid creation failed missing aid image", "failure", null, 5));
-            reject();
-          }
           client.service("aids").create(aid)
             .then(response => {
               dispatch(prompt("Aid created successfully", "success", null, 5));
