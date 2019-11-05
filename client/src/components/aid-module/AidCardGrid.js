@@ -99,6 +99,24 @@ class AidCardGrid extends React.Component {
               {
                 this.props.aids.length > 0 ?
                   <Container fluid>
+                    <Table basic='very' stackable textAlign='center'>
+                      <Table.Footer>
+                        <Table.Row>
+                          <Table.Cell colSpan='7'>
+                            <Pagination
+                              activePage={Math.floor(this.props.skip / this.props.limit) + 1}
+                              totalPages={Math.ceil(this.props.total / this.props.limit)}
+                              onPageChange={this.handlePaginationChange}
+                              boundaryRange={0}
+                              prevItem={null}
+                              nextItem={null}
+                              ellipsisItem={null}
+                            />
+                          </Table.Cell>
+                        </Table.Row>
+                      </Table.Footer>
+                    </Table>
+
                     <Card.Group centered stackable doubling style={{ 'margin': '0em 0em' }}>
                       {
                         this.props.aids.map((item) =>
