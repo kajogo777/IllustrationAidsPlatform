@@ -14,7 +14,7 @@ import ManageMenu from './ManageMenu';
 
 function NavigationBar(props) {
   return (
-    <Menu attached='top' compact stackable borderless>
+    <Menu attached='top' compact stackable borderless style={{ borderRadius: '0px' }}>
       <Menu.Item fitted='vertically' header onClick={(event, data) => props.history.push('/aidgrid')}>
         <Image spaced='right' src='family-logo.jpg' alt={'logo'} size='tiny' />
         <Header textAlign='justified'>

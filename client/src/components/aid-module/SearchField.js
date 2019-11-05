@@ -14,8 +14,11 @@ function SearchField(props) {
   };
 
   return (
-    <Menu fluid stackable borderless>
-      <Menu.Item style={{ width: '100%' }}>
+    <Menu fluid stackable borderless
+      style={{ borderRadius: '0px' }}>
+      <Menu.Item style={{
+        width: '100%',
+      }}>
         <Dropdown
           fluid
           placeholder='Search aids...'
@@ -26,13 +29,23 @@ function SearchField(props) {
           value={props.tagsFilter}
           options={props.tags}
           onChange={(e, { value }) => { props.filterAids('tags', value) }}
+          style={{
+            height: '38px',
+            borderTopRightRadius: '0px',
+            borderBottomRightRadius: '0px'
+          }}
         />
-        <Button.Group color={filterColors[props.typeFilter]}>
+        <Button.Group color={filterColors[props.typeFilter]} >
           <Dropdown
             icon='filter'
             button
             className='icon'
             direction='left'
+            style={{
+              height: '38px',
+              borderTopLeftRadius: '0px',
+              borderBottomLeftRadius: '0px'
+            }}
           >
             <Dropdown.Menu>
               <Dropdown.Menu scrolling>
