@@ -8,7 +8,8 @@ import {
   Divider,
   Pagination,
   Table,
-  Icon
+  Icon,
+  Header
 } from 'semantic-ui-react';
 import AidCard from './AidCard';
 import SearchField from './SearchField';
@@ -82,6 +83,7 @@ class AidCardGrid extends React.Component {
                   <Icon name="angle double left" />
                   Back To All Aids
                 </Button>
+                <br />
               </Container>
             </div>
 
@@ -128,9 +130,16 @@ class AidCardGrid extends React.Component {
                     </Table>
                   </Container>
                   :
-                  <h2>
-                    No illustration aids available, please contact your admin.
-                  </h2>
+                  <Container>
+                    <Segment className='placeholder'>
+                      <Header icon>
+                        <Icon name='search' />
+                        We don't have any illustration aids matching your query, please contact our servants.
+                      </Header>
+                    </Segment>
+                    <div>
+                    </div>
+                  </Container>
               }
             </div>
         }
