@@ -22,8 +22,10 @@ function AidCard(props) {
             {props.item.human_id}
           </span>
         </Card.Meta>
-        <Card.Description>
-          {props.item.description}
+        <Card.Description textAlign="center">
+          <p className="word-wrap">
+            {props.item.description}
+          </p>
         </Card.Description>
       </Card.Content>
       <Card.Content extra textAlign="right">

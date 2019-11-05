@@ -11,3 +11,7 @@ body {
 .ui.menu .dropdown.item .menu{
   z-index: 101;
 }
+
+p.word-wrap {
+  word-wrap: break-word;
+}
