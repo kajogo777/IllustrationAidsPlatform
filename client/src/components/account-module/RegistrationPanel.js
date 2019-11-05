@@ -1,11 +1,12 @@
 import React from 'react';
 import {
   Card,
-  Button
+  Button,
+  Container
 } from 'semantic-ui-react';
 import TimeAgo from 'react-timeago'
 
-function RegEntry(props){
+function RegEntry(props) {
   return (
     <Card color='orange' centered raised>
       <Card.Content>
@@ -13,16 +14,16 @@ function RegEntry(props){
           {props.name}
         </Card.Header>
         <Card.Meta>
-          <TimeAgo date={props.createdAt}/>
+          <TimeAgo date={props.createdAt} />
         </Card.Meta>
         <Card.Description>
           Username: {props.username}
-          <br/>
+          <br />
           Mobile Number: {props.mobileNumber}
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
-      <Button.Group floated='right'>
+        <Button.Group floated='right'>
           <Button basic color='green' onClick={props.onAccept}>
             Approve
           </Button>
@@ -35,29 +36,32 @@ function RegEntry(props){
   );
 }
 
-class RegistrationPanel extends React.Component{
+class RegistrationPanel extends React.Component {
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.onLoad();
   }
 
-  render(){
-    return(
-      <Card.Group stackable doubling>
-        {
-          this.props.pending_users.map((item) =>
-            <RegEntry
-              key={item._id}
-              name={item.name}
-              createdAt={item.createdAt}
-              username={item.username}
-              mobileNumber={item.mobileNumber}
-              onAccept={ () => this.props.approveUser(item) }
-              onReject={ () => this.props.deleteUser(item) }
-            />
-          )
-        }
-      </Card.Group>
+  render() {
+    return (
+      <Container text>
+        <br />
+        <Card.Group itemsPerRow={1}>
+          {
+            this.props.pending_users.map((item) =>
+              <RegEntry
+                key={item._id}
+                name={item.name}
+                createdAt={item.createdAt}
+                username={item.username}
+                mobileNumber={item.mobileNumber}
+                onAccept={() => this.props.approveUser(item)}
+                onReject={() => this.props.deleteUser(item)}
+              />
+            )
+          }
+        </Card.Group>
+      </Container>
     );
   }
 }
