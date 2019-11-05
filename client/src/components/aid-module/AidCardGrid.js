@@ -97,7 +97,7 @@ class AidCardGrid extends React.Component {
               {
                 this.props.aids.length > 0 ?
                   <Container fluid>
-                    <Card.Group centered stackable doubling>
+                    <Card.Group centered stackable doubling style={{ 'margin': '0em 0em' }}>
                       {
                         this.props.aids.map((item) =>
                           <AidCard
