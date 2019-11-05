@@ -88,7 +88,7 @@ class AidCardGrid extends React.Component {
             :
 
             <div>
-              <Container text>
+              <Container fluid>
                 <Sticky context={this.props.contextRef} offset={0} className="top-sticky">
                   <SearchField tags={this.props.tags} typeFilter={this.state.filters.type} tagsFilter={this.state.filters.tags} filterAids={this.handleChange} />
                 </Sticky>
@@ -96,7 +96,7 @@ class AidCardGrid extends React.Component {
               <br />
               {
                 this.props.aids.length > 0 ?
-                  <div>
+                  <Container fluid>
                     <Card.Group centered stackable doubling>
                       {
                         this.props.aids.map((item) =>
@@ -126,7 +126,7 @@ class AidCardGrid extends React.Component {
                         </Table.Row>
                       </Table.Footer>
                     </Table>
-                  </div>
+                  </Container>
                   :
                   <h2>
                     No illustration aids available, please contact your admin.
@@ -135,10 +135,6 @@ class AidCardGrid extends React.Component {
             </div>
         }
         <div>
-          <br />
-          <br />
-          <br />
-          <br />
         </div>
       </div>
     );
