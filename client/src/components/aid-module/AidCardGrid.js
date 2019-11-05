@@ -91,7 +91,7 @@ class AidCardGrid extends React.Component {
 
             <div>
               <Container fluid>
-                <Sticky context={this.props.contextRef} offset={0} className="top-sticky">
+                <Sticky context={this.props.contextRef}>
                   <SearchField tags={this.props.tags} typeFilter={this.state.filters.type} tagsFilter={this.state.filters.tags} filterAids={this.handleChange} />
                 </Sticky>
               </Container>
