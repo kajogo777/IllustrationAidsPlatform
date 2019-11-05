@@ -6,7 +6,6 @@ import {
   Dropdown,
   Pagination,
   Button,
-  Icon
 } from 'semantic-ui-react';
 import AidForm from './AidForm'
 

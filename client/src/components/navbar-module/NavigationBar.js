@@ -1,6 +1,8 @@
 import React from 'react';
 import {
-  Menu
+  Menu,
+  Image,
+  Header
 } from 'semantic-ui-react';
 import {
   withRouter
@@ -12,22 +14,20 @@ import ManageMenu from './ManageMenu';
 
 function NavigationBar(props) {
   return (
-    <Menu attached='top' size="huge" compact stackable>
-      <Menu.Item>
-        <img src="family-logo.jpg" alt={"logo"} style={{ "width": 90 }} />
-      </Menu.Item>
-      <Menu.Item header onClick={(event, data) => props.history.push("/aidgrid")}>
-        <h3>
+    <Menu attached='top' compact stackable borderless>
+      <Menu.Item fitted='vertically' header onClick={(event, data) => props.history.push('/aidgrid')}>
+        <Image spaced='right' src='family-logo.jpg' alt={'logo'} size='tiny' />
+        <Header textAlign='justified'>
           St. Mary Illustration Aids Library
-          </h3>
+        </Header>
       </Menu.Item>
       <Menu.Menu position='right'>
         <AdminRoute>
-          <Menu.Item >
+          <Menu.Item fitted='vertically'  >
             <ManageMenu history={props.history} />
           </Menu.Item>
         </AdminRoute>
-        <Menu.Item >
+        <Menu.Item fitted='vertically' >
           <ManageAccountMenu history={props.history} />
         </Menu.Item>
       </Menu.Menu>
