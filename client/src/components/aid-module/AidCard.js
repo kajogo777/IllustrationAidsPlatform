@@ -10,7 +10,8 @@ import {
 function AidCard(props) {
   return (
     <Card raised onClick={(event, data) => props.handleFocus(props.item)}>
-      <Image src={"uploads/" + props.item.image_uri} size='huge' />
+      <Image src={"uploads/" + props.item.image_uri} size='huge' className='fit-image' />
+      {/* <img src={"uploads/" + props.item.image_uri} /> */}
       <Card.Content>
         <Card.Header textAlign='center'>
           {props.item.name}
