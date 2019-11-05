@@ -1,7 +1,10 @@
 body {
   margin: 0;
   padding: 0;
+  height: 100%;
   font-family: sans-serif;
+
+  background-image: url('/public/full-bloom.png') !important;
 }
 
 .top-sticky div{
@@ -11,3 +14,8 @@ body {
 .ui.menu .dropdown.item .menu{
   z-index: 101;
 }
+
+/* html {
+  margin: 0;
+  height: 100%;
+} */

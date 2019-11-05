@@ -114,7 +114,7 @@ class AidCardGrid extends React.Component {
                     <Table basic='very' stackable textAlign='center'>
                       <Table.Footer>
                         <Table.Row>
-                          <Table.HeaderCell colSpan='7'>
+                          <Table.Cell colSpan='7'>
                             <Pagination
                               activePage={Math.floor(this.props.skip / this.props.limit) + 1}
                               totalPages={Math.ceil(this.props.total / this.props.limit)}
@@ -124,7 +124,7 @@ class AidCardGrid extends React.Component {
                               nextItem={null}
                               ellipsisItem={null}
                             />
-                          </Table.HeaderCell>
+                          </Table.Cell>
                         </Table.Row>
                       </Table.Footer>
                     </Table>
@@ -145,7 +145,7 @@ class AidCardGrid extends React.Component {
         }
         <div>
         </div>
-      </div>
+      </div >
     );
   }
 }

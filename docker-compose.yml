@@ -1,5 +1,4 @@
-
-version: '3.4'
+version: "3.4"
 volumes:
   node_modules_client:
   node_modules_server:
@@ -7,9 +6,8 @@ volumes:
   upload_store:
 
 services:
-
   db:
-    image: 'bitnami/mongodb:latest'
+    image: "bitnami/mongodb:latest"
     restart: always
     environment:
       - MONGODB_USERNAME
@@ -59,6 +57,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - ./client/build:/var/www/html
+      - ./client/public:/var/www/public
       - upload_store:/var/www/uploads
     restart: always
     depends_on:
