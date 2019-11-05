@@ -12,7 +12,6 @@ import {
 } from 'semantic-ui-react';
 import AidCard from './AidCard';
 import SearchField from './SearchField';
-import CategoryField from './CategoryField';
 import AidDetails from './AidDetails';
 
 
@@ -23,7 +22,10 @@ class AidCardGrid extends React.Component {
 
     let state = {
       selected: null,
-      tags: [],
+      filters: {
+        tags: [],
+        type: '',
+      },
       limit: 20,
     };
 
@@ -32,11 +34,15 @@ class AidCardGrid extends React.Component {
 
   handleFocus = (aid) => this.setState({ selected: aid })
 
-  handleChange = (event) => {
+  handleChange = (key, value) => {
     const filters = {
-      tags: event.target.value,
+      ...this.state.filters
     };
-    this.setState(filters);
+    filters[key] = value;
+    this.setState({
+      ...this.state,
+      'filters': filters
+    });
     this.props.fetchAids(0, this.state.limit, filters);
   };
 
@@ -50,10 +56,6 @@ class AidCardGrid extends React.Component {
   }
 
   render() {
-    if (this.props.aids.length === 0)
-      return <h2>
-        No illustration aids available, please contact your admin.
-      </h2>;
     return (
       <div>
         {
@@ -88,46 +90,48 @@ class AidCardGrid extends React.Component {
             <div>
               <Container text>
                 <Sticky context={this.props.contextRef} offset={0} className="top-sticky">
-                  {/* <Segment.Group horizontal> */}
-                  <Segment>
-                    <SearchField tags={this.props.tags} tagsFilter={this.state.tags} filterAids={this.handleChange} />
-                  </Segment>
-                  {/* <Segment>
-                      <CategoryField tags={this.props.tags} tagsFilter={this.state.tags} filterAids={this.handleChange} />
-                    </Segment> */}
-                  {/* </Segment.Group> */}
+                  <SearchField tags={this.props.tags} typeFilter={this.state.filters.type} tagsFilter={this.state.filters.tags} filterAids={this.handleChange} />
                 </Sticky>
               </Container>
               <br />
-              <Card.Group stackable doubling>
-                {
-                  this.props.aids.map((item) =>
-                    <AidCard
-                      item={item}
-                      key={item._id}
-                      handleFocus={this.handleFocus}
-                    />
-                  )
-                }
-              </Card.Group>
+              {
+                this.props.aids.length > 0 ?
+                  <div>
+                    <Card.Group centered stackable doubling>
+                      {
+                        this.props.aids.map((item) =>
+                          <AidCard
+                            item={item}
+                            key={item._id}
+                            handleFocus={this.handleFocus}
+                          />
+                        )
+                      }
+                    </Card.Group>
 
-              <Table basic='very' stackable textAlign='center'>
-                <Table.Footer>
-                  <Table.Row>
-                    <Table.HeaderCell colSpan='7'>
-                      <Pagination
-                        activePage={Math.floor(this.props.skip / this.props.limit) + 1}
-                        totalPages={Math.ceil(this.props.total / this.props.limit)}
-                        onPageChange={this.handlePaginationChange}
-                        boundaryRange={0}
-                        prevItem={null}
-                        nextItem={null}
-                        ellipsisItem={null}
-                      />
-                    </Table.HeaderCell>
-                  </Table.Row>
-                </Table.Footer>
-              </Table>
+                    <Table basic='very' stackable textAlign='center'>
+                      <Table.Footer>
+                        <Table.Row>
+                          <Table.HeaderCell colSpan='7'>
+                            <Pagination
+                              activePage={Math.floor(this.props.skip / this.props.limit) + 1}
+                              totalPages={Math.ceil(this.props.total / this.props.limit)}
+                              onPageChange={this.handlePaginationChange}
+                              boundaryRange={0}
+                              prevItem={null}
+                              nextItem={null}
+                              ellipsisItem={null}
+                            />
+                          </Table.HeaderCell>
+                        </Table.Row>
+                      </Table.Footer>
+                    </Table>
+                  </div>
+                  :
+                  <h2>
+                    No illustration aids available, please contact your admin.
+                  </h2>
+              }
             </div>
         }
         <div>

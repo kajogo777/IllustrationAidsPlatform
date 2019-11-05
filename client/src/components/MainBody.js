@@ -23,39 +23,39 @@ import {
 } from 'react-router-dom';
 import PromptBanner from './PromptBanner';
 
-class MainBody extends React.Component{
-  render(){
-    return(
+class MainBody extends React.Component {
+  render() {
+    return (
       <div>
-        <PromptBanner/>
+        <PromptBanner />
         <Switch>
 
           <PrivateRoute path="/aidgrid">
-            <AidContainer component={AidCardGrid} contextRef={this.props.contextRef}/>
+            <AidContainer component={AidCardGrid} contextRef={this.props.contextRef} />
           </PrivateRoute>
 
           <PrivateRoute path="/registration">
-            <PendingUserContainer component={RegistrationPanel}/>
+            <PendingUserContainer component={RegistrationPanel} />
           </PrivateRoute>
 
           <PrivateRoute path="/users">
-            <ConfirmedUserContainer component={UsersPanel}/>
+            <ConfirmedUserContainer component={UsersPanel} />
           </PrivateRoute>
 
           <PrivateRoute path="/aids">
-            <AidAdminContainer component={AidsPanel}/>
+            <AidAdminContainer component={AidsPanel} />
           </PrivateRoute>
 
           <PrivateRoute path="/reservations">
-            <ReservationAdminContainer component={ReservationsPanel}/>
+            <ReservationAdminContainer component={ReservationsPanel} />
           </PrivateRoute>
 
           <PrivateRoute path="/account">
-            <AuthContainer component={updateAccountForm}/>
+            <AuthContainer component={updateAccountForm} />
           </PrivateRoute>
 
-          <Route path="/login" render={()=>
-            <LoginPanel/>
+          <Route path="/login" render={() =>
+            <LoginPanel />
           } />
 
           <Redirect from="/" to="/aidgrid" />

@@ -2,16 +2,14 @@ import React from 'react';
 import {
   Card,
   Image,
-  Label
+  Label,
 } from 'semantic-ui-react';
 
 //after deployment remove absolute urls
 //TODO
 function AidCard(props) {
   return (
-    <Card centered raised onClick={(event, data) => props.handleFocus(props.item)}>
-      {props.item.type === 'DIGITAL' ? <Label color='violet' attached='top'>DIGITAL</Label> : null}
-
+    <Card raised onClick={(event, data) => props.handleFocus(props.item)}>
       <Image src={"uploads/" + props.item.image_uri} size='huge' />
       <Card.Content>
         <Card.Header textAlign='center'>
@@ -28,6 +26,12 @@ function AidCard(props) {
           {props.item.description}
         </Card.Description>
       </Card.Content>
+      {
+        props.item.type === 'DIGITAL' ?
+          <Label color='violet' tag attached='bottom right'>DIGITAL</Label>
+          :
+          <Label color='blue' tag attached='bottom right'>REGULAR</Label>
+      }
     </Card>
   );
 }
