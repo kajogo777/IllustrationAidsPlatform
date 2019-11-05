@@ -49,7 +49,7 @@ class AidCardGrid extends React.Component {
 
   handlePaginationChange = (e, { activePage }) => {
     const newSkip = (activePage - 1) * this.props.limit;
-    this.props.fetchAids(newSkip, this.props.limit, { tags: this.state.tags });
+    this.props.fetchAids(newSkip, this.props.limit, this.state.filters);
   }
 
   componentDidMount() {
