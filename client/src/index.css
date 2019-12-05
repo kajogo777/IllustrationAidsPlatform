@@ -4,7 +4,9 @@ body {
   height: 100%;
   font-family: sans-serif;
 
-  background-image: url('/public/full-bloom.png') !important;
+  /* background-image: url('/public/full-bloom.png') !important; */
+  background-image: url('/public/christmas_opaque_50.png') !important;
+
 }
 
 

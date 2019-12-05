@@ -18,7 +18,7 @@ function NavigationBar(props) {
       <Menu.Item fitted='vertically' header onClick={(event, data) => props.history.push('/aidgrid')}>
         <Image spaced='right' src='family-logo.jpg' alt={'logo'} size='tiny' />
         <Header textAlign='justified'>
-          St. Mary Illustration Aids Library
+          Wasa2el St. Mary Rehab
         </Header>
       </Menu.Item>
       <Menu.Menu position='right'>
